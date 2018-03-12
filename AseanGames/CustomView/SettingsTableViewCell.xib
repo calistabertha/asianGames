@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="KGk-i7-Jjw" customClass="SettingsTableViewCell" customModule="AseanGames" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="65"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybs-2l-bbb">
+                        <rect key="frame" x="22" y="5" width="276" height="54.5"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sRH-lh-zzo">
+                                <rect key="frame" x="14" y="17" width="145" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="145" id="0bC-0d-aeD"/>
+                                    <constraint firstAttribute="height" constant="21" id="L9U-FY-if8"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="16"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico-dropdown-active" translatesAutoresizingMaskIntoConstraints="NO" id="lM7-n9-CdP">
+                                <rect key="frame" x="244" y="17.5" width="20" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="RE1-so-a1a"/>
+                                    <constraint firstAttribute="height" constant="20" id="Vo7-BX-zTR"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lM7-n9-CdP" firstAttribute="centerY" secondItem="Ybs-2l-bbb" secondAttribute="centerY" id="3Na-L5-BTb"/>
+                            <constraint firstItem="sRH-lh-zzo" firstAttribute="centerY" secondItem="Ybs-2l-bbb" secondAttribute="centerY" id="Gqx-OY-5FK"/>
+                            <constraint firstItem="sRH-lh-zzo" firstAttribute="leading" secondItem="Ybs-2l-bbb" secondAttribute="leading" constant="14" id="twu-SY-su7"/>
+                            <constraint firstAttribute="trailing" secondItem="lM7-n9-CdP" secondAttribute="trailing" constant="12" id="yEz-EO-sBe"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="Ybs-2l-bbb" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="22" id="6ME-wl-ojY"/>
+                    <constraint firstAttribute="bottom" secondItem="Ybs-2l-bbb" secondAttribute="bottom" constant="5" id="BsN-ea-r9d"/>
+                    <constraint firstAttribute="trailing" secondItem="Ybs-2l-bbb" secondAttribute="trailing" constant="22" id="bqz-cc-9dv"/>
+                    <constraint firstItem="Ybs-2l-bbb" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="mzW-4w-u2Q"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="lblTitle" destination="sRH-lh-zzo" id="Nde-3w-33d"/>
+                <outlet property="viewBorder" destination="Ybs-2l-bbb" id="vw4-SO-mam"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="53.5"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ico-dropdown-active" width="16" height="16"/>
+    </resources>
+</document>

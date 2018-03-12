@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Bold.ttf">
+            <string>Lato-Bold</string>
+        </array>
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="FVD-Ir-2bx" customClass="HeaderTableViewCell" customModule="AseanGames" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FVD-Ir-2bx" id="kse-lu-jAZ">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pinned" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4zb-xD-n61">
+                        <rect key="frame" x="20" y="12" width="181" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="21" id="yai-oj-3Pn"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Bold" family="Lato" pointSize="20"/>
+                        <color key="textColor" red="0.1215686275" green="0.15686274510000001" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V3f-TO-7tl">
+                        <rect key="frame" x="206" y="7.5" width="114" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="cLA-KI-TqC"/>
+                            <constraint firstAttribute="width" constant="114" id="fSN-f6-YIQ"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="15"/>
+                        <state key="normal" title="       See all">
+                            <color key="titleColor" red="0.62352941179999999" green="0.62352941179999999" blue="0.62352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </state>
+                        <connections>
+                            <action selector="seeAllSelected:" destination="FVD-Ir-2bx" eventType="touchUpInside" id="xRD-0I-0PF"/>
+                        </connections>
+                    </button>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico-arrow" translatesAutoresizingMaskIntoConstraints="NO" id="meR-0o-aC6">
+                        <rect key="frame" x="290" y="15.5" width="16" height="16"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="16" id="ERc-CE-BlO"/>
+                            <constraint firstAttribute="width" constant="16" id="UIv-jE-FdS"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="V3f-TO-7tl" firstAttribute="leading" secondItem="4zb-xD-n61" secondAttribute="trailing" constant="5" id="1uz-hB-oZp"/>
+                    <constraint firstAttribute="trailing" secondItem="meR-0o-aC6" secondAttribute="trailing" constant="14" id="2uM-vG-BKp"/>
+                    <constraint firstItem="4zb-xD-n61" firstAttribute="leading" secondItem="kse-lu-jAZ" secondAttribute="leading" constant="20" id="3So-Jp-X5S"/>
+                    <constraint firstItem="V3f-TO-7tl" firstAttribute="centerY" secondItem="4zb-xD-n61" secondAttribute="centerY" id="CrR-Di-S73"/>
+                    <constraint firstItem="4zb-xD-n61" firstAttribute="centerY" secondItem="kse-lu-jAZ" secondAttribute="centerY" id="Jrh-CJ-huL"/>
+                    <constraint firstItem="meR-0o-aC6" firstAttribute="centerY" secondItem="V3f-TO-7tl" secondAttribute="centerY" constant="1" id="OZ8-Me-wXX"/>
+                    <constraint firstAttribute="trailing" secondItem="V3f-TO-7tl" secondAttribute="trailing" id="iOA-JY-5gC"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <connections>
+                <outlet property="btnSeeAll" destination="V3f-TO-7tl" id="Ajw-aC-btk"/>
+                <outlet property="imgArrow" destination="meR-0o-aC6" id="lT5-Gc-9Zx"/>
+                <outlet property="lblHeader" destination="4zb-xD-n61" id="3GT-CE-vg8"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ico-arrow" width="16" height="16"/>
+    </resources>
+</document>

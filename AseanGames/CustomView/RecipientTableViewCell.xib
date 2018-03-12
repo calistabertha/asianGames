@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="RecipientTableViewCell" customModule="AseanGames" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="b6G-9V-Bzy">
+                        <rect key="frame" x="2" y="7" width="30" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="30" id="9Yb-KK-NCh"/>
+                            <constraint firstAttribute="height" constant="30" id="lbY-Rn-Tzj"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nama" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jbZ-UI-2de">
+                        <rect key="frame" x="42" y="7" width="201" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="4Xd-G5-SSY"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7m3-Hy-BaI">
+                        <rect key="frame" x="42" y="25" width="201" height="18"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="18" id="q30-Nz-YjX"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="10"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attend" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AWs-JY-IW9">
+                        <rect key="frame" x="263" y="11" width="42" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="42" id="1hq-ZD-IJI"/>
+                            <constraint firstAttribute="height" constant="21" id="Y7m-hJ-4Ng"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.4941176471" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico-dropdown-active" translatesAutoresizingMaskIntoConstraints="NO" id="1Ez-d0-uYw">
+                        <rect key="frame" x="274" y="11.5" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="Dhz-iw-B9P"/>
+                            <constraint firstAttribute="width" constant="20" id="H1u-kW-X5a"/>
+                        </constraints>
+                    </imageView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="7m3-Hy-BaI" firstAttribute="trailing" secondItem="jbZ-UI-2de" secondAttribute="trailing" id="6UQ-OH-baV"/>
+                    <constraint firstItem="1Ez-d0-uYw" firstAttribute="centerY" secondItem="AWs-JY-IW9" secondAttribute="centerY" id="6v1-7F-3KB"/>
+                    <constraint firstItem="7m3-Hy-BaI" firstAttribute="top" secondItem="jbZ-UI-2de" secondAttribute="bottom" id="Ipi-9M-8wL"/>
+                    <constraint firstItem="b6G-9V-Bzy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Lch-re-r39"/>
+                    <constraint firstItem="jbZ-UI-2de" firstAttribute="top" secondItem="b6G-9V-Bzy" secondAttribute="top" id="Pq6-PL-bVj"/>
+                    <constraint firstItem="AWs-JY-IW9" firstAttribute="leading" secondItem="jbZ-UI-2de" secondAttribute="trailing" constant="20" id="SpL-f6-zLz"/>
+                    <constraint firstItem="jbZ-UI-2de" firstAttribute="leading" secondItem="b6G-9V-Bzy" secondAttribute="trailing" constant="10" id="eH6-Bd-7ce"/>
+                    <constraint firstItem="b6G-9V-Bzy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="2" id="h1O-Yo-vU7"/>
+                    <constraint firstItem="7m3-Hy-BaI" firstAttribute="leading" secondItem="jbZ-UI-2de" secondAttribute="leading" id="iJM-L5-c48"/>
+                    <constraint firstAttribute="trailing" secondItem="AWs-JY-IW9" secondAttribute="trailing" constant="15" id="mjB-qI-lCy"/>
+                    <constraint firstItem="1Ez-d0-uYw" firstAttribute="centerX" secondItem="AWs-JY-IW9" secondAttribute="centerX" id="nnC-gQ-O1S"/>
+                    <constraint firstItem="AWs-JY-IW9" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="y2U-EU-cJH"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="imgProfile" destination="b6G-9V-Bzy" id="x4h-RC-8Ds"/>
+                <outlet property="lblName" destination="jbZ-UI-2de" id="95M-g5-Wvf"/>
+                <outlet property="lblParticipant" destination="AWs-JY-IW9" id="Nl6-RL-Tkh"/>
+                <outlet property="lblTitle" destination="7m3-Hy-BaI" id="HHg-T7-cew"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="ico-dropdown-active" width="16" height="16"/>
+        <image name="img-profile" width="38" height="38"/>
+    </resources>
+</document>

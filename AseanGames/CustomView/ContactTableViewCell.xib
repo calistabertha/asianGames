@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Lato-Regular.ttf">
+            <string>Lato-Regular</string>
+        </array>
+        <array key="OpenSans-Regular.ttf">
+            <string>OpenSans-Regular</string>
+        </array>
+    </customFonts>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="137" id="1Ck-xP-grK" customClass="ContactTableViewCell" customModule="AseanGames" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="137"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1Ck-xP-grK" id="Lba-z2-9Ll">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="136.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Phone" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ho7-M0-5S6">
+                        <rect key="frame" x="22" y="12" width="50" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="50" id="2IK-v1-cIQ"/>
+                            <constraint firstAttribute="height" constant="21" id="PAD-Zd-q2r"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.4941176471" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IqH-hP-qFc">
+                        <rect key="frame" x="22" y="33" width="276" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="B3J-Dr-qmz"/>
+                        </constraints>
+                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="16"/>
+                        <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="h5j-sR-t8p">
+                        <rect key="frame" x="22" y="62" width="276" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="1RM-0f-h6k"/>
+                        </constraints>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yLR-T9-Qhs">
+                        <rect key="frame" x="22" y="75" width="73" height="21"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="73" id="UTN-gU-MWk"/>
+                            <constraint firstAttribute="height" constant="21" id="UcV-7y-5qm"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Lato-Regular" family="Lato" pointSize="14"/>
+                        <color key="textColor" red="0.0" green="0.4941176471" blue="0.47450980390000003" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eWI-m0-2Ab">
+                        <rect key="frame" x="22" y="96" width="276" height="30"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="30" id="Rtx-Vg-pQQ"/>
+                        </constraints>
+                        <color key="textColor" red="0.48627450979999998" green="0.48627450979999998" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
+                        <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="16"/>
+                        <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                    </textField>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mQe-V3-y1A">
+                        <rect key="frame" x="22" y="125" width="276" height="1"/>
+                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="1" id="Hjj-IV-dd2"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                <constraints>
+                    <constraint firstItem="h5j-sR-t8p" firstAttribute="trailing" secondItem="IqH-hP-qFc" secondAttribute="trailing" id="2pB-wU-436"/>
+                    <constraint firstItem="yLR-T9-Qhs" firstAttribute="top" secondItem="IqH-hP-qFc" secondAttribute="bottom" constant="12" id="5Br-xo-9SI"/>
+                    <constraint firstItem="mQe-V3-y1A" firstAttribute="leading" secondItem="eWI-m0-2Ab" secondAttribute="leading" id="Alp-dT-sUz"/>
+                    <constraint firstAttribute="trailing" secondItem="IqH-hP-qFc" secondAttribute="trailing" constant="22" id="FhS-mp-XaQ"/>
+                    <constraint firstAttribute="trailing" secondItem="eWI-m0-2Ab" secondAttribute="trailing" constant="22" id="JlA-tf-m78"/>
+                    <constraint firstItem="eWI-m0-2Ab" firstAttribute="top" secondItem="yLR-T9-Qhs" secondAttribute="bottom" id="YYe-ZK-pEn"/>
+                    <constraint firstItem="h5j-sR-t8p" firstAttribute="bottom" secondItem="IqH-hP-qFc" secondAttribute="bottom" id="c32-wT-5fM"/>
+                    <constraint firstItem="IqH-hP-qFc" firstAttribute="leading" secondItem="ho7-M0-5S6" secondAttribute="leading" id="de9-Zx-yoF"/>
+                    <constraint firstItem="ho7-M0-5S6" firstAttribute="leading" secondItem="Lba-z2-9Ll" secondAttribute="leading" constant="22" id="gYe-qh-Zcq"/>
+                    <constraint firstItem="mQe-V3-y1A" firstAttribute="trailing" secondItem="eWI-m0-2Ab" secondAttribute="trailing" id="l8f-H0-LX7"/>
+                    <constraint firstItem="mQe-V3-y1A" firstAttribute="bottom" secondItem="eWI-m0-2Ab" secondAttribute="bottom" id="naW-HV-Fwg"/>
+                    <constraint firstItem="IqH-hP-qFc" firstAttribute="top" secondItem="ho7-M0-5S6" secondAttribute="bottom" id="umC-C2-95t"/>
+                    <constraint firstItem="h5j-sR-t8p" firstAttribute="leading" secondItem="IqH-hP-qFc" secondAttribute="leading" id="uoY-Hu-pTn"/>
+                    <constraint firstItem="eWI-m0-2Ab" firstAttribute="leading" secondItem="yLR-T9-Qhs" secondAttribute="leading" id="vaS-HJ-wdR"/>
+                    <constraint firstItem="yLR-T9-Qhs" firstAttribute="leading" secondItem="Lba-z2-9Ll" secondAttribute="leading" constant="22" id="xBT-wz-vdF"/>
+                    <constraint firstItem="ho7-M0-5S6" firstAttribute="top" secondItem="Lba-z2-9Ll" secondAttribute="top" constant="12" id="yYw-y9-zXs"/>
+                </constraints>
+            </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <viewLayoutGuide key="safeArea" id="tNK-hX-iok"/>
+            <connections>
+                <outlet property="txtEmail" destination="eWI-m0-2Ab" id="34q-id-luR"/>
+                <outlet property="txtPhone" destination="IqH-hP-qFc" id="fih-zW-faa"/>
+            </connections>
+            <point key="canvasLocation" x="115" y="100.5"/>
+        </tableViewCell>
+    </objects>
+</document>

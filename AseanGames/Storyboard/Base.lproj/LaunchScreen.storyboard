@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="jzO-hI-fBI">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="n7X-x1-ral">
+            <objects>
+                <viewController id="jzO-hI-fBI" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="YqI-bb-T3E"/>
+                        <viewControllerLayoutGuide type="bottom" id="rHj-u8-tZl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1le-no-RoG">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-bg_homepage" translatesAutoresizingMaskIntoConstraints="NO" id="yZt-lv-fbV">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <accessibility key="accessibilityConfiguration" identifier="4D4E13AB-C7A7-409B-B60F-BD76EB88923E-asset"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-logoocc" translatesAutoresizingMaskIntoConstraints="NO" id="eew-KV-b7f">
+                                <rect key="frame" x="85" y="69" width="150" height="223"/>
+                                <accessibility key="accessibilityConfiguration" identifier="9C81E14E-128C-4000-A694-D1CAF49065A7-asset"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="223" id="76J-90-rC5"/>
+                                    <constraint firstAttribute="width" constant="150" id="Myg-bi-s7r"/>
+                                </constraints>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-logoasiangames" translatesAutoresizingMaskIntoConstraints="NO" id="ByC-Pf-IMa">
+                                <rect key="frame" x="24" y="394" width="127" height="80"/>
+                                <accessibility key="accessibilityConfiguration" identifier="9510060C-5979-4925-BA71-D2C6D099E61E-asset"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="lSo-KV-yEx"/>
+                                    <constraint firstAttribute="width" constant="127" id="pN5-od-gX0"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="ByC-Pf-IMa" firstAttribute="leading" secondItem="1le-no-RoG" secondAttribute="leading" constant="24" id="AZK-GW-94f"/>
+                            <constraint firstItem="rHj-u8-tZl" firstAttribute="top" secondItem="yZt-lv-fbV" secondAttribute="bottom" id="JfA-Yj-wga"/>
+                            <constraint firstItem="yZt-lv-fbV" firstAttribute="top" secondItem="1le-no-RoG" secondAttribute="top" id="KZO-4J-SQA"/>
+                            <constraint firstAttribute="trailing" secondItem="yZt-lv-fbV" secondAttribute="trailing" id="MVj-XH-OyZ"/>
+                            <constraint firstItem="ByC-Pf-IMa" firstAttribute="top" secondItem="eew-KV-b7f" secondAttribute="bottom" constant="102" id="RbZ-eu-jym"/>
+                            <constraint firstItem="eew-KV-b7f" firstAttribute="top" secondItem="YqI-bb-T3E" secondAttribute="bottom" constant="49" id="m7L-Cg-np2"/>
+                            <constraint firstItem="eew-KV-b7f" firstAttribute="centerX" secondItem="yZt-lv-fbV" secondAttribute="centerX" id="xiu-f7-LeU"/>
+                            <constraint firstItem="yZt-lv-fbV" firstAttribute="leading" secondItem="1le-no-RoG" secondAttribute="leading" id="zly-PN-4iT"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gpm-lw-aHM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.5" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="img-bg_homepage" width="320" height="568"/>
+        <image name="img-logoasiangames" width="127" height="80"/>
+        <image name="img-logoocc" width="150" height="223"/>
+    </resources>
+</document>
