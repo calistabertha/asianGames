@@ -16,7 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        if let _ = UserDefaults.standard.getUserProfile() {
+        if let user = UserDefaults.standard.getUserProfile() {
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
             let vc = storyboard.instantiateInitialViewController()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         ICEnvironmentSetting.setup(window: self.window!,defaultEnv: .DEVELOPMENT)
         ICEnvironmentSetting.setupBaseURL(development: Config.developmentBaseAPI, staging: Config.staggingBaseAPI, production: Config.productionBaseAPI)
+        UITabBar.appearance().tintColor = UIColor(hexString: "007E79")
         
         return true
     }

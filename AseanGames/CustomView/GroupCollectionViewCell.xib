@@ -21,31 +21,31 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="GroupCollectionViewCell" customModule="AseanGames" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="152" height="182"/>
+            <rect key="frame" x="0.0" y="0.0" width="164" height="185"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="152" height="182"/>
+                <rect key="frame" x="0.0" y="0.0" width="164" height="185"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD8-lM-yK6">
-                        <rect key="frame" x="20" y="0.0" width="132" height="182"/>
+                        <rect key="frame" x="20" y="3" width="134" height="179"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="bB4-8M-fkK">
-                                <rect key="frame" x="45" y="17" width="42" height="42"/>
+                                <rect key="frame" x="46" y="17" width="42" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="5OB-43-mdM"/>
                                     <constraint firstAttribute="width" constant="42" id="owy-TX-G28"/>
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-separator-70" translatesAutoresizingMaskIntoConstraints="NO" id="sQv-lf-Pav">
-                                <rect key="frame" x="37" y="70" width="58" height="3"/>
+                                <rect key="frame" x="38" y="70" width="58" height="3"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="3" id="9YV-Rj-gWi"/>
                                     <constraint firstAttribute="width" constant="58" id="cbA-W8-N7c"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Opening Ceremony Group" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xdK-Lb-njn">
-                                <rect key="frame" x="17" y="80" width="97" height="67"/>
+                                <rect key="frame" x="18" y="80" width="97" height="67"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="67" id="hhv-24-fNT"/>
                                     <constraint firstAttribute="width" constant="97" id="s9d-lf-Whv"/>
@@ -55,7 +55,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120 members" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dx0-0I-FHj">
-                                <rect key="frame" x="20" y="151" width="92" height="21"/>
+                                <rect key="frame" x="20" y="151" width="94" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="2DO-H1-2i3"/>
                                 </constraints>
@@ -81,18 +81,20 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="hD8-lM-yK6" secondAttribute="trailing" id="1Av-hc-ABj"/>
-                <constraint firstAttribute="bottom" secondItem="hD8-lM-yK6" secondAttribute="bottom" id="4Uz-fy-ZqB"/>
+                <constraint firstAttribute="trailing" secondItem="hD8-lM-yK6" secondAttribute="trailing" constant="10" id="1Av-hc-ABj"/>
+                <constraint firstAttribute="bottom" secondItem="hD8-lM-yK6" secondAttribute="bottom" constant="3" id="4Uz-fy-ZqB"/>
                 <constraint firstItem="hD8-lM-yK6" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="20" id="6Fj-fU-4ci"/>
-                <constraint firstItem="hD8-lM-yK6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xpu-CL-apm"/>
+                <constraint firstItem="hD8-lM-yK6" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="3" id="xpu-CL-apm"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <size key="customSize" width="164" height="185"/>
             <connections>
                 <outlet property="imgProfile" destination="bB4-8M-fkK" id="ip3-8f-bjK"/>
                 <outlet property="lblGroupName" destination="xdK-Lb-njn" id="Dme-bw-REj"/>
                 <outlet property="lblTotalMember" destination="dx0-0I-FHj" id="94E-mG-u4z"/>
                 <outlet property="viewBorder" destination="hD8-lM-yK6" id="WdX-lB-EWe"/>
             </connections>
+            <point key="canvasLocation" x="79" y="121.5"/>
         </collectionViewCell>
     </objects>
     <resources>

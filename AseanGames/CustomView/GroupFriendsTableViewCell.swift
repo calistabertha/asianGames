@@ -21,6 +21,11 @@ class GroupFriendsTableViewCell: UITableViewCell {
     @IBOutlet weak var constraintHeightCollection: NSLayoutConstraint!
     
     internal var context: UIViewController?
+    internal var groupItems = [GroupModel](){
+        didSet{
+            collectionView.reloadData()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -40,7 +45,8 @@ extension GroupFriendsTableViewCell: TableViewCellProtocol {
         cell.collectionView.reloadData()
         cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
         cell.context = context
-        
+        guard  let data = object as? [GroupModel] else {return cell}
+        cell.groupItems = data
         return cell
     }
 }
@@ -58,11 +64,11 @@ extension GroupFriendsTableViewCell: UICollectionViewDelegate {
 
 extension GroupFriendsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return 5 //groupItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = ""
+        let data = "" //groupItems[indexPath.row]
         
         if let ctx = self.context {
             return GroupCollectionViewCell.configure(context: ctx, collectionView: collectionView, indexPath: indexPath, object: data)

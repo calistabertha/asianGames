@@ -20,39 +20,63 @@ class GroupViewController: UIViewController {
         }
     }
     
+    internal var groupItems = [GroupModel](){
+        didSet{
+            collectionView.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupData()
     }
 
+    //MARK : Function
+    func setupData() {
+        PeopleController().getPeople(onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.groupItems = res.group
+//                self.spinner.stopAnimating()
+//                self.spinner.isHidden = true
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
+    
     
     @IBAction func back(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
-    
-    @IBAction func createGroup(_ sender: Any) {
-    }
+ 
 }
 
 extension GroupViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-        //        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
-        //        if let ctx = self.context {
-        //            ctx.navigationController?.pushViewController(vc, animated: true)
-        //        }
+        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detail) as! DetailGroupViewController
+        let data = groupItems[indexPath.row]
+        vc.idGroup = String(data.id)
+        self.navigationController?.pushViewController(vc, animated: true)
+  
     }
     
 }
 
 extension GroupViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return groupItems.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = ""
+        let data = groupItems[indexPath.row]
         
         return GroupCollectionViewCell.configure(context: self, collectionView: collectionView, indexPath: indexPath, object: data)
         
@@ -61,6 +85,6 @@ extension GroupViewController: UICollectionViewDataSource {
 
 extension GroupViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width/2 - 5, height: 182)
-    }
+        return CGSize(width:collectionView.frame.size.width/2 , height: 182)
+    }//collectionView.frame.size.width/2
 }

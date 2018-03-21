@@ -28,7 +28,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUB-IU-cWp">
-                        <rect key="frame" x="20" y="0.0" width="280" height="54"/>
+                        <rect key="frame" x="20" y="5" width="280" height="53.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="P1w-JS-Px3">
                                 <rect key="frame" x="14" y="8" width="38" height="38"/>
@@ -81,8 +81,8 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="fUB-IU-cWp" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="Ith-fy-SMS"/>
-                    <constraint firstAttribute="bottom" secondItem="fUB-IU-cWp" secondAttribute="bottom" constant="10" id="XXa-SD-nI7"/>
-                    <constraint firstItem="fUB-IU-cWp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="tE4-ec-ecm"/>
+                    <constraint firstAttribute="bottom" secondItem="fUB-IU-cWp" secondAttribute="bottom" constant="5" id="XXa-SD-nI7"/>
+                    <constraint firstItem="fUB-IU-cWp" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="tE4-ec-ecm"/>
                     <constraint firstAttribute="trailing" secondItem="fUB-IU-cWp" secondAttribute="trailing" constant="20" id="uZ5-sS-xR7"/>
                 </constraints>
             </tableViewCellContentView>

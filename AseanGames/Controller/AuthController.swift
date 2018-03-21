@@ -52,7 +52,8 @@ class AuthController: BaseController {
         
         let params = [
             "email" : email,
-            "password" : password
+            "password" : password,
+            "device_id" : "!@#$%^&QWERTYUI"
         ]
         
         httpHelper.requestAPI(url: loginAPI, param: params, method: .post) {
@@ -72,7 +73,7 @@ class AuthController: BaseController {
                     }
                     
                     UserDefaults.standard.setToken(token: dataJSON["X-Access-Token"].stringValue)
-                    UserDefaults.standard.setUserProfile(json: data)
+                    UserDefaults.standard.setUserProfile(json: dataJSON)
                     
 //                    var users = [UserModel]()
 //                    for value in (response.data?.arrayValue)! {

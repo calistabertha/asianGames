@@ -30,7 +30,16 @@ class CommentTableViewCell: UITableViewCell {
 extension CommentTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: CommentTableViewCell.identifier, for: indexPath) as! CommentTableViewCell
+        guard let data = object as? CommentModel else {return cell}
+        cell.lblComment.text = data.comment
+        cell.lblName.text = "\(data.user) - \(data.title)"
+        cell.lblTime.text = data.createAt
         
+        guard let url = URL(string: data.photo) else { return cell}
+        cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
+            cell.imgProfile.layer.masksToBounds = true
+        })
         return cell
     }
 }

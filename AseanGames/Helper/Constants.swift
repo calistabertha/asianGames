@@ -54,6 +54,18 @@ struct API {
         static let home = "agendas"
         static let history = "agendas/history"
     }
+    
+    struct People {
+        static let people = "people"
+        static let group = "people/group"
+        static let friends = "people/friends"
+        static let search = "people/search?keyword="
+        static let profile = "users"
+    }
+    
+    struct Settings {
+        static let profile = "users"
+    }
 }
 
 struct StoryboardReferences {

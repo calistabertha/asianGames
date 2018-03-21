@@ -46,10 +46,13 @@ extension ListCollectionViewCell: CollectionViewCellProtocol{
         cell.viewCollection.dropShadow()
         
         guard let url = URL(string: data.photo) else { return cell }
-        cell.imgProfile.sd_setImage(with: url, placeholderImage: nil, options: .progressiveDownload, completed: { (img, error, type, url) in
-            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
-            cell.imgProfile.layer.masksToBounds = true
-        })
+
+            cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
+                cell.imgProfile.layer.masksToBounds = true
+            })
+        
+       
         
         return cell
     }

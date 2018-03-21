@@ -16,4 +16,5 @@ target 'AseanGames' do
   pod 'ICTabFragment'
   pod 'CollapsibleTableSectionViewController', '~> 1.0.0'
   pod 'SDWebImage', '~> 4.0'
+  pod 'SwipeCellKit'
 end

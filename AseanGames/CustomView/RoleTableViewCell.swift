@@ -9,8 +9,8 @@
 import UIKit
 
 class RoleTableViewCell: UITableViewCell {
-    @IBOutlet weak var txtTitle: UITextField!
-    @IBOutlet weak var txtDivision: UITextField!
+    @IBOutlet weak var lblTitle: UILabel!
+    @IBOutlet weak var lblDivision: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,8 +28,10 @@ class RoleTableViewCell: UITableViewCell {
 extension RoleTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: RoleTableViewCell.identifier, for: indexPath) as! RoleTableViewCell
-        cell.txtTitle.isUserInteractionEnabled = false
-        cell.txtDivision.isUserInteractionEnabled = false
+        guard  let data = object as? UserModel else {return cell}
+        cell.lblTitle.text = data.department.name
+        cell.lblDivision.text = data.assignment.name
+        
         return cell
     }
 }

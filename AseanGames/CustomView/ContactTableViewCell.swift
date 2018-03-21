@@ -9,8 +9,8 @@
 import UIKit
 
 class ContactTableViewCell: UITableViewCell {
-    @IBOutlet weak var txtPhone: UITextField!
-    @IBOutlet weak var txtEmail: UITextField!
+    @IBOutlet weak var lblPhone: UILabel!
+    @IBOutlet weak var lblEmail: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,8 +28,9 @@ class ContactTableViewCell: UITableViewCell {
 extension ContactTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ContactTableViewCell.identifier, for: indexPath) as! ContactTableViewCell
-        cell.txtEmail.isUserInteractionEnabled = false
-        cell.txtPhone.isUserInteractionEnabled = false
+        guard  let data = object as? UserModel else {return cell}
+        cell.lblEmail.text = data.email
+        cell.lblPhone.text = data.phone
         return cell
     }
 }

@@ -30,13 +30,17 @@ class DetailFriendsViewController: UIViewController {
     
     var profile:UIViewController!
     var agenda:UIViewController!
-    
+    var idUser = ""
     var currentViewController:UIViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         setTabs()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        setupData()
     }
     
     
@@ -48,6 +52,16 @@ class DetailFriendsViewController: UIViewController {
             ICTabModel(tabName: "Profile", tabView: profile!, isSelected: true),
             ICTabModel(tabName: "Agenda", tabView: agenda!, isSelected: false)
         ]
+        
+        if let pvc = profile as? ProfileFriendsViewController {
+            pvc.childDelegate = self
+            pvc.idUser = idUser
+        }
+        if let avc = agenda as? AgendaFriendsViewController{
+            avc.childDelegate = self
+            avc.idUser = idUser
+        }
+        
         currentViewController = profile
         
         let tabFragment = ICTabFragmentViewController(context: self, tabs: tabs, tabView: viewMenu, containerView: viewContainer)
@@ -60,13 +74,6 @@ class DetailFriendsViewController: UIViewController {
         tabFragment.tabFitSize = 2
         tabFragment.delegate = self
         tabFragment.create()
-        
-        if let pvc = profile as? ProfileFriendsViewController {
-            pvc.childDelegate = self
-        }
-        if let avc = agenda as? AgendaFriendsViewController{
-            avc.childDelegate = self
-        }
         
     }
     
@@ -85,7 +92,36 @@ class DetailFriendsViewController: UIViewController {
             }
         }
     }
-
+    
+    //MARK : Function
+    func setupData() {
+        PeopleController().getFriendsProfile(id: idUser,onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.lblName.text = "\(res.firstName) \(res.lastName)"
+                if res.photo == ""{
+                    self.imgProfile.image = #imageLiteral(resourceName: "img-placeholder")
+               
+                }else{
+                    guard let url = URL(string: res.photo) else { return }
+                    self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                        print("eror \(String(describing: error)) \(type)")
+                        self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
+                        self.imgProfile.layer.masksToBounds = true
+                    })
+                }
+              
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
+    
+    //MARK: Action
     @IBAction func back(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }

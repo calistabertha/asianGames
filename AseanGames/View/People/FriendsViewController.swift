@@ -19,11 +19,39 @@ class FriendsViewController: UIViewController {
         }
     }
     
+    internal var friendsItems = [RecipientModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        setupData()
     }
+    
+    //MARK : Function
+    func setupData() {
+        PeopleController().getFriends(onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.friendsItems = res
+                self.table.isHidden = false
+//                self.spinner.stopAnimating()
+//                self.spinner.isHidden = true
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
+    
+    //MARK: Action
     @IBAction func back(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
     }
@@ -36,19 +64,21 @@ extension FriendsViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return friendsItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-       
-        return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+       let data = friendsItems[indexPath.row]
+        return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.friends) as! FriendsViewController
-//        self.navigationController?.pushViewController(vc, animated: true)
+        let data = friendsItems[indexPath.row]
+        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
+        vc.idUser = data.id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

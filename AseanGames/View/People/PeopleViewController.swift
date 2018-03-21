@@ -29,18 +29,60 @@ class PeopleViewController: UIViewController {
     @IBOutlet weak var constraintTopTable: NSLayoutConstraint!
     @IBOutlet weak var viewUnderline: UIView!
     @IBOutlet weak var viewTitleSmall: UIView!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    
+    internal var groupItems = [GroupModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
+    
+    internal var friendsItems = [RecipientModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.constraintTopTable.constant = 50
         self.lblSmallPeople.alpha = 0
         self.viewUnderline.alpha = 0
-        
+      //  self.table.isHidden = true
+        self.spinner.startAnimating()
+        setupData()
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         self.viewTitleSmall.backgroundColor = UIColor.clear
+      
+    }
+    
+    //MARK : Function
+    func setupData() {
+        PeopleController().getPeople(onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.groupItems = res.group
+                self.friendsItems = res.friends
+              //  self.table.isHidden = false
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
+             
+            }
+        }, onFailed: { (message) in
+            print(message)
+          //  self.table.isHidden = true
+            self.spinner.isHidden = true
+            self.spinner.stopAnimating()
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
+            print("Do action when data complete fetching here")
+        }
     }
 }
 
@@ -50,7 +92,7 @@ extension PeopleViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return 3 + self.friendsItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -60,20 +102,26 @@ extension PeopleViewController: UITableViewDataSource{
         }else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: PeopleTableViewCell.identifier, for: indexPath) as! PeopleTableViewCell
             cell.context = self
+            cell.peopleData = groupItems
             return cell
             
         }else if indexPath.row == 2 {
             return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Friends")
             
         }else {
-            return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+            let data = friendsItems[indexPath.row - 3]
+            return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
         }
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+        if indexPath.row >= 3{
+            let data = friendsItems[indexPath.row - 3]
+            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
+            vc.idUser = data.id
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
 }

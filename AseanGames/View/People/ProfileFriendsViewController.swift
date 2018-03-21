@@ -27,19 +27,73 @@ class ProfileFriendsViewController: UIViewController, UIGestureRecognizerDelegat
             table.delegate = self
         }
     }
+    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     var childDelegate: FriendsOffsetDelegate?
+    var idUser = ""
+    var dataUser : UserModel?
+    internal var groupItems = [GroupModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.spinner.startAnimating()
         self.table.estimatedRowHeight = 70
         self.table.isScrollEnabled = false
         let pan = UIPanGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         pan.delegate = self
         self.table.addGestureRecognizer(pan)
-        
+        self.table.isHidden = true
+        setupData()
+        print("user \(idUser)")
+    }
+    
+    //MARK : Function
+    func setupData() {
+        PeopleController().getFriendsProfile(id: idUser,onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.table.isHidden = false
+                self.dataUser = res
+                self.setupGroup()
+                self.table.reloadData()
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
+            print("Do action when data complete fetching here")
+        }
     }
   
+    func setupGroup() {
+        PeopleController().getFriendsGroup(id: idUser,onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.table.isHidden = false
+                self.groupItems = res
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
+    
     //MARK: - Gesture
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -97,17 +151,28 @@ extension ProfileFriendsViewController : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.row == 0 {
             return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Role")
+            
         } else if indexPath.row == 1 {
-            return RoleTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+            return RoleTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: self.dataUser)
+            
         }else if indexPath.row == 2 {
             return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Contact")
+            
         }else if indexPath.row == 3 {
-            return ContactTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+            return ContactTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: self.dataUser)
+            
         }else if indexPath.row == 4 {
             return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Groups")
+            
         }else {
+           // let cell = tableView.dequeueReusableCell(withIdentifier: GroupFriendsTableViewCell.identifier, for: indexPath) as! GroupFriendsTableViewCell
+//            cell.collectionView.reloadData()
+//            cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+//            cell.context = self
+//            cell.groupItems = groupItems
             return GroupFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
         }
     }

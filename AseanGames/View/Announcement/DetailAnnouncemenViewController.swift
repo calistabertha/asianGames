@@ -21,6 +21,8 @@ class DetailAnnouncemenViewController: UIViewController {
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblDivision: UILabel!
     @IBOutlet weak var lblDate: UILabel!
+    @IBOutlet weak var lblMoreOthers: UILabel!
+    @IBOutlet weak var btnOpenRecipient: UIButton!
     
     @IBOutlet weak var table: UITableView!{
         didSet{
@@ -38,6 +40,22 @@ class DetailAnnouncemenViewController: UIViewController {
         }
     }
     
+    var recipientsItem = [DataImage](){
+        didSet{
+            recipientCollection.reloadData()
+        }
+    }
+    
+   // @IBOutlet var imageCollection: [UIImageView]!
+    @IBOutlet weak var recipientCollection: UICollectionView!{
+        didSet{
+            let xib = RecipientCollectionViewCell.nib
+            recipientCollection.register(xib, forCellWithReuseIdentifier: RecipientCollectionViewCell.identifier)
+            
+            recipientCollection.delegate = self
+            recipientCollection.dataSource = self
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -64,10 +82,28 @@ class DetailAnnouncemenViewController: UIViewController {
                 self.lblName.text = res.user
                 self.lblDivision.text = res.assigment
                 guard let url = URL(string: res.photo) else { return }
-                self.imgProfile.sd_setImage(with: url, placeholderImage: nil, options: .progressiveDownload, completed: { (img, error, type, url) in
+                
+                self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
                     self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
                     self.imgProfile.layer.masksToBounds = true
                 })
+                
+                self.recipientsItem = res.recipient.image
+                
+                if self.recipientsItem.count == 0{
+                    self.btnOpenRecipient.isUserInteractionEnabled = false
+                    self.btnOpenRecipient.isHidden = true
+                    self.viewOthers.isHidden = true
+                    self.lblMoreOthers.isHidden = true
+                    
+                }else if res.recipient.more > 0 {
+                    self.viewOthers.isHidden = false
+                    self.lblMoreOthers.isHidden = false
+                    
+                }else {
+                    self.viewOthers.isHidden = true
+                    self.lblMoreOthers.isHidden = true
+                }
                 
             }
         }, onFailed: { (message) in
@@ -110,17 +146,20 @@ class DetailAnnouncemenViewController: UIViewController {
         UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
             
         }, completion: { (done) in
+            self.setupRecipient()
             self.viewRecipient.isHidden = false
         })
     }
     @IBAction func seeComment(_ sender: Any) {
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.comment) as! CommentViewController
+        vc.idAnnouncement = idAnnouncement
         self.navigationController?.pushViewController(vc, animated: true)
     }
 
 }
 
+//MARK: TableView
 extension DetailAnnouncemenViewController: UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -131,8 +170,8 @@ extension DetailAnnouncemenViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        return RecipientTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "announcement")
+        let data = recipientItem[indexPath.row]
+        return RecipientTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
         
     }
     
@@ -141,5 +180,36 @@ extension DetailAnnouncemenViewController: UITableViewDataSource{
 extension DetailAnnouncemenViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 45
+    }
+}
+
+//MARK: CollectionView
+extension DetailAnnouncemenViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+        //        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
+        //        if let ctx = self.context {
+        //            ctx.navigationController?.pushViewController(vc, animated: true)
+        //        }
+    }
+    
+}
+
+extension DetailAnnouncemenViewController: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return recipientsItem.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let data = recipientsItem[indexPath.row]
+        
+        return RecipientCollectionViewCell.configure(context: self, collectionView: collectionView, indexPath: indexPath, object: data)
+        
+    }
+}
+
+extension DetailAnnouncemenViewController: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 35, height: 35)
     }
 }

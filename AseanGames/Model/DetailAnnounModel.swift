@@ -21,7 +21,7 @@ class DetailAnnounModel {
     var time : String
     var creatAt : String
     var isPast : Bool
-    
+
     init(recipient : DataRecipient, id : Int, title : String, description : String, attachment : Int, date : String, user : String, assigment : String, photo : String, time : String, creatAt : String, isPast : Bool) {
         self.recipient = recipient
         self.id = id

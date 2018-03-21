@@ -18,11 +18,29 @@ class SettingsViewController: UIViewController {
             table.delegate = self
         }
     }
+    @IBOutlet weak var imgProfile: UIImageView!
+    @IBOutlet weak var lblName: UILabel!
+    @IBOutlet weak var lblDivision: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupData()
+        
+    }
+    
+    func setupData(){
+        guard let user = UserDefaults.standard.getUserProfile() else {return}
+        if user.firstName == ""{
+            self.lblName.text = "Unknown User"
+        }else{
+             self.lblName.text = "\(user.firstName) \(user.lastName)"
+        }
+        self.lblDivision.text = user.department.name
+        guard let url = URL(string: user.photo) else { return }
+        self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+            self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
+            self.imgProfile.layer.masksToBounds = true
+        })
     }
 
 }
@@ -60,10 +78,29 @@ extension SettingsViewController : UITableViewDataSource{
             let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.help) as! HelpViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
-        } else if indexPath.row == 2 {
+        }else if indexPath.row == 2 {
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.change) as! ChangePasswordViewController
             self.navigationController?.pushViewController(vc, animated: true)
+            
+        }else if indexPath.row == 3 {
+            let alert = UIAlertController(title: nil, message: "Do you want to sign out?", preferredStyle: UIAlertControllerStyle.alert)
+            
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+               
+                //UserDefaults.standard.removeUserProfile()
+                if let bundle = Bundle.main.bundleIdentifier {
+                    UserDefaults.standard.removePersistentDomain(forName: bundle)
+                }
+                
+                let vc = UIStoryboard(name: StoryboardReferences.authentication, bundle: nil).instantiateViewController(withIdentifier: ViewControllerID.Authentication.login)
+                self.present(vc, animated: true, completion: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.cancel, handler: nil))
+            
+            // show the alert
+            self.present(alert, animated: true, completion: nil )
         }
      
     }

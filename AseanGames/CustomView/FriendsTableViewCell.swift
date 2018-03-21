@@ -30,6 +30,14 @@ class FriendsTableViewCell: UITableViewCell {
 extension FriendsTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: FriendsTableViewCell.identifier, for: indexPath) as! FriendsTableViewCell
+        guard let data = object as? RecipientModel else {return cell}
+        cell.lblName.text = data.name
+        cell.lblTitle.text = data.title
+        guard let url = URL(string: data.photo) else { return cell }
+        cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
+            cell.imgProfile.layer.masksToBounds = true
+        })
         cell.viewBorder.dropShadow()
         return cell
     }

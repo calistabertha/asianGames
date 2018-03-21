@@ -21,6 +21,7 @@ class DetailAgendaViewController: UIViewController {
     @IBOutlet weak var lblDivision: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblCreateAgenda: UILabel!
+    @IBOutlet weak var lblMoreRSVP: UILabel!
     @IBOutlet weak var btnAttendDecline: UIButton!
     @IBOutlet weak var viewBtnOption: UIView!
     @IBOutlet weak var btnAttend: UIButton!
@@ -35,7 +36,21 @@ class DetailAgendaViewController: UIViewController {
             table.delegate = self
         }
     }
-    var decision = ""
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var btnOpenRSVP: UIButton!
+    @IBOutlet var imageCollection: [UIImageView]!
+    @IBOutlet weak var lblGoing: UILabel!
+    
+    var decision = 0
+    var idAgenda: String?
+    var recipientItem = [RSVPModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
+    
+    
+    //NOTE : HARUS GANTI TABLE, KARNA SETIAP USER KASIH RESPOND (PERTAMA KALI), HARUSNYA RSVPNYA LANGSUNG KE GANTI/MUNCUL
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +60,128 @@ class DetailAgendaViewController: UIViewController {
         btnDecline.layer.cornerRadius = 3
         btnAttendDecline.layer.cornerRadius = 3
         viewRSVP.isHidden = true
+        spinner.startAnimating()
+        scrollView.isHidden = true
+        setupData()
+       
+    }
+    
+    //MARK: Function
+    func setupData(){
+        guard let id = idAgenda else {return}
+        AgendaController().getDetail(id: id, onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.scrollView.isHidden = false
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
+                self.lblTitle.text = res.title
+                self.lblDate.text = res.date
+                self.lblTime.text = res.time
+                self.lblLocation.text = res.location
+                self.lblAddress.text = res.address
+                self.lblAgenda.text = res.description
+                self.lblName.text = res.user
+                self.lblDivision.text = res.assignment
+                self.lblCreateAgenda.text = res.createAt
+               
+                guard let url = URL(string: res.photo) else { return }
+                self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
+                    self.imgProfile.layer.masksToBounds = true
+                })
+                
+                if res.attendants.count > 0 {
+                    for var i in 0...res.attendants.count-1{
+                        let image = self.imageCollection[i]
+                        image.isHidden = false
+                        
+                        guard let url = URL(string: res.attendants[i]) else { return }
+                        image.sd_setImage(with: url, placeholderImage: nil, options: .progressiveDownload, completed: { (img, error, type, url) in
+                            image.layer.cornerRadius = image.frame.size.height*0.5
+                            image.layer.masksToBounds = true
+                        })
+                    }
+                }
+                
+                if res.attendants.count == 0{
+                    self.btnOpenRSVP.isUserInteractionEnabled = false
+                    self.btnOpenRSVP.isHidden = true
+                    self.viewGoing.isHidden = true
+                    self.lblGoing.isHidden = true
+                    
+                } else if res.attendants.count < 5 {
+                    self.viewGoing.isHidden = true
+                    self.lblGoing.isHidden = true
+                    
+                } else {
+                    self.viewGoing.isHidden = false
+                    self.lblGoing.isHidden = false
+                    self.lblMoreRSVP.text = String(res.more)
+                }
+                
+                if res.respond == 0{
+                    self.viewBtnOption.isHidden = true
+                    self.btnAttendDecline.isHidden = false
+                    self.decision = 0
+                    if res.isPast{
+                        self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "C5C5C5")
+                        self.btnAttendDecline.setTitleColor(UIColor(hexString: "9F9F9F"), for: UIControlState.normal)
+                        
+                    }else {
+                        self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
+                       self.btnAttendDecline.setTitleColor(UIColor.white, for: UIControlState.normal)
+                    }
+                }else if res.respond == 1{
+                    self.viewBtnOption.isHidden = true
+                    self.btnAttendDecline.isHidden = false
+                    self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
+                    self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
+                    self.decision = 1
+                    
+                    if res.isPast{
+                        self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "C5C5C5")
+                        self.btnAttendDecline.setTitleColor(UIColor(hexString: "9F9F9F"), for: UIControlState.normal)
+                        
+                    }else {
+                        self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
+                        self.btnAttendDecline.setTitleColor(UIColor.white, for: UIControlState.normal)
+                    }
+                    
+                }else {
+                    self.viewBtnOption.isHidden = false
+                    self.btnAttendDecline.isHidden = true
+                }
+              
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
+    
+    func getRSVP(){
+        guard let id = idAgenda else {return}
+        AgendaController().getRecipient(id: id, onSuccess: { (code, message, result) in
+            if code == 200 {
+                guard let res = result else {return}
+                self.recipientItem = res
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
     }
 
     //MARK: Action
@@ -53,6 +190,7 @@ class DetailAgendaViewController: UIViewController {
     }
     
     @IBAction func openRSVP(_ sender: Any) {
+        getRSVP()
         viewRSVP.isHidden = false
     }
     
@@ -61,42 +199,94 @@ class DetailAgendaViewController: UIViewController {
     }
     
     @IBAction func attendOption(_ sender: Any) {
-        viewBtnOption.isHidden = true
-        btnAttendDecline.isHidden = false
-        btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
-        btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
-        decision = "Attend"
+        guard let id = idAgenda else {return}
+        AgendaController().requestRespond(id: id, respond: "1", onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if res == 200 {
+                let alert = JDropDownAlert()
+                alert.alertWith("Attend", message: "You can change response by clicking button below.", topLabelColor:
+                    UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
+                
+                self.viewBtnOption.isHidden = true
+                self.btnAttendDecline.isHidden = false
+                self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
+                self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
+                self.decision = 1
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
     }
     
     @IBAction func declineOption(_ sender: Any) {
-        viewBtnOption.isHidden = true
-        btnAttendDecline.isHidden = false
-        btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
-        btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
-        decision = "Decline"
+        guard let id = idAgenda else {return}
+        AgendaController().requestRespond(id: id, respond: "0", onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if res == 200 {
+                let alert = JDropDownAlert()
+                alert.alertWith("Decline", message: "You can change response by clicking button below.", topLabelColor:
+                    UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "F52D5A"), image: nil)
+                
+                self.viewBtnOption.isHidden = true
+                self.btnAttendDecline.isHidden = false
+                self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
+                self.btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
+                self.decision = 0
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
     }
     
     @IBAction func attendDecline(_ sender: Any) {
-        let alert = UIAlertController(title: "Change Availability", message: "Want to change availability? Current :\(decision) ", preferredStyle: UIAlertControllerStyle.alert)
+        var desc = ""
+        if self.decision == 0 {
+            desc = "Decline"
+        }else{
+            desc = "Attend"
+        }
         
-        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
-        alert.addAction(UIAlertAction(title: "Change", style: UIAlertActionStyle.default, handler: { action in
-           
-            if self.decision == "Attend" {
-                self.decision = "Decline"
-                self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
-                self.btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
+        guard let id = idAgenda else {return}
+        AgendaController().requestRespond(id: id, respond: "\(self.decision)", onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if res == 200 {
+                let alert = UIAlertController(title: "Change Availability", message: "Want to change availability? Current :\(desc) ", preferredStyle: UIAlertControllerStyle.alert)
                 
-            }else {
-                self.decision = "Attend"
-                self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
-                self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+                alert.addAction(UIAlertAction(title: "Change", style: UIAlertActionStyle.default, handler: { action in
+                    
+                    if self.decision == 1 {
+                        self.decision = 0
+                        self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
+                        
+                    }else {
+                        self.decision = 1
+                        self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
+                        self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
+                    }
+                    
+                }))
+                
+                // show the alert
+                self.present(alert, animated: true, completion: nil )
             }
-            
-        }))
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
         
-        // show the alert
-        self.present(alert, animated: true, completion: nil )
     }
     
 }
@@ -107,11 +297,12 @@ extension DetailAgendaViewController: UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return recipientItem.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return RecipientTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "agenda")
+        let data = recipientItem[indexPath.row]
+        return RecipientTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
     }
     
 }

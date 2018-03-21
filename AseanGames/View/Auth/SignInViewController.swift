@@ -56,7 +56,9 @@ class SignInViewController: UIViewController {
                                                 if code == 200 {
                                                     let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
                                                     let vc = storyboard.instantiateInitialViewController()
-                                                    self.navigationController?.pushViewController(vc!, animated: true)
+                                                    self.present(vc!, animated: true, completion: nil)
+                                    
+                                    
                                                 } else{
                                                     let alert = JDropDownAlert()
                                                     alert.alertWith("Sign in failed", message: message, topLabelColor:

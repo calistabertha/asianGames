@@ -1,23 +1,24 @@
 //
-//  AnnouncementController.swift
+//  PeopleController.swift
 //  AseanGames
 //
-//  Created by Calista on 3/5/18.
+//  Created by Calista on 3/16/18.
 //  Copyright © 2018 codigo. All rights reserved.
 //
 
 import Foundation
 import SwiftyJSON
 
-class AnnouncementController: BaseController {
-    fileprivate let homeAPI = API.Announcement.home.ENV
-    fileprivate let historyAPI = API.Announcement.history.ENV
-    fileprivate let pinnedAPI = API.Announcement.pinned.ENV
+class PeopleController: BaseController {
+    fileprivate let peopleAPI = API.People.people.ENV
+    fileprivate let groupAPI = API.People.group.ENV
+    fileprivate let friendsAPI = API.People.friends.ENV
+    fileprivate let profileAPI = API.People.profile.ENV
     
-    func getAnnouncement(onSuccess: @escaping SingleResultListener<AnnouncementModel>,
-                      onFailed: @escaping MessageListener,
-                      onComplete: @escaping MessageListener) {
-        httpHelper.requestAPI(url: homeAPI, param: nil, method: .get) {
+    func getPeople(onSuccess: @escaping SingleResultListener<PeopleModel>,
+                         onFailed: @escaping MessageListener,
+                         onComplete: @escaping MessageListener) {
+        httpHelper.requestAPI(url: peopleAPI, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
                 guard let data = json else {
@@ -25,11 +26,11 @@ class AnnouncementController: BaseController {
                     return
                 }
                 let response = ResponseModel(with: data)
-         
+                
                 if statusCode == 200 {
                     guard let datas = response.data else {return}
-                    let home = AnnouncementModel(json: datas)
-                   
+                    let home = PeopleModel(json: datas)
+                    
                     onSuccess(200, "Success fetching data", home)
                     onComplete("Fetching data completed")
                 }
@@ -48,84 +49,12 @@ class AnnouncementController: BaseController {
         }
     }
     
-    func getHistory(onSuccess: @escaping CollectionResultListener<DataAnnouncement>,
-                    onFailed: @escaping MessageListener,
-                    onComplete: @escaping MessageListener) {
-        httpHelper.requestAPI(url: historyAPI, param: nil, method: .get) {
-            (success, statusCode, json) in
-            if success {
-                guard let data = json else {
-                    onFailed("Null response from server")
-                    return
-                }
-                let response = ResponseModel(with: data)
-                
-                if statusCode == 200 {
-                    guard let datas = response.data else {return}
-                    var histories = [DataAnnouncement]()
-                    for value in datas.arrayValue {
-                        let history = DataAnnouncement(json: value)
-                        histories.append(history)
-                    }
-                    
-                    onSuccess(200, "Success fetching data", histories)
-                    onComplete("Fetching data completed")
-                }
-            }else{
-                if statusCode >= 400 {
-                    onFailed("Bad request")
-                } else if statusCode >= 500 {
-                    onFailed("Internal server error")
-                } else {
-                    let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
-                    onFailed("An error occured")
-                }
-            }
-        }
-    }
-    
-    func getPinned(onSuccess: @escaping CollectionResultListener<DataAnnouncement>,
-                    onFailed: @escaping MessageListener,
-                    onComplete: @escaping MessageListener) {
-        httpHelper.requestAPI(url: pinnedAPI, param: nil, method: .get) {
-            (success, statusCode, json) in
-            if success {
-                guard let data = json else {
-                    onFailed("Null response from server")
-                    return
-                }
-                let response = ResponseModel(with: data)
-                
-                if statusCode == 200 {
-                    guard let datas = response.data else {return}
-                    var histories = [DataAnnouncement]()
-                    for value in datas.arrayValue {
-                        let history = DataAnnouncement(json: value)
-                        histories.append(history)
-                    }
-                    
-                    onSuccess(200, "Success fetching data", histories)
-                    onComplete("Fetching data completed")
-                }
-            }else{
-                if statusCode >= 400 {
-                    onFailed("Bad request")
-                } else if statusCode >= 500 {
-                    onFailed("Internal server error")
-                } else {
-                    let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
-                    onFailed("An error occured")
-                }
-            }
-        }
-    }
-    
-    func getDetailAnnouncement(id: String, onSuccess: @escaping SingleResultListener<DetailAnnounModel>,
-                               onFailed: @escaping MessageListener,
-                               onComplete: @escaping MessageListener) {
-        let url = "\(homeAPI)/\(id)"
+    func getGroup(onSuccess: @escaping CollectionResultListener<GroupModel>,
+                        onFailed: @escaping MessageListener,
+                        onComplete: @escaping MessageListener) {
+        
+        let url = "\(groupAPI)?limit=20&offset=0"
+        
         httpHelper.requestAPI(url: url, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
@@ -137,8 +66,13 @@ class AnnouncementController: BaseController {
                 
                 if statusCode == 200 {
                     guard let datas = response.data else {return}
-                    let detail = DetailAnnounModel(json: datas)
-                    onSuccess(200, "Success fetching data", detail)
+                    var groups = [GroupModel]()
+                    for value in datas.arrayValue {
+                        let group = GroupModel(json: value)
+                        groups.append(group)
+                    }
+                    
+                    onSuccess(200, "Success fetching data", groups)
                     onComplete("Fetching data completed")
                 }
             }else{
@@ -155,11 +89,11 @@ class AnnouncementController: BaseController {
         }
     }
     
-    func getRecipient(id: String ,onSuccess: @escaping CollectionResultListener<RecipientModel>,
-                   onFailed: @escaping MessageListener,
-                   onComplete: @escaping MessageListener) {
-        let url = "\(homeAPI)/\(id)/recipients"
-        httpHelper.requestAPI(url: url, param: nil, method: .get) {
+    func getFriends(onSuccess: @escaping CollectionResultListener<RecipientModel>,
+                  onFailed: @escaping MessageListener,
+                  onComplete: @escaping MessageListener) {
+        
+        httpHelper.requestAPI(url: friendsAPI, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
                 guard let data = json else {
@@ -193,10 +127,10 @@ class AnnouncementController: BaseController {
         }
     }
     
-    func getComment(id: String ,onSuccess: @escaping CollectionResultListener<CommentModel>,
-                    onFailed: @escaping MessageListener,
-                    onComplete: @escaping MessageListener) {
-        let url = "\(homeAPI)/\(id)/comments"
+    func getDetailGroup(id: String, filter: String, onSuccess: @escaping SingleResultListener<DetailGroupModel>,
+                   onFailed: @escaping MessageListener,
+                   onComplete: @escaping MessageListener) {
+        let url = "\(groupAPI)/\(id)?filter=\(filter)"
         httpHelper.requestAPI(url: url, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
@@ -208,13 +142,84 @@ class AnnouncementController: BaseController {
                 
                 if statusCode == 200 {
                     guard let datas = response.data else {return}
-                    var recipients = [CommentModel]()
+                    let detail = DetailGroupModel(json: datas)
+                    
+                    onSuccess(200, "Success fetching data", detail)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
+    
+    func getFriendsProfile(id: String, onSuccess: @escaping SingleResultListener<UserModel>,
+                        onFailed: @escaping MessageListener,
+                        onComplete: @escaping MessageListener) {
+        let url = "\(profileAPI)/\(id)"
+        httpHelper.requestAPI(url: url, param: nil, method: .get) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    guard let datas = response.data else {return}
+                    let user = UserModel(json: datas)
+                    
+                    onSuccess(200, "Success fetching data", user)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
+    
+    func getFriendsGroup(id: String, onSuccess: @escaping CollectionResultListener<GroupModel>,
+                  onFailed: @escaping MessageListener,
+                  onComplete: @escaping MessageListener) {
+        
+        let url = "\(peopleAPI)/\(id)/groups"
+        httpHelper.requestAPI(url: url, param: nil, method: .get) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    guard let datas = response.data else {return}
+                    var groups = [GroupModel]()
                     for value in datas.arrayValue {
-                        let recipient = CommentModel(json: value)
-                        recipients.append(recipient)
+                        let group = GroupModel(json: value)
+                        groups.append(group)
                     }
                     
-                    onSuccess(200, "Success fetching data", recipients)
+                    onSuccess(200, "Success fetching data", groups)
                     onComplete("Fetching data completed")
                 }
             }else{
@@ -231,12 +236,13 @@ class AnnouncementController: BaseController {
         }
     }
     
-    func requestComment(id: String, comment: String ,onSuccess: @escaping SingleResultListener<String>,
+    
+    func getFriendsAgenda(id: String, onSuccess: @escaping CollectionResultListener<HistoryModel>,
                     onFailed: @escaping MessageListener,
                     onComplete: @escaping MessageListener) {
-        let url = "\(homeAPI)/\(id)/comment"
-        let params = ["comment": comment]
-        httpHelper.requestAPI(url: url, param: params, method: .post) {
+        
+        let url = "\(peopleAPI)/\(id)/agendas"
+        httpHelper.requestAPI(url: url, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
                 guard let data = json else {
@@ -246,8 +252,14 @@ class AnnouncementController: BaseController {
                 let response = ResponseModel(with: data)
                 
                 if statusCode == 200 {
-                
-                    onSuccess(200, "Success fetching data", response.displayMessage)
+                    guard let datas = response.data else {return}
+                    var agendas = [HistoryModel]()
+                    for value in datas.arrayValue {
+                        let agenda = HistoryModel(json: value)
+                        agendas.append(agenda)
+                    }
+                    
+                    onSuccess(200, "Success fetching data", agendas)
                     onComplete("Fetching data completed")
                 }
             }else{

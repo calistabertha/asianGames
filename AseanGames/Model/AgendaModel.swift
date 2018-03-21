@@ -52,11 +52,11 @@ class DataUpNext {
     var user : String
     var assignment : String
     var photo : String
-    // var attendants :
+    var attendants : [String]
     var more : Int
     var response : Int
     
-    init(id : Int, title : String, date : String, time : String, description : String, location : String, address : String, user : String, assignment : String, photo: String, more : Int, response : Int) {
+    init(id : Int, title : String, date : String, time : String, description : String, location : String, address : String, user : String, assignment : String, photo: String,attendants : [String], more : Int, response : Int) {
         self.id = id
         self.title = title
         self.date = date
@@ -67,6 +67,7 @@ class DataUpNext {
         self.user = user
         self.assignment = assignment
         self.more = more
+        self.attendants = attendants
         self.photo = photo
         self.response = response
     }
@@ -82,11 +83,14 @@ class DataUpNext {
         let user = json["user"].stringValue
         let assignment = json["assignment"].stringValue
         let photo = json["photo"].stringValue
-        // let attendants :
         let more = json["attendant-more"].intValue
         let response = json["response"].intValue
+        var attends : [String] = []
+        if let attendats = json["attendants"].arrayObject , let att = attendats as? [String]{
+            attends = att
+        }
         
-        self.init(id: id, title: title, date: date, time: time, description: description, location: location, address: address, user: user, assignment: assignment, photo: photo, more: more, response: response)
+        self.init(id: id, title: title, date: date, time: time, description: description, location: location, address: address, user: user, assignment: assignment, photo: photo, attendants : attends, more: more, response: response)
     }
 }
 

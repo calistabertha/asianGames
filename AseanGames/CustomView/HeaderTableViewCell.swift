@@ -38,16 +38,19 @@ extension HeaderTableViewCell: TableViewCellProtocol {
             cell.lblHeader.text = data
             cell.btnSeeAll.isHidden = false
             cell.imgArrow.isHidden = false
+            cell.isUserInteractionEnabled = true
             
         }else if data == "Groups"{
             cell.lblHeader.text = "Group"
             cell.btnSeeAll.isHidden = true
             cell.imgArrow.isHidden = true
+            cell.isUserInteractionEnabled = false
             
         }else  {
             cell.lblHeader.text = data
             cell.btnSeeAll.isHidden = true
             cell.imgArrow.isHidden = true
+            cell.isUserInteractionEnabled = false
             
         }
         

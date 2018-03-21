@@ -24,11 +24,11 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="169" id="KGk-i7-Jjw" customClass="CommentTableViewCell" customModule="AseanGames" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="122"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" rowHeight="137" id="KGk-i7-Jjw" customClass="CommentTableViewCell" customModule="AseanGames" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="90"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="121.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="89.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="nFT-Yh-3qG">
@@ -38,17 +38,17 @@
                             <constraint firstAttribute="height" constant="30" id="iqC-aU-mDA"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sometimes this is the irony of promoting your businesses products and services," textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcX-ef-2mt">
-                        <rect key="frame" x="54" y="10" width="230" height="54"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sometimes this is " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EcX-ef-2mt">
+                        <rect key="frame" x="54" y="15" width="230" height="20"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="54" id="MJo-bF-8VY"/>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="HYx-Hv-JOU"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="OpenSans-Regular" family="Open Sans" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Nora Mitchell - Liaison Officer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xsZ-Jb-Bbq">
-                        <rect key="frame" x="54" y="74" width="246" height="21"/>
+                        <rect key="frame" x="54" y="45" width="246" height="21"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="21" id="pG7-mV-p7Z"/>
                         </constraints>
@@ -57,7 +57,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12 Min ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STY-6w-4tR">
-                        <rect key="frame" x="54" y="95" width="246" height="16"/>
+                        <rect key="frame" x="54" y="66" width="246" height="16"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="16" id="UuD-ck-GOX"/>
                         </constraints>
@@ -66,7 +66,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aBs-WL-8aC">
-                        <rect key="frame" x="16" y="120.5" width="288" height="1"/>
+                        <rect key="frame" x="16" y="88.5" width="288" height="1"/>
                         <color key="backgroundColor" red="0.77254901960784317" green="0.77254901960784317" blue="0.77254901960784317" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="bYX-11-VWO"/>
@@ -79,6 +79,7 @@
                     <constraint firstAttribute="trailingMargin" secondItem="EcX-ef-2mt" secondAttribute="trailing" constant="20" id="5ri-34-m47"/>
                     <constraint firstItem="nFT-Yh-3qG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="FB7-dQ-Q3N"/>
                     <constraint firstItem="aBs-WL-8aC" firstAttribute="leading" secondItem="nFT-Yh-3qG" secondAttribute="leading" id="Ikz-kE-Fcs"/>
+                    <constraint firstItem="aBs-WL-8aC" firstAttribute="top" secondItem="STY-6w-4tR" secondAttribute="bottom" constant="6.5" id="KXL-qB-NX6"/>
                     <constraint firstAttribute="trailing" secondItem="aBs-WL-8aC" secondAttribute="trailing" constant="16" id="Mkf-tm-hSk"/>
                     <constraint firstItem="xsZ-Jb-Bbq" firstAttribute="top" secondItem="EcX-ef-2mt" secondAttribute="bottom" constant="10" id="NiT-lN-wOA"/>
                     <constraint firstItem="EcX-ef-2mt" firstAttribute="leading" secondItem="nFT-Yh-3qG" secondAttribute="trailing" constant="8" id="SZL-Pb-vlE"/>
@@ -87,7 +88,7 @@
                     <constraint firstItem="xsZ-Jb-Bbq" firstAttribute="leading" secondItem="EcX-ef-2mt" secondAttribute="leading" id="Yjq-xy-I4i"/>
                     <constraint firstItem="STY-6w-4tR" firstAttribute="leading" secondItem="xsZ-Jb-Bbq" secondAttribute="leading" id="a7b-UV-NCA"/>
                     <constraint firstAttribute="trailing" secondItem="xsZ-Jb-Bbq" secondAttribute="trailing" constant="20" id="jG2-tj-Jv4"/>
-                    <constraint firstItem="EcX-ef-2mt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="zVp-iX-8g7"/>
+                    <constraint firstItem="EcX-ef-2mt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="zVp-iX-8g7"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -98,10 +99,10 @@
                 <outlet property="lblName" destination="xsZ-Jb-Bbq" id="Wn9-Gu-ZY8"/>
                 <outlet property="lblTime" destination="STY-6w-4tR" id="gB6-tf-Ru5"/>
             </connections>
-            <point key="canvasLocation" x="21" y="141"/>
+            <point key="canvasLocation" x="21" y="125"/>
         </tableViewCell>
     </objects>
     <resources>
-        <image name="img-profile" width="17" height="19"/>
+        <image name="img-profile" width="38" height="38"/>
     </resources>
 </document>

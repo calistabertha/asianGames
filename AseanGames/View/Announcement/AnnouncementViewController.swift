@@ -46,10 +46,6 @@ class AnnouncementViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        if let bundle = Bundle.main.bundleIdentifier {
-//            UserDefaults.standard.removePersistentDomain(forName: bundle)
-//        }
-        
         self.spinner.startAnimating()
         self.table.isHidden = true
         self.constraintTopTable.constant = 50
@@ -57,6 +53,11 @@ class AnnouncementViewController: UIViewController {
         self.viewUnderline.alpha = 0
         self.viewTitleSmall.backgroundColor = UIColor.clear
         self.btnCreate.isHidden = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.spinner.startAnimating()
         setupData()
     }
     
@@ -78,9 +79,13 @@ class AnnouncementViewController: UIViewController {
             }
         }, onFailed: { (message) in
             print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
             print("Do action when data failed to fetching here")
         }) { (message) in
             print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
             print("Do action when data complete fetching here")
         }
     }
@@ -134,8 +139,8 @@ extension AnnouncementViewController: UITableViewDataSource{
         let data = self.recentItems[indexPath.row-3]
         vc.idAnnouncement = data.id
         self.navigationController?.pushViewController(vc, animated: true)
-    }
     
+    }
 }
 
 extension AnnouncementViewController: UITableViewDelegate{

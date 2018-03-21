@@ -21,10 +21,16 @@ class PeopleTableViewCell: UITableViewCell {
             
         }
     }
+
+    internal var peopleData = [GroupModel]() {
+        didSet {
+            self.collectionView.reloadData()
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        print(collectionView.frame.size.height)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -49,6 +55,9 @@ extension PeopleTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detail) as! DetailGroupViewController
+        let data = peopleData[indexPath.row]
+        print("id selected \(data.id)")
+        vc.idGroup = String(data.id)
         if let ctx = self.context {
             ctx.navigationController?.pushViewController(vc, animated: true)
         }
@@ -58,12 +67,12 @@ extension PeopleTableViewCell: UICollectionViewDelegate {
 
 extension PeopleTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return peopleData.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = ""
-        
+        let data = peopleData[indexPath.row]
+        print("id \(data.id)")
         if let ctx = self.context {
             return GroupCollectionViewCell.configure(context: ctx, collectionView: collectionView, indexPath: indexPath, object: data)
         } else {
@@ -75,6 +84,6 @@ extension PeopleTableViewCell: UICollectionViewDataSource {
 
 extension PeopleTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width/2, height: 182)
+        return CGSize(width: 172, height: collectionView.frame.size.height)
     }
 }

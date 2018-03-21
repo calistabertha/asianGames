@@ -17,8 +17,21 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        setupData()
+    }
+    
+    //MARK: Function
+    func setupData(){
+        guard let user = UserDefaults.standard.getUserProfile() else {return}
+        if user.firstName == ""{
+            self.lblName.text = "Unknown User"
+        }else{
+            self.lblName.text = "\(user.firstName) \(user.lastName)"
+        }
+        self.lblDivision.text = user.assignment.name
+        self.lblEmail.text = user.email
+        self.lblPhone.text = user.phone
+        self.lblTitle.text = user.department.name
     }
 
     @IBAction func back(_ sender: Any) {

@@ -25,14 +25,17 @@ class DetailGroupViewController: UIViewController {
             scroll.panGestureRecognizer.addTarget(self, action: #selector(respondToSwipeGesture(gesture:)))
         }
     }
+    
+    @IBOutlet weak var imgProfile: UIImageView!
+    @IBOutlet weak var lblName: UILabel!
     var friends:UIViewController!
     var announcement:UIViewController!
-    
+    var idGroup = ""
     var currentViewController:UIViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        setupData()
         setTabs()
     }
 
@@ -46,6 +49,15 @@ class DetailGroupViewController: UIViewController {
         ]
         currentViewController = friends
         
+        if let fvc = friends as? ListFriendsViewController {
+            fvc.idGroup = idGroup
+            fvc.childDelegate = self
+        }
+        if let ann = announcement as? PeopleAnnouncementViewController{
+            ann.idGroup = idGroup
+            ann.childDelegate = self
+        }
+        
         let tabFragment = ICTabFragmentViewController(context: self, tabs: tabs, tabView: viewMenu, containerView: viewContainer)
         tabFragment.indicatorColorSelected = UIColor.black
         tabFragment.indicatorHeight = 2
@@ -56,12 +68,29 @@ class DetailGroupViewController: UIViewController {
         tabFragment.tabFitSize = 2
         tabFragment.delegate = self
         tabFragment.create()
-        
-        if let fvc = friends as? ListFriendsViewController {
-            fvc.childDelegate = self
-        }
-        if let ann = announcement as? PeopleAnnouncementViewController{
-            ann.childDelegate = self
+      
+    }
+    
+    //MARK: Function
+    func setupData(){
+        PeopleController().getDetailGroup(id: idGroup, filter: "friends", onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.lblName.text = res.group.name
+                guard let url = URL(string: res.group.photo) else { return }
+                self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                   
+                    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
+                    self.imgProfile.layer.masksToBounds = true
+                })
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
         }
     }
     

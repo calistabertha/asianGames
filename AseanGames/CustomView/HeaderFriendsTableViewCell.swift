@@ -26,6 +26,13 @@ class HeaderFriendsTableViewCell: UITableViewCell {
 extension HeaderFriendsTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HeaderFriendsTableViewCell.identifier, for: indexPath) as! HeaderFriendsTableViewCell
+        guard let data = object as? Int else {return cell}
+        if data >= 2 {
+            cell.lblTotalFriends.text = "\(data) Friends"
+        }else{
+            cell.lblTotalFriends.text = "\(data) Friend"
+        }
+        
         return cell
     }
 }

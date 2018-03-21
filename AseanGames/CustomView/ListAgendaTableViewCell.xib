@@ -30,6 +30,47 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="94.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rU-Ta-1xf">
+                        <rect key="frame" x="0.0" y="5" width="153" height="76"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8q-7r-nsP">
+                                <rect key="frame" x="0.0" y="0.0" width="76" height="75.5"/>
+                                <color key="backgroundColor" red="0.1019607843" green="0.73333333329999995" blue="0.64313725489999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="76" id="DSF-9W-n2K"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="12"/>
+                                <state key="normal" title="Attend">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="attendSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="60z-dK-gH4"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5u6-Un-ySf">
+                                <rect key="frame" x="77" y="0.0" width="76" height="75.5"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.1764705882" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" name="OpenSans-SemiBold" family="Open Sans" pointSize="12"/>
+                                <state key="normal" title="Decline">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="declineSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="CnX-9z-gYJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="5u6-Un-ySf" firstAttribute="leading" secondItem="Z8q-7r-nsP" secondAttribute="trailing" constant="1" id="7es-L8-z0S"/>
+                            <constraint firstAttribute="bottom" secondItem="5u6-Un-ySf" secondAttribute="bottom" id="HfG-3s-H9f"/>
+                            <constraint firstAttribute="bottom" secondItem="Z8q-7r-nsP" secondAttribute="bottom" id="UbN-0H-By1"/>
+                            <constraint firstItem="5u6-Un-ySf" firstAttribute="width" secondItem="Z8q-7r-nsP" secondAttribute="width" id="dkw-iO-mGZ"/>
+                            <constraint firstAttribute="width" constant="153" id="hV6-y8-kgL"/>
+                            <constraint firstItem="5u6-Un-ySf" firstAttribute="top" secondItem="1rU-Ta-1xf" secondAttribute="top" id="pZ5-p5-4sl"/>
+                            <constraint firstItem="Z8q-7r-nsP" firstAttribute="top" secondItem="1rU-Ta-1xf" secondAttribute="top" id="sPQ-pP-T4h"/>
+                            <constraint firstItem="Z8q-7r-nsP" firstAttribute="leading" secondItem="1rU-Ta-1xf" secondAttribute="leading" id="u0E-MB-x6p"/>
+                        </constraints>
+                    </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ulx-Lt-Qb8">
                         <rect key="frame" x="0.0" y="5" width="300" height="75.5"/>
                         <subviews>
@@ -121,19 +162,24 @@
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="Ulx-Lt-Qb8" secondAttribute="trailing" constant="20" id="2eM-wU-gdb"/>
                     <constraint firstItem="Ulx-Lt-Qb8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="6Np-L3-JN1"/>
+                    <constraint firstItem="1rU-Ta-1xf" firstAttribute="top" secondItem="Ulx-Lt-Qb8" secondAttribute="top" id="7Ya-xg-5uO"/>
                     <constraint firstAttribute="bottom" secondItem="Ulx-Lt-Qb8" secondAttribute="bottom" constant="14" id="C1f-Pe-GSZ"/>
+                    <constraint firstItem="1rU-Ta-1xf" firstAttribute="height" secondItem="Ulx-Lt-Qb8" secondAttribute="height" id="RsJ-eA-6gp"/>
                     <constraint firstItem="Ulx-Lt-Qb8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="nbR-LA-xXJ"/>
+                    <constraint firstItem="1rU-Ta-1xf" firstAttribute="leading" secondItem="Ulx-Lt-Qb8" secondAttribute="leading" id="x4Q-ir-DyD"/>
                 </constraints>
             </tableViewCellContentView>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="imgStripe" destination="ETX-2f-z98" id="cW5-Hb-wKK"/>
                 <outlet property="lblAMPM" destination="03E-qk-BfB" id="4FJ-pS-7RY"/>
                 <outlet property="lblLocation" destination="Y9s-mh-PRw" id="7f2-9n-Ohp"/>
                 <outlet property="lblTimeEnd" destination="9K3-hD-okQ" id="7N3-4Z-8Xw"/>
                 <outlet property="lblTimeStart" destination="Nzd-Vl-z6c" id="bCW-1M-5wr"/>
                 <outlet property="lblTitle" destination="Puv-ac-0v2" id="KwY-fg-krd"/>
                 <outlet property="viewBorder" destination="Ulx-Lt-Qb8" id="Okn-q7-zhl"/>
+                <outlet property="viewLeft" destination="1rU-Ta-1xf" id="yPs-3A-N91"/>
             </connections>
             <point key="canvasLocation" x="34" y="53.5"/>
         </tableViewCell>

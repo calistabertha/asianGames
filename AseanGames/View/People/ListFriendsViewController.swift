@@ -23,6 +23,12 @@ class ListFriendsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     var childDelegate: ChildOffsetDelegate?
+    var idGroup = ""
+    internal var friendsItems = [RecipientModel](){
+        didSet{
+            table.reloadData()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,8 +37,9 @@ class ListFriendsViewController: UIViewController, UIGestureRecognizerDelegate {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(respondToSwipeGesture(gesture:)))
         pan.delegate = self
         self.table.addGestureRecognizer(pan)
+        setupData()
     }
-    
+
     //MARK: - Gesture
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
@@ -56,6 +63,25 @@ class ListFriendsViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
 
+    //MARK: Function
+    func setupData(){
+        PeopleController().getDetailGroup(id: idGroup, filter: "friends", onSuccess: { (code, message, result) in
+            guard let res = result else {return}
+            if code == 200 {
+                self.friendsItems = res.friends
+                self.table.isHidden = false
+                //                self.spinner.stopAnimating()
+                //                self.spinner.isHidden = true
+                
+            }
+        }, onFailed: { (message) in
+            print(message)
+            print("Do action when data failed to fetching here")
+        }) { (message) in
+            print(message)
+            print("Do action when data complete fetching here")
+        }
+    }
 }
 
 extension ListFriendsViewController: UITableViewDelegate{
@@ -75,15 +101,17 @@ extension ListFriendsViewController : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 11
+        return friendsItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
-            return HeaderFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+            let data = friendsItems.count
+            return HeaderFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
         }
         
-        return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+        let data = friendsItems[indexPath.row - 1]
+        return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
