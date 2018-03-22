@@ -13,7 +13,7 @@ class DetailAnnounModel {
     var id : Int
     var title : String
     var description : String
-    var attachment : Int
+    var attachment : DataAttachment
     var date : String
     var user : String
     var assigment : String
@@ -22,7 +22,7 @@ class DetailAnnounModel {
     var creatAt : String
     var isPast : Bool
 
-    init(recipient : DataRecipient, id : Int, title : String, description : String, attachment : Int, date : String, user : String, assigment : String, photo : String, time : String, creatAt : String, isPast : Bool) {
+    init(recipient : DataRecipient, id : Int, title : String, description : String, attachment : DataAttachment, date : String, user : String, assigment : String, photo : String, time : String, creatAt : String, isPast : Bool) {
         self.recipient = recipient
         self.id = id
         self.title = title
@@ -42,7 +42,7 @@ class DetailAnnounModel {
         let id = json["id"].intValue
         let title = json["title"].stringValue
         let description = json["description"].stringValue
-        let attachment = json["attachment"].intValue
+        let attachment = DataAttachment(json: json["attachment"])
         let date = json["date"].stringValue
         let user = json["user"].stringValue
         let assigment = json["assignment"].stringValue
@@ -92,4 +92,24 @@ class DataImage{
         
         self.init(id: id, image: image)
     }
+}
+
+class DataAttachment{
+    var total : Int
+    var files : [String]
+    
+    init(total: Int, files: [String]){
+        self.total = total
+        self.files = files
+    }
+    
+    convenience init(json: JSON){
+        let total = json["total"].intValue
+        var files : [String] = []
+        if let filess = json["files"].arrayObject , let fl = filess as? [String]{
+            files = fl
+        }
+        self.init(total: total, files: files)
+    }
+   
 }
