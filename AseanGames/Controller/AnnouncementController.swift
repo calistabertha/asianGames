@@ -263,4 +263,45 @@ class AnnouncementController: BaseController {
             }
         }
     }
+    
+    func requestAnnouncement(title: String, description: String, group: String, date: String, time: String ,onSuccess: @escaping SingleResultListener<String>,
+                        onFailed: @escaping MessageListener,
+                        onComplete: @escaping MessageListener) {
+       
+        let params = ["title": "John Lennon Update For Announcement Group",
+                      "description": "description description description description description description description description description description description description description description description",
+                      "attachments[0]" : "",
+                      "attachments[1]" : "",
+                      "group": [
+                                    "type": "1"
+                                    ],
+                      "date": "2017-03-01",
+                      "time": "12:00:00"] as [String : Any]
+        httpHelper.requestAPI(url: homeAPI, param: params, method: .post) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    
+                    onSuccess(200, "Success fetching data", response.displayMessage)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
 }
