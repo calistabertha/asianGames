@@ -267,4 +267,27 @@ class AnnouncementController: BaseController {
     func downloadAttachment(attachment:DataAttachment, onProgress: @escaping progressFile , onComplete: @escaping completeFile){
         HTTPHelper.shared.downloadFile(attachment.files, onProgress: onProgress, onComplete: onComplete)
     }
+    
+    func requestAnnouncement(title: String, description: String,files: [URL], group: [String], date: String, time: String ,onSuccess: @escaping SingleResultListener<String>,
+                        onFailed: @escaping MessageListener,
+                        onComplete: @escaping MessageListener) {
+        var groupParam:JSON = ["type":1]
+        if group.count > 0 {
+            groupParam = ["type":2,"groups":group]
+        }
+        let params:[String:String] = ["title": "John Lennon Update For Announcement Group",
+                      "description": "description description description description description description description description description description description description description description description",
+                      "group": groupParam.rawString() ?? "",
+                      "date": "2017-03-01",
+                      "time": "12:00:00"]
+        var fileParams:[String:URL] = [:]
+        if files.count > 0 {
+            for i in 0...files.count - 1 {
+                fileParams["attachments[\(i)]"] = files[i]
+            }
+        }
+        httpHelper.uploadFile(url: homeAPI, parameter: params, fileParameter: fileParams) { (isSuccess, code, data) in
+            
+        }
+    }
 }

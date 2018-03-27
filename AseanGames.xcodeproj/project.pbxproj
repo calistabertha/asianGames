@@ -30,6 +30,8 @@
 		2D2FB5112046AFDF00D3BD09 /* ContactTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D2FB50F2046AFDF00D3BD09 /* ContactTableViewCell.swift */; };
 		2D2FB5122046AFDF00D3BD09 /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D2FB5102046AFDF00D3BD09 /* ContactTableViewCell.xib */; };
 		2D31ECF8205E717500E5EB69 /* SettingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D31ECF7205E717500E5EB69 /* SettingController.swift */; };
+		2D3B3FC82068EEE100096D15 /* AddAttachmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D3B3FC62068EEE100096D15 /* AddAttachmentTableViewCell.swift */; };
+		2D3B3FC92068EEE100096D15 /* AddAttachmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D3B3FC72068EEE100096D15 /* AddAttachmentTableViewCell.xib */; };
 		2D4109991FEA8DD900B61361 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D4109981FEA8DD900B61361 /* RegisterViewController.swift */; };
 		2D43FF9C2043A8EC00CDA3BD /* PeopleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D43FF9A2043A8EC00CDA3BD /* PeopleTableViewCell.swift */; };
 		2D43FF9D2043A8EC00CDA3BD /* PeopleTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D43FF9B2043A8EC00CDA3BD /* PeopleTableViewCell.xib */; };
@@ -158,6 +160,8 @@
 		2D2FB50F2046AFDF00D3BD09 /* ContactTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactTableViewCell.swift; sourceTree = "<group>"; };
 		2D2FB5102046AFDF00D3BD09 /* ContactTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		2D31ECF7205E717500E5EB69 /* SettingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingController.swift; sourceTree = "<group>"; };
+		2D3B3FC62068EEE100096D15 /* AddAttachmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAttachmentTableViewCell.swift; sourceTree = "<group>"; };
+		2D3B3FC72068EEE100096D15 /* AddAttachmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AddAttachmentTableViewCell.xib; sourceTree = "<group>"; };
 		2D4109981FEA8DD900B61361 /* RegisterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
 		2D43FF9A2043A8EC00CDA3BD /* PeopleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleTableViewCell.swift; sourceTree = "<group>"; };
 		2D43FF9B2043A8EC00CDA3BD /* PeopleTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PeopleTableViewCell.xib; sourceTree = "<group>"; };
@@ -524,6 +528,8 @@
 				2D74FBB32047B2CF00EBE4A5 /* SettingsTableViewCell.xib */,
 				2D8B5211205A2D2400F2BE68 /* RecipientCollectionViewCell.swift */,
 				2D8B5212205A2D2400F2BE68 /* RecipientCollectionViewCell.xib */,
+				2D3B3FC62068EEE100096D15 /* AddAttachmentTableViewCell.swift */,
+				2D3B3FC72068EEE100096D15 /* AddAttachmentTableViewCell.xib */,
 			);
 			path = CustomView;
 			sourceTree = "<group>";
@@ -680,6 +686,7 @@
 				2DF616C420358658001B6F7D /* CommentTableViewCell.xib in Resources */,
 				2D8D94F91FE91AE8009BF3E1 /* OpenSans-Italic.ttf in Resources */,
 				2D8D94E41FE91AD0009BF3E1 /* Lato-Hairline.ttf in Resources */,
+				2D3B3FC92068EEE100096D15 /* AddAttachmentTableViewCell.xib in Resources */,
 				2D8B5214205A2D2400F2BE68 /* RecipientCollectionViewCell.xib in Resources */,
 				2D8D94FB1FE91AE8009BF3E1 /* OpenSans-LightItalic.ttf in Resources */,
 				2D8D94E01FE91AD0009BF3E1 /* Lato-Black.ttf in Resources */,
@@ -815,6 +822,7 @@
 				2D895E4120284EF700F9CAF7 /* UserModel.swift in Sources */,
 				2D43FFB120440A3600CDA3BD /* PeopleAnnouncementViewController.swift in Sources */,
 				2D43FF9C2043A8EC00CDA3BD /* PeopleTableViewCell.swift in Sources */,
+				2D3B3FC82068EEE100096D15 /* AddAttachmentTableViewCell.swift in Sources */,
 				2D895E432028574300F9CAF7 /* CommentViewController.swift in Sources */,
 				2D1796691FFC8AF200F2108E /* NewPasswordViewController.swift in Sources */,
 				2D903538205B8DBB006827EB /* PeopleModel.swift in Sources */,

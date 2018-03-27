@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 typealias progressFile = (_ currentUrl:Int,_ totalUrl:Int,_ isSuccess:Bool, _ error:Error?) -> Void
 typealias completeFile = (_ currentUrl:Int,_ totalUrl:Int,_ isSuccess:Bool, _ error:Error?) -> Void
@@ -66,16 +67,41 @@ extension HTTPHelper {
             })
     }
     
-    func uploadFile(parameter:[String:String], file:[Data], filename:[String]){
+    func uploadFile(url:String,parameter:[String:String], fileParameter:[String:URL], completion: @escaping(_ success: Bool, _ statusCode: Int, _ data: JSON?) -> Void){
+        print("print \(parameter)")
+        let token = UserDefaults.standard.getToken()
+        let header = [
+            "authorization" : token
+        ]
+
         upload(multipartFormData: { (formData) in
+            for (key, url) in fileParameter {
+                do{
+                    let filename = url.lastPathComponent
+                    let data = try Data(contentsOf: url)
+                    print("file \(filename) \(data.count)")
+                    formData.append(data, withName: key, fileName: filename, mimeType: "application/octet-stream")
+                }catch let e {
+                    print("error type \(e)")
+                }
+            }
             for(key, value) in parameter {
                 formData.append(value.data(using: .utf8)!, withName: key)
-                }
-            file.forEach({ (f) in
-                
-            })
-        }, to: "") { (result) in
+            }
+        }, to: url, headers:header) { (result) in
+            switch result {
+            case .success (let request,  _,  _):
+                request.responseJSON(completionHandler: { (respon) in
+                    print("respon \(respon.result.value) \(respon.result.error)")
+                    self.requestHandler(response: respon, url: "", param: [:], method: .post, completion: completion)
+                })
+                print("success data")
+                break
             
+            case .failure(let error):
+                print("Error data \(error)")
+                break
+            }
         }
     }
 }

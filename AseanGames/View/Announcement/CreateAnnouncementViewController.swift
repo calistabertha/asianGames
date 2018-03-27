@@ -33,6 +33,13 @@ class CreateAnnouncementViewController: UIViewController,UIDocumentMenuDelegate,
     }
     
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
+        AnnouncementController().requestAnnouncement(title: "", description: "",files:[url], group: [], date: "", time: "", onSuccess: { (code,respon, error) in
+            
+        }, onFailed: { (respon) in
+            
+        }) { (respon) in
+            
+        }
         print("picked \(url)")
     }
     

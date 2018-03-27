@@ -46,6 +46,7 @@ class SignInViewController: UIViewController {
     }
 
     @IBAction func signIn(_ sender: Any) {
+        print("signin")
         AuthController().getToken(onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if res != "" {

@@ -61,7 +61,6 @@ class HTTPHelper {
     
     func request(url: String, param: Parameters?, method: HTTPMethodHelper, completion: @escaping(_ success: Bool, _ statusCode: Int, _ data: JSON?) -> Void) {
         manager.request(url, method: method.toHTTPMethod(), parameters: param, headers: self.header).responseJSON { (response) in
-            
             if let responHeader = response.response?.statusCode {
                 if responHeader >= 400 {
                     completion(false, responHeader, nil)
@@ -104,7 +103,7 @@ class HTTPHelper {
         }
     }
     
-    fileprivate func requestHandler(response: DataResponse<Any>, url: String, param: Parameters?, method: HTTPMethodHelper, completion: @escaping(_ success: Bool,_ statusCode: Int, _ data: JSON?) -> Void) {
+    func requestHandler(response: DataResponse<Any>, url: String, param: Parameters?, method: HTTPMethodHelper, completion: @escaping(_ success: Bool,_ statusCode: Int, _ data: JSON?) -> Void) {
         if let data = response.result.value {
             let json = JSON(data)
             if json["status"].intValue >= 400 {
