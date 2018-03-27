@@ -112,6 +112,8 @@
 		2DF616C320358658001B6F7D /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DF616C120358658001B6F7D /* CommentTableViewCell.swift */; };
 		2DF616C420358658001B6F7D /* CommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2DF616C220358658001B6F7D /* CommentTableViewCell.xib */; };
 		2DFD1C942032ADB50084E754 /* ListAnnouncementViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DFD1C932032ADB40084E754 /* ListAnnouncementViewController.swift */; };
+		3068E8972068AB9C00552C9D /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3068E8962068AB9C00552C9D /* CloudKit.framework */; };
+		30BCFCA9206217E200C03DFC /* FileRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30BCFCA8206217E200C03DFC /* FileRequestHelper.swift */; };
 		B73CCD341EF76932007DF54E /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73CCD331EF76932007DF54E /* Movie.swift */; };
 		B73CCD3B1EF7700B007DF54E /* BaseCellProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73CCD3A1EF7700B007DF54E /* BaseCellProtocol.swift */; };
 		B73CCD3D1EF77A1D007DF54E /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B73CCD3C1EF77A1D007DF54E /* UIImageView+Extension.swift */; };
@@ -238,6 +240,9 @@
 		2DF616C120358658001B6F7D /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		2DF616C220358658001B6F7D /* CommentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CommentTableViewCell.xib; sourceTree = "<group>"; };
 		2DFD1C932032ADB40084E754 /* ListAnnouncementViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListAnnouncementViewController.swift; sourceTree = "<group>"; };
+		305D562F2063B7F20038250C /* AseanGames.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AseanGames.entitlements; sourceTree = "<group>"; };
+		3068E8962068AB9C00552C9D /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
+		30BCFCA8206217E200C03DFC /* FileRequestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileRequestHelper.swift; sourceTree = "<group>"; };
 		50D2791B4F666D74FEA28F21 /* Pods_AseanGames.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AseanGames.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B73CCD331EF76932007DF54E /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		B73CCD3A1EF7700B007DF54E /* BaseCellProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseCellProtocol.swift; sourceTree = "<group>"; };
@@ -266,6 +271,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BE6226761BFC803FE8930187 /* Pods_AseanGames.framework in Frameworks */,
+				3068E8972068AB9C00552C9D /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,6 +388,7 @@
 		743CF8B4C7629187868E6D5C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3068E8962068AB9C00552C9D /* CloudKit.framework */,
 				50D2791B4F666D74FEA28F21 /* Pods_AseanGames.framework */,
 			);
 			name = Frameworks;
@@ -417,6 +424,7 @@
 		B742150A1EE7C91A008CB785 /* AseanGames */ = {
 			isa = PBXGroup;
 			children = (
+				305D562F2063B7F20038250C /* AseanGames.entitlements */,
 				B742151D1EE7C922008CB785 /* View */,
 				B742151E1EE7C927008CB785 /* Controller */,
 				B742151F1EE7C932008CB785 /* Model */,
@@ -557,6 +565,7 @@
 				2D1837D92013393700756A97 /* JDropDownAlert.swift */,
 				B73CCD3E1EF7B44E007DF54E /* Reachability.swift */,
 				2D43FFB22044154400CDA3BD /* SubClassScrollView.swift */,
+				30BCFCA8206217E200C03DFC /* FileRequestHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -609,6 +618,14 @@
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = H8YLW5ZK54;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+							com.apple.iCloud = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -787,6 +804,7 @@
 				2DBF5EBC1FEB9A0400ACF744 /* ForgotPasswordViewController.swift in Sources */,
 				2DEAEE2F2039A61700A080A0 /* HistoryAgendaViewController.swift in Sources */,
 				B73CCD341EF76932007DF54E /* Movie.swift in Sources */,
+				30BCFCA9206217E200C03DFC /* FileRequestHelper.swift in Sources */,
 				2D1D0540204843A000FEE55D /* ChangePasswordViewController.swift in Sources */,
 				2D1D053E204839D900FEE55D /* SupportViewController.swift in Sources */,
 				2D7E197C203D5422000AD7B0 /* CreateAgendaViewController.swift in Sources */,
@@ -953,6 +971,7 @@
 			baseConfigurationReference = 207E23CE4D35214963C442BE /* Pods-AseanGames.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AseanGames/AseanGames.entitlements;
 				DEVELOPMENT_TEAM = H8YLW5ZK54;
 				INFOPLIST_FILE = AseanGames/Utility/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -968,6 +987,7 @@
 			baseConfigurationReference = D25FE39C2966E35957855002 /* Pods-AseanGames.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = AseanGames/AseanGames.entitlements;
 				DEVELOPMENT_TEAM = H8YLW5ZK54;
 				INFOPLIST_FILE = AseanGames/Utility/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;

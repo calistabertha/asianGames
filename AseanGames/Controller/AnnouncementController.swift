@@ -263,4 +263,8 @@ class AnnouncementController: BaseController {
             }
         }
     }
+    
+    func downloadAttachment(attachment:DataAttachment, onProgress: @escaping progressFile , onComplete: @escaping completeFile){
+        HTTPHelper.shared.downloadFile(attachment.files, onProgress: onProgress, onComplete: onComplete)
+    }
 }

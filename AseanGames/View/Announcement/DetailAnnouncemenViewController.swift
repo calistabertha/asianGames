@@ -34,6 +34,7 @@ class DetailAnnouncemenViewController: UIViewController {
         }
     }
     var idAnnouncement: String?
+    var attachment:DataAttachment = DataAttachment(json: "")
     var recipientItem = [RecipientModel](){
         didSet{
             table.reloadData()
@@ -70,9 +71,10 @@ class DetailAnnouncemenViewController: UIViewController {
     //MARK: Function
     func setupData(){
         guard let id = idAnnouncement else {return}
-        AnnouncementController().getDetailAnnouncement(id: id, onSuccess: { (code, message, result) in
+        AnnouncementController().getDetailAnnouncement(id: "12", onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
+                self.attachment = res.attachment
                 self.lblTitle.text = res.title
                 self.lblDesc.font = UIFont(name: "OpenSans-Regular", size: 13)
                 self.lblDesc.text = res.description
@@ -155,6 +157,14 @@ class DetailAnnouncemenViewController: UIViewController {
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.comment) as! CommentViewController
         vc.idAnnouncement = idAnnouncement
         self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @IBAction func downloadOnClick(_ sender:Any){
+        AnnouncementController().downloadAttachment(attachment: attachment, onProgress: { (currentFile, totalFile, isSuccess, error) in
+            print("progress \(currentFile) \(isSuccess) \(error)")
+        }) { (currentFile, totalFile, isSuccess, error) in
+            print("complete \(currentFile) \(isSuccess) \(error)")
+        }
     }
 
 }

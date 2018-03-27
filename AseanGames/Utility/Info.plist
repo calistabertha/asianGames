@@ -25,6 +25,18 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSUbiquitousContainers</key>
+	<dict>
+		<key>iCloud.id.asiangames.occ</key>
+		<dict>
+			<key>NSUbiquitousContainerIsDocumentScopePublic</key>
+			<true/>
+			<key>NSUbiquitousContainerName</key>
+			<string>OCC</string>
+			<key>NSUbiquitousContainerSupportedFolderLevels</key>
+			<string>Any</string>
+		</dict>
+	</dict>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
