@@ -9,7 +9,6 @@
 import UIKit
 
 class DetailAgendaViewController: UIViewController {
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var lblTitle: UILabel!
     @IBOutlet weak var viewGoing: UIView!
     @IBOutlet weak var lblDate: UILabel!
@@ -27,13 +26,14 @@ class DetailAgendaViewController: UIViewController {
     @IBOutlet weak var btnAttend: UIButton!
     @IBOutlet weak var btnDecline: UIButton!
     @IBOutlet weak var viewRSVP: UIView!
-    @IBOutlet weak var table: UITableView!{
+    @IBOutlet weak var table: UITableView!
+    @IBOutlet weak var tableRSVP: UITableView!{
         didSet{
             let xib = RecipientTableViewCell.nib
-            table.register(xib, forCellReuseIdentifier: RecipientTableViewCell.identifier)
+            tableRSVP.register(xib, forCellReuseIdentifier: RecipientTableViewCell.identifier)
             
-            table.dataSource = self
-            table.delegate = self
+            tableRSVP.dataSource = self
+            tableRSVP.delegate = self
         }
     }
     @IBOutlet weak var spinner: UIActivityIndicatorView!
@@ -45,12 +45,9 @@ class DetailAgendaViewController: UIViewController {
     var idAgenda: String?
     var recipientItem = [RSVPModel](){
         didSet{
-            table.reloadData()
+            tableRSVP.reloadData()
         }
     }
-    
-    
-    //NOTE : HARUS GANTI TABLE, KARNA SETIAP USER KASIH RESPOND (PERTAMA KALI), HARUSNYA RSVPNYA LANGSUNG KE GANTI/MUNCUL
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +58,7 @@ class DetailAgendaViewController: UIViewController {
         btnAttendDecline.layer.cornerRadius = 3
         viewRSVP.isHidden = true
         spinner.startAnimating()
-        scrollView.isHidden = true
+        table.isHidden = true
         setupData()
        
     }
@@ -72,7 +69,7 @@ class DetailAgendaViewController: UIViewController {
         AgendaController().getDetail(id: id, onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
-                self.scrollView.isHidden = false
+                self.table.isHidden = false
                 self.spinner.stopAnimating()
                 self.spinner.isHidden = true
                 self.lblTitle.text = res.title
@@ -212,6 +209,7 @@ class DetailAgendaViewController: UIViewController {
                 self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
                 self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
                 self.decision = 1
+                self.table.reloadData()
             }
         }, onFailed: { (message) in
             print(message)
@@ -236,6 +234,7 @@ class DetailAgendaViewController: UIViewController {
                 self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
                 self.btnAttendDecline.backgroundColor = UIColor(hexString: "F52D5A")
                 self.decision = 0
+                self.table.reloadData()
             }
         }, onFailed: { (message) in
             print(message)

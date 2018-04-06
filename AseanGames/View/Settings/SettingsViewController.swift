@@ -24,8 +24,20 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupData()
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        if Connectivity.isConnectedToInternet() {
+            print("Yes! internet is available.")
+            setupData()
+        }else{
+//            self.spinner.stopAnimating()
+//            self.spinner.isHidden = true
+            let alert = JDropDownAlert()
+            alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+        }
     }
     
     func setupData(){

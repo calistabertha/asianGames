@@ -88,12 +88,15 @@ struct ViewControllerID {
         static let create = "CreateAnnouncementViewController"
         static let comment = "CommentViewController"
         static let detail = "DetailAnnouncemenViewController"
+        static let parent = "ParentSelectGroupViewController"
+        static let selectGroup = "SelectGroupViewController"
     }
     
     struct Agenda {
         static let history = "HistoryAgendaViewController"
         static let detail = "DetailAgendaViewController"
         static let create = "CreateAgendaViewController"
+        static let selectGuest = "SelectGuestViewController"
     }
     
     struct People {

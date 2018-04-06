@@ -62,6 +62,8 @@
 		2D7E197C203D5422000AD7B0 /* CreateAgendaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7E197B203D5422000AD7B0 /* CreateAgendaViewController.swift */; };
 		2D7E197E203D5C30000AD7B0 /* SelectGuestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7E197D203D5C30000AD7B0 /* SelectGuestViewController.swift */; };
 		2D7E1981203D779B000AD7B0 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D7E1980203D779B000AD7B0 /* PeopleViewController.swift */; };
+		2D8105E62074C26F00745474 /* ListSelectGroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8105E42074C26F00745474 /* ListSelectGroupTableViewCell.swift */; };
+		2D8105E72074C26F00745474 /* ListSelectGroupTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2D8105E52074C26F00745474 /* ListSelectGroupTableViewCell.xib */; };
 		2D895E3F20284C8A00F9CAF7 /* ResponseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D895E3E20284C8A00F9CAF7 /* ResponseModel.swift */; };
 		2D895E4120284EF700F9CAF7 /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D895E4020284EF700F9CAF7 /* UserModel.swift */; };
 		2D895E432028574300F9CAF7 /* CommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D895E422028574300F9CAF7 /* CommentViewController.swift */; };
@@ -96,6 +98,9 @@
 		2D93BB10202981FA0095B35E /* UserDefaults+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D93BB0F202981FA0095B35E /* UserDefaults+Extension.swift */; };
 		2D93EB37205909EA005FED55 /* RespondModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D93EB36205909EA005FED55 /* RespondModel.swift */; };
 		2D93EB3920591DB2005FED55 /* RSVPModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D93EB3820591DB2005FED55 /* RSVPModel.swift */; };
+		2DA192EF2076086B00843172 /* CheckBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA192EE2076086B00843172 /* CheckBox.swift */; };
+		2DA192F120760C8800843172 /* ParentSelectGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA192F020760C8800843172 /* ParentSelectGroupViewController.swift */; };
+		2DA192F320760D7200843172 /* SelectGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DA192F220760D7200843172 /* SelectGroupViewController.swift */; };
 		2DB23D832056337000EC6FBE /* HistoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB23D822056337000EC6FBE /* HistoryModel.swift */; };
 		2DB23D85205672FD00EC6FBE /* DetailAgendaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DB23D84205672FD00EC6FBE /* DetailAgendaModel.swift */; };
 		2DBF5EBC1FEB9A0400ACF744 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DBF5EBB1FEB9A0400ACF744 /* ForgotPasswordViewController.swift */; };
@@ -192,6 +197,8 @@
 		2D7E197B203D5422000AD7B0 /* CreateAgendaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAgendaViewController.swift; sourceTree = "<group>"; };
 		2D7E197D203D5C30000AD7B0 /* SelectGuestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGuestViewController.swift; sourceTree = "<group>"; };
 		2D7E1980203D779B000AD7B0 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		2D8105E42074C26F00745474 /* ListSelectGroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSelectGroupTableViewCell.swift; sourceTree = "<group>"; };
+		2D8105E52074C26F00745474 /* ListSelectGroupTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ListSelectGroupTableViewCell.xib; sourceTree = "<group>"; };
 		2D895E3E20284C8A00F9CAF7 /* ResponseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResponseModel.swift; sourceTree = "<group>"; };
 		2D895E4020284EF700F9CAF7 /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		2D895E422028574300F9CAF7 /* CommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentViewController.swift; sourceTree = "<group>"; };
@@ -226,6 +233,9 @@
 		2D93BB0F202981FA0095B35E /* UserDefaults+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extension.swift"; sourceTree = "<group>"; };
 		2D93EB36205909EA005FED55 /* RespondModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RespondModel.swift; sourceTree = "<group>"; };
 		2D93EB3820591DB2005FED55 /* RSVPModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RSVPModel.swift; sourceTree = "<group>"; };
+		2DA192EE2076086B00843172 /* CheckBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBox.swift; sourceTree = "<group>"; };
+		2DA192F020760C8800843172 /* ParentSelectGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentSelectGroupViewController.swift; sourceTree = "<group>"; };
+		2DA192F220760D7200843172 /* SelectGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectGroupViewController.swift; sourceTree = "<group>"; };
 		2DB23D822056337000EC6FBE /* HistoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryModel.swift; sourceTree = "<group>"; };
 		2DB23D84205672FD00EC6FBE /* DetailAgendaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailAgendaModel.swift; sourceTree = "<group>"; };
 		2DBF5EBB1FEB9A0400ACF744 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
@@ -373,6 +383,9 @@
 				2DFD1C932032ADB40084E754 /* ListAnnouncementViewController.swift */,
 				2D895E422028574300F9CAF7 /* CommentViewController.swift */,
 				2DD9068A2036F61A0095C685 /* CreateAnnouncementViewController.swift */,
+				2DA192F020760C8800843172 /* ParentSelectGroupViewController.swift */,
+				2DA192F220760D7200843172 /* SelectGroupViewController.swift */,
+				2D7E197D203D5C30000AD7B0 /* SelectGuestViewController.swift */,
 			);
 			path = Announcement;
 			sourceTree = "<group>";
@@ -384,7 +397,6 @@
 				2DEAEE2E2039A61700A080A0 /* HistoryAgendaViewController.swift */,
 				2DEAEE342039B58700A080A0 /* DetailAgendaViewController.swift */,
 				2D7E197B203D5422000AD7B0 /* CreateAgendaViewController.swift */,
-				2D7E197D203D5C30000AD7B0 /* SelectGuestViewController.swift */,
 			);
 			path = Agenda;
 			sourceTree = "<group>";
@@ -528,6 +540,8 @@
 				2D74FBB32047B2CF00EBE4A5 /* SettingsTableViewCell.xib */,
 				2D8B5211205A2D2400F2BE68 /* RecipientCollectionViewCell.swift */,
 				2D8B5212205A2D2400F2BE68 /* RecipientCollectionViewCell.xib */,
+				2D8105E42074C26F00745474 /* ListSelectGroupTableViewCell.swift */,
+				2D8105E52074C26F00745474 /* ListSelectGroupTableViewCell.xib */,
 				2D3B3FC62068EEE100096D15 /* AddAttachmentTableViewCell.swift */,
 				2D3B3FC72068EEE100096D15 /* AddAttachmentTableViewCell.xib */,
 			);
@@ -569,6 +583,7 @@
 				B7D00D3A1EF3DE5E00BD98EF /* Constants.swift */,
 				B74215281EE7CA4C008CB785 /* HTTPHelper.swift */,
 				2D1837D92013393700756A97 /* JDropDownAlert.swift */,
+				2DA192EE2076086B00843172 /* CheckBox.swift */,
 				B73CCD3E1EF7B44E007DF54E /* Reachability.swift */,
 				2D43FFB22044154400CDA3BD /* SubClassScrollView.swift */,
 				30BCFCA8206217E200C03DFC /* FileRequestHelper.swift */,
@@ -669,6 +684,7 @@
 				2D8D94E31FE91AD0009BF3E1 /* Lato-BoldItalic.ttf in Resources */,
 				B74215131EE7C91A008CB785 /* Assets.xcassets in Resources */,
 				2D1071C9201596940026F392 /* AnnouncementTableViewCell.xib in Resources */,
+				2D8105E72074C26F00745474 /* ListSelectGroupTableViewCell.xib in Resources */,
 				2DF616C02035503B001B6F7D /* RecipientTableViewCell.xib in Resources */,
 				2D8D94F61FE91AE8009BF3E1 /* OpenSans-BoldItalic.ttf in Resources */,
 				B74215111EE7C91A008CB785 /* Main.storyboard in Resources */,
@@ -784,6 +800,7 @@
 				B7D00D3B1EF3DE5E00BD98EF /* Constants.swift in Sources */,
 				2D2FB5022046A02700D3BD09 /* DetailFriendsViewController.swift in Sources */,
 				2D43FFA02043A8FE00CDA3BD /* GroupCollectionViewCell.swift in Sources */,
+				2D8105E62074C26F00745474 /* ListSelectGroupTableViewCell.swift in Sources */,
 				2D903536205B8CA9006827EB /* PeopleController.swift in Sources */,
 				2D1837E72014367A00756A97 /* ListTableViewCell.swift in Sources */,
 				B74215311EE7CBF1008CB785 /* MovieController.swift in Sources */,
@@ -801,6 +818,7 @@
 				2D1837EA20143AED00756A97 /* DetailAnnouncemenViewController.swift in Sources */,
 				B74215291EE7CA4C008CB785 /* HTTPHelper.swift in Sources */,
 				2D8D95001FE91C9A009BF3E1 /* SignInViewController.swift in Sources */,
+				2DA192F320760D7200843172 /* SelectGroupViewController.swift in Sources */,
 				2D895E3F20284C8A00F9CAF7 /* ResponseModel.swift in Sources */,
 				2D1837E020142FCF00756A97 /* AnnouncementViewController.swift in Sources */,
 				2DEAEE2D2039A5F900A080A0 /* AgendaViewController.swift in Sources */,
@@ -825,6 +843,7 @@
 				2D3B3FC82068EEE100096D15 /* AddAttachmentTableViewCell.swift in Sources */,
 				2D895E432028574300F9CAF7 /* CommentViewController.swift in Sources */,
 				2D1796691FFC8AF200F2108E /* NewPasswordViewController.swift in Sources */,
+				2DA192F120760C8800843172 /* ParentSelectGroupViewController.swift in Sources */,
 				2D903538205B8DBB006827EB /* PeopleModel.swift in Sources */,
 				2D74FBB42047B2CF00EBE4A5 /* SettingsTableViewCell.swift in Sources */,
 				2D1837D6201325CF00756A97 /* AuthController.swift in Sources */,
@@ -837,6 +856,7 @@
 				B73CCD3B1EF7700B007DF54E /* BaseCellProtocol.swift in Sources */,
 				2D2FB5062046A8BB00D3BD09 /* AgendaFriendsViewController.swift in Sources */,
 				2D1071C8201596940026F392 /* AnnouncementTableViewCell.swift in Sources */,
+				2DA192EF2076086B00843172 /* CheckBox.swift in Sources */,
 				2D93BB10202981FA0095B35E /* UserDefaults+Extension.swift in Sources */,
 				2D93EB3920591DB2005FED55 /* RSVPModel.swift in Sources */,
 				B7528CE51EEA7A10009EE47F /* AppUpdate.swift in Sources */,
@@ -986,7 +1006,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = id.asiangames.occ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1002,7 +1024,9 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = id.asiangames.occ;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

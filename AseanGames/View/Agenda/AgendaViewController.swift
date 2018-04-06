@@ -61,7 +61,15 @@ class AgendaViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         self.viewTitleSmall.backgroundColor = UIColor.clear
         self.spinner.startAnimating()
-        setupData()
+        if Connectivity.isConnectedToInternet() {
+            print("Yes! internet is available.")
+            setupData()
+        }else{
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
+            let alert = JDropDownAlert()
+            alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+        }
     }
     
     //MARK : Function

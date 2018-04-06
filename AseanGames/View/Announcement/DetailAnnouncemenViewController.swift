@@ -24,6 +24,7 @@ class DetailAnnouncemenViewController: UIViewController {
     @IBOutlet weak var lblMoreOthers: UILabel!
     @IBOutlet weak var btnOpenRecipient: UIButton!
     
+    @IBOutlet var imgCollection: [UIImageView]!
     @IBOutlet weak var table: UITableView!{
         didSet{
             let xib = RecipientTableViewCell.nib
@@ -41,22 +42,6 @@ class DetailAnnouncemenViewController: UIViewController {
         }
     }
     
-    var recipientsItem = [DataImage](){
-        didSet{
-            recipientCollection.reloadData()
-        }
-    }
-    
-   // @IBOutlet var imageCollection: [UIImageView]!
-    @IBOutlet weak var recipientCollection: UICollectionView!{
-        didSet{
-            let xib = RecipientCollectionViewCell.nib
-            recipientCollection.register(xib, forCellWithReuseIdentifier: RecipientCollectionViewCell.identifier)
-            
-            recipientCollection.delegate = self
-            recipientCollection.dataSource = self
-        }
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -71,7 +56,7 @@ class DetailAnnouncemenViewController: UIViewController {
     //MARK: Function
     func setupData(){
         guard let id = idAnnouncement else {return}
-        AnnouncementController().getDetailAnnouncement(id: "12", onSuccess: { (code, message, result) in
+        AnnouncementController().getDetailAnnouncement(id: id, onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
                 self.attachment = res.attachment
@@ -90,26 +75,26 @@ class DetailAnnouncemenViewController: UIViewController {
                     self.imgProfile.layer.masksToBounds = true
                 })
                 
-                self.recipientsItem = res.recipient.image
-                
-                if self.recipientsItem.count == 0{
-                    self.btnOpenRecipient.isUserInteractionEnabled = false
-                    self.btnOpenRecipient.isHidden = true
-                    self.viewOthers.isHidden = true
-                    self.lblMoreOthers.isHidden = true
-                    
-                }else if res.recipient.more > 0 {
-                    self.viewOthers.isHidden = false
-                    self.lblMoreOthers.isHidden = false
-                    
-                }else {
-                    self.viewOthers.isHidden = true
-                    self.lblMoreOthers.isHidden = true
+                if res.recipient.image.count > 0 {
+                    for var i in 0...res.recipient.image.count-1{
+                        let image = self.imgCollection[i]
+                        image.isHidden = false
+                        
+                        guard let url = URL(string: res.recipient.image[i].image) else { return }
+                        print("url \(url)")
+                        image.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                            image.layer.cornerRadius = image.frame.size.height*0.5
+                            image.layer.masksToBounds = true
+                        })
+                    }
                 }
-                
+
             }
         }, onFailed: { (message) in
             print(message)
+            let alert = JDropDownAlert()
+            alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+            
             print("Do action when data failed to fetching here")
         }) { (message) in
             print(message)
@@ -143,7 +128,6 @@ class DetailAnnouncemenViewController: UIViewController {
         viewRecipient.isHidden = true
     }
     
-    //MARK : Action
     @IBAction func openRecipient(_ sender: Any) {
         UIView.animate(withDuration: 0.2, delay: 0.2, options: .curveEaseOut, animations: {
             
@@ -194,7 +178,7 @@ extension DetailAnnouncemenViewController: UITableViewDelegate{
 }
 
 //MARK: CollectionView
-extension DetailAnnouncemenViewController: UICollectionViewDelegate {
+/*extension DetailAnnouncemenViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         //        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
@@ -223,3 +207,4 @@ extension DetailAnnouncemenViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: 35, height: 35)
     }
 }
+ */

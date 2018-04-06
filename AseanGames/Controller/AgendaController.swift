@@ -39,7 +39,7 @@ class AgendaController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }

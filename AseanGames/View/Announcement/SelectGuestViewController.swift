@@ -9,14 +9,10 @@
 import UIKit
 
 class SelectGuestViewController: UIViewController {
+    @IBOutlet weak var btnSelect: CheckBox!
+    @IBOutlet weak var txtSearch: UITextField!
+    @IBOutlet weak var table: UITableView!
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    @IBAction func back(_ sender: Any) {
-    }
-    
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
 }
+

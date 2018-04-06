@@ -30,6 +30,7 @@ class ChangePasswordViewController: UIViewController {
     }
     
     @IBAction func changePassword(_ sender: Any) {
+        
     }
     
 }

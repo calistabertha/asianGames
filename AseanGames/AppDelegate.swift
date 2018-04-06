@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        print("uuid \(UIDevice.current.identifierForVendor!.uuidString)")
+        
         if let user = UserDefaults.standard.getUserProfile() {
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
             let vc = storyboard.instantiateInitialViewController()

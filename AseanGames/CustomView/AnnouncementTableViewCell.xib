@@ -43,6 +43,7 @@
                         </constraints>
                     </view>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="zx3-Je-IeZ" secondAttribute="bottom" id="C4D-LV-6W3"/>
                     <constraint firstAttribute="trailing" secondItem="zx3-Je-IeZ" secondAttribute="trailing" id="efm-Yz-RA0"/>
@@ -50,6 +51,7 @@
                     <constraint firstItem="zx3-Je-IeZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="osP-R1-1os"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="collectionView" destination="NYi-WP-2Zj" id="sho-7d-AoR"/>
             </connections>
