@@ -78,6 +78,7 @@ extension FriendsViewController: UITableViewDataSource{
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
         vc.idUser = data.id
+        print("user select \(data.id)")
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

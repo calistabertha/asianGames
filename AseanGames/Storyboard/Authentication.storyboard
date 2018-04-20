@@ -769,7 +769,7 @@ instructions</string>
                                                     <action selector="forgotPassword:" destination="Xq6-2w-2Pg" eventType="touchUpInside" id="jkI-7N-yxC"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVc-mb-FMB">
+                                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gVc-mb-FMB">
                                                 <rect key="frame" x="22" y="450" width="276" height="45"/>
                                                 <color key="backgroundColor" red="0.1019607843" green="0.73333333329999995" blue="0.64313725489999995" alpha="1" colorSpace="deviceRGB"/>
                                                 <accessibility key="accessibilityConfiguration" hint="" identifier="56ECFA85-C404-4E10-80DF-59FA55D1E594" label=""/>
@@ -918,6 +918,6 @@ instructions</string>
     <resources>
         <image name="ico-eyes-active" width="20" height="20"/>
         <image name="ico-eyes-incative" width="20" height="20"/>
-        <image name="img-bg_fill" width="375" height="667"/>
+        <image name="img-bg_fill" width="320" height="602"/>
     </resources>
 </document>

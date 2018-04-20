@@ -30,7 +30,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="94.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rU-Ta-1xf">
+                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1rU-Ta-1xf">
                         <rect key="frame" x="0.0" y="5" width="153" height="76"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Z8q-7r-nsP">
@@ -71,7 +71,7 @@
                             <constraint firstItem="Z8q-7r-nsP" firstAttribute="leading" secondItem="1rU-Ta-1xf" secondAttribute="leading" id="u0E-MB-x6p"/>
                         </constraints>
                     </view>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ulx-Lt-Qb8">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ulx-Lt-Qb8" customClass="ShadowView" customModule="AseanGames" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="5" width="300" height="75.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ASIAN Games 2018 Closing Ceremony" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Puv-ac-0v2">
@@ -135,11 +135,18 @@
                                 <color key="textColor" red="0.1215686275" green="0.15686274510000001" blue="0.33333333329999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmE-TX-H7B">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
+                                <connections>
+                                    <action selector="cellSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ung-Yf-Aup"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="03E-qk-BfB" firstAttribute="centerY" secondItem="ETX-2f-z98" secondAttribute="centerY" id="1Ak-pP-zgx"/>
                             <constraint firstItem="GV6-S4-Oq0" firstAttribute="centerX" secondItem="Nzd-Vl-z6c" secondAttribute="centerX" id="1PS-zP-fme"/>
+                            <constraint firstItem="UmE-TX-H7B" firstAttribute="top" secondItem="Ulx-Lt-Qb8" secondAttribute="top" id="DUG-Jy-l8X"/>
                             <constraint firstAttribute="bottom" secondItem="Y9s-mh-PRw" secondAttribute="bottom" constant="3" id="IoJ-NS-AZ7"/>
                             <constraint firstItem="9K3-hD-okQ" firstAttribute="width" secondItem="Nzd-Vl-z6c" secondAttribute="width" id="J4e-Lw-cbj"/>
                             <constraint firstAttribute="trailing" secondItem="03E-qk-BfB" secondAttribute="trailing" constant="5" id="MH0-FN-QKe"/>
@@ -152,11 +159,19 @@
                             <constraint firstItem="Y9s-mh-PRw" firstAttribute="leading" secondItem="Puv-ac-0v2" secondAttribute="leading" id="asa-Nb-Un8"/>
                             <constraint firstItem="ETX-2f-z98" firstAttribute="leading" secondItem="Puv-ac-0v2" secondAttribute="trailing" constant="10" id="bKb-Bs-WRb"/>
                             <constraint firstItem="Nzd-Vl-z6c" firstAttribute="top" secondItem="Ulx-Lt-Qb8" secondAttribute="top" constant="15" id="iog-A6-pQp"/>
+                            <constraint firstAttribute="trailing" secondItem="UmE-TX-H7B" secondAttribute="trailing" id="kfG-zY-M86"/>
                             <constraint firstItem="ETX-2f-z98" firstAttribute="top" secondItem="Ulx-Lt-Qb8" secondAttribute="top" id="kxw-mW-Mp8"/>
+                            <constraint firstItem="UmE-TX-H7B" firstAttribute="leading" secondItem="Ulx-Lt-Qb8" secondAttribute="leading" id="lty-bi-6Mo"/>
                             <constraint firstAttribute="bottom" secondItem="ETX-2f-z98" secondAttribute="bottom" id="oVg-Xn-shN"/>
                             <constraint firstItem="GV6-S4-Oq0" firstAttribute="centerY" secondItem="ETX-2f-z98" secondAttribute="centerY" id="qca-OS-MNh"/>
+                            <constraint firstAttribute="bottom" secondItem="UmE-TX-H7B" secondAttribute="bottom" id="tG7-0a-oJe"/>
                             <constraint firstAttribute="bottom" secondItem="9K3-hD-okQ" secondAttribute="bottom" constant="15" id="vwS-Pt-S1R"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <constraints>
@@ -172,6 +187,7 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="btnSelect" destination="UmE-TX-H7B" id="Jlh-XN-wUu"/>
                 <outlet property="imgStripe" destination="ETX-2f-z98" id="cW5-Hb-wKK"/>
                 <outlet property="lblAMPM" destination="03E-qk-BfB" id="4FJ-pS-7RY"/>
                 <outlet property="lblLocation" destination="Y9s-mh-PRw" id="7f2-9n-Ohp"/>

@@ -96,6 +96,8 @@ extension PeopleAnnouncementViewController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
+        let data = announcementItems[indexPath.row]
+        vc.idAnnouncement = data.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
     

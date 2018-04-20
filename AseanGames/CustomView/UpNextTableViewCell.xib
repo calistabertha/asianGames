@@ -34,7 +34,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="223.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hh-cd-lPE">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6hh-cd-lPE" customClass="ShadowView" customModule="AseanGames" customModuleProvider="target">
                         <rect key="frame" x="20" y="15" width="280" height="198.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Meeting as Usual" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJN-vt-mwK">
@@ -239,14 +239,23 @@
                                     <constraint firstAttribute="bottom" secondItem="EBh-Wh-JNV" secondAttribute="bottom" id="yx0-Tb-rh3"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OrY-bl-XWc">
+                                <rect key="frame" x="0.0" y="0.0" width="204" height="198.5"/>
+                                <connections>
+                                    <action selector="cellSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="TEU-oJ-zWo"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="OrY-bl-XWc" secondAttribute="bottom" id="0kA-Zp-p39"/>
+                            <constraint firstItem="OrY-bl-XWc" firstAttribute="top" secondItem="6hh-cd-lPE" secondAttribute="top" id="3s3-BW-hwZ"/>
                             <constraint firstItem="k5B-Yd-cd2" firstAttribute="top" secondItem="6hh-cd-lPE" secondAttribute="top" id="4pr-d1-BKh"/>
                             <constraint firstItem="evE-Ix-kEH" firstAttribute="top" secondItem="pW0-lr-y6G" secondAttribute="bottom" constant="3" id="4uQ-rE-gRf"/>
                             <constraint firstItem="ByI-F3-iMT" firstAttribute="leading" secondItem="Awc-Zc-Evc" secondAttribute="leading" id="5Cb-HN-ekx"/>
                             <constraint firstItem="Awc-Zc-Evc" firstAttribute="top" secondItem="1Ux-eS-Tvv" secondAttribute="bottom" constant="10" id="63V-00-cE8"/>
                             <constraint firstItem="1Ux-eS-Tvv" firstAttribute="top" secondItem="uu2-ee-HrK" secondAttribute="bottom" constant="10" id="70m-CM-FgE"/>
+                            <constraint firstItem="k5B-Yd-cd2" firstAttribute="leading" secondItem="OrY-bl-XWc" secondAttribute="trailing" id="7hW-BE-L6U"/>
                             <constraint firstItem="evE-Ix-kEH" firstAttribute="leading" secondItem="pW0-lr-y6G" secondAttribute="leading" id="8yA-sW-EBi"/>
                             <constraint firstItem="z4h-es-cf8" firstAttribute="leading" secondItem="pBY-be-ikr" secondAttribute="leading" id="A2M-SV-5Gh"/>
                             <constraint firstAttribute="trailing" secondItem="k5B-Yd-cd2" secondAttribute="trailing" id="AJb-CC-2MU"/>
@@ -254,6 +263,7 @@
                             <constraint firstItem="pBY-be-ikr" firstAttribute="top" secondItem="EJN-vt-mwK" secondAttribute="bottom" constant="8" id="ApT-LL-ah9"/>
                             <constraint firstItem="2Xx-xl-Qxa" firstAttribute="leading" secondItem="z4h-es-cf8" secondAttribute="leading" id="AsB-Z2-AF0"/>
                             <constraint firstItem="1Ux-eS-Tvv" firstAttribute="leading" secondItem="6hh-cd-lPE" secondAttribute="leading" constant="33" id="CEE-kr-Aj5"/>
+                            <constraint firstItem="OrY-bl-XWc" firstAttribute="leading" secondItem="6hh-cd-lPE" secondAttribute="leading" id="EBZ-eh-N4Y"/>
                             <constraint firstItem="uu2-ee-HrK" firstAttribute="leading" secondItem="OJp-Ub-sSz" secondAttribute="leading" id="F0R-Iz-4rx"/>
                             <constraint firstItem="k5B-Yd-cd2" firstAttribute="leading" secondItem="pW0-lr-y6G" secondAttribute="trailing" constant="5" id="GeE-I3-44U"/>
                             <constraint firstItem="uu2-ee-HrK" firstAttribute="trailing" secondItem="OJp-Ub-sSz" secondAttribute="trailing" id="Hmz-cS-FdM"/>
@@ -283,6 +293,11 @@
                             <constraint firstItem="EJN-vt-mwK" firstAttribute="top" secondItem="6hh-cd-lPE" secondAttribute="top" constant="10" id="xaP-KY-mL5"/>
                             <constraint firstItem="2Xx-xl-Qxa" firstAttribute="top" secondItem="1Ux-eS-Tvv" secondAttribute="bottom" constant="12" id="yh6-wD-qGB"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

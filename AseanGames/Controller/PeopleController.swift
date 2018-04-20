@@ -42,7 +42,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     
                     onFailed("An error occured")
                 }
@@ -83,7 +83,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -121,7 +121,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -167,6 +167,45 @@ class PeopleController: BaseController {
         }
     }
     
+    func getSearchFriends(keyword: String, onSuccess: @escaping CollectionResultListener<RecipientModel>,
+                        onFailed: @escaping MessageListener,
+                        onComplete: @escaping MessageListener) {
+        let url = "\(searchAPI)\(keyword)"
+        
+        httpHelper.requestAPI(url: url, param: nil, method: .get) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    guard let datas = response.data else {return}
+                    var recipients = [RecipientModel]()
+                    for value in datas.arrayValue {
+                        let recipient = RecipientModel(json: value)
+                        recipients.append(recipient)
+                    }
+                    
+                    onSuccess(200, "Success fetching data", recipients)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
+    
     func getDetailGroup(id: String, filter: String, onSuccess: @escaping SingleResultListener<DetailGroupModel>,
                    onFailed: @escaping MessageListener,
                    onComplete: @escaping MessageListener) {
@@ -194,7 +233,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     
                     onFailed("An error occured")
                 }
@@ -229,7 +268,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     
                     onFailed("An error occured")
                 }
@@ -269,7 +308,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -309,7 +348,7 @@ class PeopleController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }

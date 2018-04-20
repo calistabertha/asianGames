@@ -107,18 +107,23 @@ class HTTPHelper {
         if let data = response.result.value {
             let json = JSON(data)
             if json["status"].intValue >= 400 {
-                
-                let alert = UIAlertController.init(title: "Your session has been expired. Please login again", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
-                    (action) in
-                    let storyboard = UIStoryboard(name: StoryboardReferences.authentication, bundle: nil)
-                    let loginViewController = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Authentication.login) as! SignInViewController
+                if json["display_message"].stringValue.range(of: "token") != nil{
+                    let alert = UIAlertController.init(title: "Your session has been expired. Please login again", message: nil, preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: {
+                        (action) in
+                        let storyboard = UIStoryboard(name: StoryboardReferences.authentication, bundle: nil)
+                        let loginViewController = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Authentication.login) as! SignInViewController
+                        
+                        (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = loginViewController
+                        (UIApplication.shared.delegate as! AppDelegate).window?.makeKeyAndVisible()
+                    }))
                     
-                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController = loginViewController
-                    (UIApplication.shared.delegate as! AppDelegate).window?.makeKeyAndVisible()
-                }))
+                    (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: false, completion: nil)
+                }else{
+                    let alert = JDropDownAlert()
+                    alert.alertWith("", message: json["display_message"].stringValue, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                }
                 
-                (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: false, completion: nil)
             } else {
                 completion(true,200, json)
             }

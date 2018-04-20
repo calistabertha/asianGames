@@ -43,6 +43,12 @@ class PeopleViewController: UIViewController {
         }
     }
     
+    internal var dataSource: [(section: String, type: Int, data: [Any])] = [] {
+        didSet {
+            self.table.reloadData()
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -72,9 +78,18 @@ class PeopleViewController: UIViewController {
         PeopleController().getPeople(onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
-                self.groupItems = res.group
-                self.friendsItems = res.friends
               //  self.table.isHidden = false
+                self.dataSource = []
+                
+                if res.group.count > 0 {
+                    self.dataSource.append((section: "Group", type: 0, data: res.group))
+                    self.groupItems = res.group
+                }
+                
+                if res.friends.count > 0 {
+                    self.dataSource.append((section: "Friends", type: 1, data: res.friends))
+                }
+                
                 self.spinner.stopAnimating()
                 self.spinner.isHidden = true
              
@@ -92,39 +107,65 @@ class PeopleViewController: UIViewController {
             print("Do action when data complete fetching here")
         }
     }
+    
+    func openSeeAll(sender : UIButton){
+        let data = dataSource[sender.tag].section
+        if sender.tag == 0 {
+            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.group) as! GroupViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }else {
+            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.friends) as! FriendsViewController
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        print("see all \(sender.tag), \(data)")
+    }
+    
 }
 
 extension PeopleViewController: UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return dataSource.count //1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 + self.friendsItems.count
+        if dataSource[section].type == 0 {
+            return 1
+        }
+        return dataSource[section].data.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as! HeaderTableViewCell
+        cell.lblHeader.text = dataSource[section].section
+        cell.btnSeeAll.tag = section
+        cell.btnSeeAll.addTarget(self, action: #selector(openSeeAll(sender:)), for: .touchUpInside)
+        return cell
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Group")
-            
-        }else if indexPath.row == 1 {
+        let data = dataSource[indexPath.section].data[indexPath.row]
+        if dataSource[indexPath.section].type == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: PeopleTableViewCell.identifier, for: indexPath) as! PeopleTableViewCell
             cell.context = self
             cell.peopleData = groupItems
+         
             return cell
             
-        }else if indexPath.row == 2 {
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Friends")
+        }else if let data = data as? RecipientModel{
+           return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
             
-        }else {
-            let data = friendsItems[indexPath.row - 3]
-            return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+        }else{
+            return UITableViewCell()
         }
+ 
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row >= 3{
-            let data = friendsItems[indexPath.row - 3]
+        let data = dataSource[indexPath.section].data[indexPath.row]
+        if let data = data as? RecipientModel {
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
             vc.idUser = data.id
@@ -135,19 +176,20 @@ extension PeopleViewController: UITableViewDataSource{
 }
 
 extension PeopleViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 60
-            
-        } else if indexPath.row == 1 {
+        let data = dataSource[indexPath.section]
+        if data.type == 0 {
             return 182
-            
-        }else if indexPath.row == 2 {
-            return 60
-            
-        }else {
+        }else if data.type == 1 {
             return 64
+        }else{
+            return 0
         }
+        
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

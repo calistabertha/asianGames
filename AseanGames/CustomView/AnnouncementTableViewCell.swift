@@ -22,7 +22,7 @@ class AnnouncementTableViewCell: UITableViewCell {
         }
     }
     
-    internal var pinnedData = [DataAnnouncement]() {
+    internal var pinnedData = [DataPinned]() {
         didSet {
             self.collectionView.reloadData()
         }
@@ -46,9 +46,6 @@ extension AnnouncementTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AnnouncementTableViewCell.identifier, for: indexPath) as! AnnouncementTableViewCell
         cell.context = context
-//        guard let data = object as? DataAnnouncement else { return cell }
-//        
-//        cell.pinnedData.append(data)
         return cell
     }
 }
@@ -85,6 +82,6 @@ extension AnnouncementTableViewCell: UICollectionViewDataSource {
 
 extension AnnouncementTableViewCell: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.size.width-90, height: collectionView.frame.size.height)
+        return CGSize(width: 250, height: collectionView.frame.size.height)
     }
 }

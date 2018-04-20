@@ -21,11 +21,14 @@ class AddAttachmentTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+ 
 }
 
 extension AddAttachmentTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: AddAttachmentTableViewCell.identifier, for: indexPath) as! AddAttachmentTableViewCell
+      //  guard  let data = object as? URL else {return cell}
+        
         return cell
     }
 }

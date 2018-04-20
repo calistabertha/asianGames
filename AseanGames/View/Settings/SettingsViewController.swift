@@ -71,7 +71,7 @@ extension SettingsViewController : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return  3 //4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -85,17 +85,19 @@ extension SettingsViewController : UITableViewDataSource{
             let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.profile) as! ProfileViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
-        }else if indexPath.row == 1 {
-            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.help) as! HelpViewController
-            self.navigationController?.pushViewController(vc, animated: true)
-            
-        }else if indexPath.row == 2 {
+        }
+//        else if indexPath.row == 1 {
+//            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.help) as! HelpViewController
+//            self.navigationController?.pushViewController(vc, animated: true)
+//
+//        }
+        else if indexPath.row == 1 { //2
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
             let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Settings.change) as! ChangePasswordViewController
             self.navigationController?.pushViewController(vc, animated: true)
             
-        }else if indexPath.row == 3 {
+        }else if indexPath.row == 2 { //3
             let alert = UIAlertController(title: nil, message: "Do you want to sign out?", preferredStyle: UIAlertControllerStyle.alert)
             
             // add the actions (buttons)

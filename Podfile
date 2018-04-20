@@ -17,4 +17,6 @@ target 'AseanGames' do
   pod 'CollapsibleTableSectionViewController', '~> 1.0.0'
   pod 'SDWebImage', '~> 4.0'
   pod 'SwipeCellKit'
+  pod 'GooglePlaces', '~> 2.5.0'
+  pod 'GooglePlacePicker', '~> 2.5.0'
 end

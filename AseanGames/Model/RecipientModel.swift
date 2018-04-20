@@ -13,6 +13,7 @@ class RecipientModel {
     var name : String
     var title : String
     var photo : String
+    var isSelected: Bool = false
     
     init(id : String, name : String, title : String, photo : String) {
         self.id = id

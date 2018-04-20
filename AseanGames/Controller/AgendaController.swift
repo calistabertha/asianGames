@@ -14,33 +14,36 @@ class AgendaController: BaseController {
     fileprivate let historyAPI = API.Agenda.history.ENV
     
     func getAgenda(onSuccess: @escaping SingleResultListener<AgendaModel>,
-                         onFailed: @escaping MessageListener,
-                         onComplete: @escaping MessageListener) {
+                         onFailed: @escaping CodeMessageListener,
+                         onComplete: @escaping SingleResultListener<AgendaModel>) {
         httpHelper.requestAPI(url: homeAPI, param: nil, method: .get) {
             (success, statusCode, json) in
             if success {
                 guard let data = json else {
-                    onFailed("Null response from server")
+                    onFailed(400, "Null response from server")
                     return
                 }
                 let response = ResponseModel(with: data)
                 
                 if statusCode == 200 {
-                    guard let datas = response.data else {return}
+                    guard let datas = response.data else {
+                        onFailed(202, "No data")
+                        return
+                    }
                     let home = AgendaModel(json: datas)
                     
                     onSuccess(200, "Success fetching data", home)
-                    onComplete("Fetching data completed")
+                    onComplete(200, "Fetching data completed", home)
                 }
             }else{
                 if statusCode >= 400 {
-                    onFailed("Bad request")
+                    onFailed(400, "Bad request")
                 } else if statusCode >= 500 {
-                    onFailed("Internal server error")
+                    onFailed(500, "Internal server error")
                 } else {
                     let alert = JDropDownAlert()
                     alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
-                    onFailed("An error occured")
+                    onFailed(600, "An error occured")
                 }
             }
         }
@@ -75,7 +78,7 @@ class AgendaController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -110,7 +113,7 @@ class AgendaController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -144,7 +147,7 @@ class AgendaController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -182,7 +185,56 @@ class AgendaController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
+    
+    func requestAgenda(title: String, description: String, location: String, guest: [String]?, group: [String]?, date: String, timeStart: String, timeEnd: String, onSuccess: @escaping SingleResultListener<String>,
+                             onFailed: @escaping MessageListener,
+                             onComplete: @escaping MessageListener) {
+        var groupParam:JSON = [:]
+        if let g = group {
+           groupParam["group"].arrayObject = g
+        }
+        if let g = guest {
+            groupParam["guest"].arrayObject = g
+        }
+
+        let params:[String:Any] = ["title": title,
+                                      "description": description,
+                                      "recipient": groupParam,
+                                      "location" : location,
+                                      "date": date,
+                                      "time_start": "\(timeStart)",
+                                      "time_end": "\(timeEnd)"]
+     
+        print("param \(params)")
+        
+        httpHelper.requestAPI(url: homeAPI, param: params, method: .post) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    
+                    onSuccess(200, "Success fetching data", response.displayMessage)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Server Temporarily Unavailable ", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }

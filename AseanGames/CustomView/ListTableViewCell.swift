@@ -63,7 +63,7 @@ extension ListTableViewCell: TableViewCellProtocol {
         }
        
         
-        cell.viewList.dropShadow()
+        //cell.viewList.dropShadow()
         
         return cell
     }

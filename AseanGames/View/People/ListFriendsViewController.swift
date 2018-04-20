@@ -115,8 +115,10 @@ extension ListFriendsViewController : UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let data = friendsItems[indexPath.row - 1]
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
+        vc.idUser = data.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }

@@ -27,7 +27,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="164" height="185"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD8-lM-yK6">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hD8-lM-yK6" customClass="ShadowView" customModule="AseanGames" customModuleProvider="target">
                         <rect key="frame" x="20" y="3" width="134" height="179"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="bB4-8M-fkK">
@@ -77,6 +77,11 @@
                             <constraint firstItem="dx0-0I-FHj" firstAttribute="leading" secondItem="hD8-lM-yK6" secondAttribute="leading" constant="20" id="mey-uz-OBb"/>
                             <constraint firstItem="sQv-lf-Pav" firstAttribute="top" secondItem="bB4-8M-fkK" secondAttribute="bottom" constant="11" id="ofM-ck-cxW"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
             </view>

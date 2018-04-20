@@ -39,32 +39,36 @@ class AnnouncementViewController: UIViewController {
             table.delegate = self
         }
     }
-    internal var pinnedItems = [DataAnnouncement](){
+    
+    @IBOutlet weak var lblNoAnnouncement: UILabel!
+    
+     var nextPage = 0
+    
+    internal var pinnedItems = [DataPinned](){
         didSet{
             table.reloadData()
         }
     }
-    
-    internal var recentItems = [DataAnnouncement]() {
-        didSet{
-            table.reloadData()
+
+    internal var dataSource: [(section: String, type: Int, data: [Any])] = [] {
+        didSet {
+            self.table.reloadData()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.spinner.startAnimating()
         self.table.isHidden = true
         self.constraintTopTable.constant = 50
         self.lblSmallAnnouncement.alpha = 0
         self.viewUnderline.alpha = 0
         self.viewTitleSmall.backgroundColor = UIColor.clear
-        self.btnCreate.isHidden = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.spinner.startAnimating()
+        self.lblNoAnnouncement.isHidden = true
         if Connectivity.isConnectedToInternet() {
             print("Yes! internet is available.")
              setupData()
@@ -81,8 +85,19 @@ class AnnouncementViewController: UIViewController {
         AnnouncementController().getAnnouncement(onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
-                self.pinnedItems = res.pinned
-                self.recentItems = res.recent
+                self.dataSource = []
+                
+                if res.pinned.count > 0 {
+                    self.dataSource.append((section: "Pinned", type: 0, data: res.pinned))
+                    self.pinnedItems = res.pinned
+                }
+                
+                if res.recent.count > 0 {
+                    self.dataSource.append((section: "Recent", type: 1, data: res.recent))
+//                    self.recentItems = res.recent
+//                    self.setRecent(isInit: true, nextURL: 1)
+                }
+                
                 self.table.isHidden = false
                 self.spinner.stopAnimating()
                 self.spinner.isHidden = true
@@ -96,13 +111,29 @@ class AnnouncementViewController: UIViewController {
             print(message)
             self.spinner.stopAnimating()
             self.spinner.isHidden = true
+            self.table.isHidden = true
+            self.lblNoAnnouncement.isHidden = false
             print("Do action when data failed to fetching here")
         }) { (message) in
             print(message)
             self.spinner.stopAnimating()
             self.spinner.isHidden = true
+//            self.table.isHidden = true
+//            self.lblNoAnnouncement.isHidden = false
             print("Do action when data complete fetching here")
         }
+        self.btnCreate.isHidden = false
+    }
+    
+    func openSeeAll(sender : UIButton){
+        let data = dataSource[sender.tag].section
+        if sender.tag == 0 {
+            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.list) as! ListAnnouncementViewController
+            vc.idAnnouncement = 1
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        print("see all \(sender.tag), \(data)")
     }
     
     //MARK : Action
@@ -123,55 +154,78 @@ class AnnouncementViewController: UIViewController {
 
 extension AnnouncementViewController: UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 + self.recentItems.count // 3 = 2 header + 1 collectionPinned
+        if dataSource[section].type == 0 {
+            return 1
+        }
+        return dataSource[section].data.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as! HeaderTableViewCell
+        cell.lblHeader.text = dataSource[section].section
+        if section == 1 {
+            cell.imgArrow.isHidden = true
+            cell.btnSeeAll.isHidden = true
+            cell.btnSeeAll.isUserInteractionEnabled = false
+        }
+        cell.btnSeeAll.tag = section
+        cell.btnSeeAll.addTarget(self, action: #selector(openSeeAll(sender:)), for: .touchUpInside)
+        return cell
+       
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Pinned")
-            
-        }else if indexPath.row == 1 {
+        let data = dataSource[indexPath.section].data[indexPath.row]
+        if dataSource[indexPath.section].type == 0{
             let cell = tableView.dequeueReusableCell(withIdentifier: AnnouncementTableViewCell.identifier, for: indexPath) as! AnnouncementTableViewCell
             cell.context = self
-            cell.pinnedData = self.pinnedItems
+            cell.pinnedData = pinnedItems
             return cell
             
-        }else if indexPath.row == 2 {
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Recent")
+        }else if let data = data as? DataAnnouncement{
+            return ListTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object:data)
             
-        }else {
-            return ListTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: self.recentItems[indexPath.row-3])
+        }else{
+            return UITableViewCell()
         }
+     
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
-        let data = self.recentItems[indexPath.row-3]
-        vc.idAnnouncement = data.id
-        self.navigationController?.pushViewController(vc, animated: true)
+        
+        let data = dataSource[indexPath.section].data[indexPath.row]
+        if let data = data as? DataPinned {
+            vc.idAnnouncement = String(data.id)
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if let data = data as? DataAnnouncement {
+            vc.idAnnouncement = String(data.id)
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     
     }
 }
 
 extension AnnouncementViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 60
-            
-        } else if indexPath.row == 1 {
+          let data = dataSource[indexPath.section]
+        if data.type == 0 {
             return 270
-            
-        }else if indexPath.row == 2 {
-            return 60
-            
-        }else {
-            return 175
+        }else if data.type == 1 {
+            return 166
+        }else{
+            return 0
         }
+    
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {

@@ -65,6 +65,7 @@ struct API {
     
     struct Settings {
         static let profile = "users"
+        static let change = "people/change-password"
     }
 }
 
@@ -88,7 +89,6 @@ struct ViewControllerID {
         static let create = "CreateAnnouncementViewController"
         static let comment = "CommentViewController"
         static let detail = "DetailAnnouncemenViewController"
-        static let parent = "ParentSelectGroupViewController"
         static let selectGroup = "SelectGroupViewController"
     }
     
@@ -96,7 +96,9 @@ struct ViewControllerID {
         static let history = "HistoryAgendaViewController"
         static let detail = "DetailAgendaViewController"
         static let create = "CreateAgendaViewController"
-        static let selectGuest = "SelectGuestViewController"
+        static let parent = "ParentSelectGroupViewController"
+        static let friend = "ChildFriendsViewController"
+        static let group = "ChildGroupViewController"
     }
     
     struct People {

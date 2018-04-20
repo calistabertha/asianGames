@@ -33,16 +33,9 @@ class AgendaViewController: UIViewController {
         }
     }
     
-    internal var upNextItems : DataUpNext?
-    internal var todayItems = [DataAgenda](){
-        didSet{
-            table.reloadData()
-        }
-    }
-    
-    internal var tomorrowItems = [DataAgenda](){
-        didSet{
-            table.reloadData()
+    internal var dataSource: [(section: String, type: Int, data: [Any])] = [] {
+        didSet {
+            self.table.reloadData()
         }
     }
     
@@ -74,38 +67,57 @@ class AgendaViewController: UIViewController {
     
     //MARK : Function
     func setupData() {
+        self.spinner.startAnimating()
         AgendaController().getAgenda(onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
-                if res.today.count == 0 && res.tomorrow.count == 0 {
-                    self.lblNoAgenda.isHidden = false
-                    self.table.isHidden = true
-                    self.btnCreateAgenda.isHidden = true
-                    
+                self.dataSource = []
+
+                if let nextAgenda = res.upNext {
+                    self.dataSource.append((section: "Up Next", type: 0, data: [nextAgenda]))
+                }
+                
+                if res.today.count > 0 {
+                    self.dataSource.append((section: "Today", type: 1, data: res.today))
+                }
+                
+                if res.tomorrow.count > 0 {
+                    self.dataSource.append((section: "Tomorrow", type: 2, data: res.tomorrow))
+                }
+                
+                self.table.isHidden = false
+                self.lblNoAgenda.isHidden = true
+                
+                if res.isCreate {
+                    self.btnCreateAgenda.isHidden = false
                 }else{
-                    self.table.isHidden = false
-                    self.upNextItems = res.upNext
-                    self.todayItems = res.today
-                    self.tomorrowItems = res.tomorrow
-                    self.table.isHidden = false
-                    self.lblNoAgenda.isHidden = true
-                    
-                    if res.isCreate {
-                        self.btnCreateAgenda.isHidden = false
-                    }else{
-                        self.btnCreateAgenda.isHidden = true
-                    }
+                    self.btnCreateAgenda.isHidden = true
                 }
                 
             }
-        }, onFailed: { (message) in
+        }, onFailed: { (code, message) in
+            if code == 202 {
+                print(message)
+                self.lblNoAgenda.isHidden = false
+                self.table.isHidden = true
+                self.btnCreateAgenda.isHidden = true
+            } else {
+                print(message)
+                print("Do action when data failed to fetching here")
+            }
+        }, onComplete: { (code, message, result) in
             print(message)
-            print("Do action when data failed to fetching here")
-        }) { (message) in
-            print(message)
+            guard let res = result else {return}
+            self.lblNoAgenda.isHidden = false
+            self.table.isHidden = true
+            if res.isCreate {
+                self.btnCreateAgenda.isHidden = false
+            }else{
+                self.btnCreateAgenda.isHidden = true
+            }
             print("Do action when data complete fetching here")
-        }
-        
+        })
+
         self.spinner.stopAnimating()
         self.spinner.isHidden = true
     }
@@ -127,103 +139,124 @@ class AgendaViewController: UIViewController {
 
 extension AgendaViewController: UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return dataSource.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3 + todayItems.count + tomorrowItems.count//(4) header, upnext, row in today and tomorrow
+        return dataSource[section].data.count
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeaderTableViewCell.identifier) as! HeaderTableViewCell
+        cell.lblHeader.text = dataSource[section].section
+        cell.btnSeeAll.isHidden = true
+        cell.imgArrow.isHidden = true
+        return cell
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Up Next")
-            
-        }else if indexPath.row == 1 {
-            let data = self.upNextItems
+        let data = dataSource[indexPath.section].data[indexPath.row]
+        if let data = data as? DataUpNext {
             return UpNextTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
-            
-        }else if indexPath.row == 2 {
-            var title = ""
-            if todayItems.count == 0 {
-                title = "Tommorow"
-            }else {
-                title = "Today"
-            }
-            
-            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: title)
-            
-        }
-//        else if indexPath.row <= self.todayItems.count {
-//            let data = todayItems[indexPath.row-3]
-//            return ListAgendaTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
-//       
-//        }else if indexPath.row <= self.todayItems.count + 1{
-//            return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Tomorrow")
-//        }
-        else if indexPath.row <= self.tomorrowItems.count + self.todayItems.count + 1 {
-            let data = todayItems[indexPath.row-3] //tomorrowItems[indexPath.row-3]
+        } else if let data = data as? DataAgenda {
             return ListAgendaTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+        } else {
+            return UITableViewCell()
         }
-        
-        return UITableViewCell()
-  
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
-        var id = ""
-        if indexPath.row == 1 {
-            guard let data = self.upNextItems else {return}
-            id = String(data.id)
-        }else if indexPath.row <= self.tomorrowItems.count + self.todayItems.count + 1 {
-            let data = tomorrowItems[indexPath.row-3]
-            id = String(data.id)
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+         let data = dataSource[indexPath.section]
+        if data.type > 0 {
+            return true
+        }else{
+            return false
         }
-        vc.idAgenda = id
-        self.navigationController?.pushViewController(vc, animated: true)
+       
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let data = dataSource[indexPath.section].data[indexPath.row]
+       
+        let decline = UITableViewRowAction(style: .normal, title: "Decline") { (action, indexPath) in
+            if let data = data as? DataAgenda{
+                AgendaController().requestRespond(id: String(data.id), respond: "0", onSuccess: { (code, message, result) in
+                    guard let res = result else {return}
+                    if res == 200 {
+                        let alert = JDropDownAlert()
+                        alert.alertWith("Decline", message: "You can change response by clicking button below.", topLabelColor:
+                            UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "F52D5A"), image: nil)
+                        self.setupData()
+                    }
+                }, onFailed: { (message) in
+                    print(message)
+                    print("Do action when data failed to fetching here")
+                }) { (message) in
+                    print(message)
+                    print("Do action when data complete fetching here")
+                }
+            }
+            print("decline")
+            // delete item at indexPath
+        }
+    
+        let attend = UITableViewRowAction(style: .normal, title: "Attend") { (action, indexPath) in
+            if let data = data as? DataAgenda{
+                AgendaController().requestRespond(id: String(data.id), respond: "1", onSuccess: { (code, message, result) in
+                    guard let res = result else {return}
+                    if res == 200 {
+                        let alert = JDropDownAlert()
+                        alert.alertWith("Attend", message: "You can change response by clicking button below.", topLabelColor:
+                            UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
+                        self.setupData()
+                        
+                    }
+                }, onFailed: { (message) in
+                    print(message)
+                    print("Do action when data failed to fetching here")
+                }) { (message) in
+                    print(message)
+                    print("Do action when data complete fetching here")
+                }
+            }
+        
+            print("attend")
+            // share item at indexPath
+        }
+        
+        decline.backgroundColor = UIColor(hexString: "f52d5a")
+        attend.backgroundColor = UIColor(hexString: "1abba4")
+    
+        return [decline, attend]
     }
 
-//    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-//        if indexPath.row > 2 {
-//            return true
-//        }else{
-//            return false
-//        }
-//    }
-//    
-//    
-//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-//     
-//        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-//            // delete item at indexPath
-//        }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
 //        
-//        let share = UITableViewRowAction(style: .normal, title: "Disable") { (action, indexPath) in
-//            // share item at indexPath
+//        let data = dataSource[indexPath.section].data[indexPath.row]
+//        if let data = data as? DataAgenda {
+//            vc.idAgenda = String(data.id)
+//            self.navigationController?.pushViewController(vc, animated: true)
 //        }
-//        
-//        share.backgroundColor = UIColor.blue
-//        
-//        return [delete, share]
 //    }
 }
 
 extension AgendaViewController: UITableViewDelegate{
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
+    }
+    
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 60
-            
-        } else if indexPath.row == 1 {
+        let data = dataSource[indexPath.section]
+        if data.type == 0 {
             return 224
-            
-        }else if indexPath.row == 2 {
-            return 60
-            
-        }else if indexPath.row <= self.todayItems.count  || indexPath.row <= self.todayItems.count + 1 || indexPath.row <= self.tomorrowItems.count + self.todayItems.count + 1{
+        } else if data.type == 1 {
             return 95
-            
-        }else{
+        } else if data.type == 2 {
+            return 95
+        } else {
             return 0
         }
     }

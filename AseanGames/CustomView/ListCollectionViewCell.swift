@@ -29,7 +29,7 @@ class ListCollectionViewCell: UICollectionViewCell {
 extension ListCollectionViewCell: CollectionViewCellProtocol{
     static func configure<T>(context: UIViewController, collectionView: UICollectionView, indexPath: IndexPath, object: T) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ListCollectionViewCell.identifier, for: indexPath) as! ListCollectionViewCell
-        guard let data = object as? DataAnnouncement else {return cell}
+        guard let data = object as? DataPinned else {return cell}
         cell.lblTitle.text = data.title
         cell.lblDesc.text = data.description
         cell.lblName.text = data.user
@@ -43,7 +43,7 @@ extension ListCollectionViewCell: CollectionViewCellProtocol{
             cell.lblAttachment.text = "Attachment : \(data.attachment) Files"
         }
         
-        cell.viewCollection.dropShadow()
+       // cell.viewCollection.dropShadow()
         
         guard let url = URL(string: data.photo) else { return cell }
 

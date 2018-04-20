@@ -33,18 +33,18 @@ extension GroupCollectionViewCell: CollectionViewCellProtocol{
             cell.lblTotalMember.text = "\(data.member) Members"
         }
         
-        var url : URL
+        var url : URL?
         if data.image == "" {
-            url = URL(string: data.photo)!
+            url = URL(string: data.photo)
         }else {
-            url = URL(string: data.image)!
+            url = URL(string: data.image)
         }
   
         cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
             cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
             cell.imgProfile.layer.masksToBounds = true
         })
-        cell.viewBorder.dropShadow()
+        //cell.viewBorder.dropShadow()
         return cell
     }
 }

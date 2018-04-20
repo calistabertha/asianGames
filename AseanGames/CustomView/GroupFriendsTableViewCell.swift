@@ -42,11 +42,11 @@ class GroupFriendsTableViewCell: UITableViewCell {
 extension GroupFriendsTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: GroupFriendsTableViewCell.identifier, for: indexPath) as! GroupFriendsTableViewCell
-        cell.collectionView.reloadData()
-        cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
-        cell.context = context
-        guard  let data = object as? [GroupModel] else {return cell}
-        cell.groupItems = data
+//        cell.collectionView.reloadData()
+//        cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+//        cell.context = context
+//        guard  let data = object as? [GroupModel] else {return cell}
+//        cell.groupItems = data
         return cell
     }
 }
@@ -64,11 +64,11 @@ extension GroupFriendsTableViewCell: UICollectionViewDelegate {
 
 extension GroupFriendsTableViewCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5 //groupItems.count
+        return groupItems.count //5 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let data = "" //groupItems[indexPath.row]
+        let data = groupItems[indexPath.row]
         
         if let ctx = self.context {
             return GroupCollectionViewCell.configure(context: ctx, collectionView: collectionView, indexPath: indexPath, object: data)

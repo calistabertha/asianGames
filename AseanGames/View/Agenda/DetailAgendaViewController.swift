@@ -36,10 +36,12 @@ class DetailAgendaViewController: UIViewController {
             tableRSVP.delegate = self
         }
     }
+    @IBOutlet weak var viewResponsRSVP: UIView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var btnOpenRSVP: UIButton!
     @IBOutlet var imageCollection: [UIImageView]!
     @IBOutlet weak var lblGoing: UILabel!
+    @IBOutlet weak var constraintHeightRSVP: NSLayoutConstraint!
     
     var decision = 0
     var idAgenda: String?
@@ -94,7 +96,7 @@ class DetailAgendaViewController: UIViewController {
                         image.isHidden = false
                         
                         guard let url = URL(string: res.attendants[i]) else { return }
-                        image.sd_setImage(with: url, placeholderImage: nil, options: .progressiveDownload, completed: { (img, error, type, url) in
+                        image.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
                             image.layer.cornerRadius = image.frame.size.height*0.5
                             image.layer.masksToBounds = true
                         })
@@ -102,10 +104,12 @@ class DetailAgendaViewController: UIViewController {
                 }
                 
                 if res.attendants.count == 0{
+                    self.viewResponsRSVP.isHidden = true
+                    self.constraintHeightRSVP.constant = 0
                     self.btnOpenRSVP.isUserInteractionEnabled = false
                     self.btnOpenRSVP.isHidden = true
-                    self.viewGoing.isHidden = true
-                    self.lblGoing.isHidden = true
+//                    self.viewGoing.isHidden = true
+//                    self.lblGoing.isHidden = true
                     
                 } else if res.attendants.count < 5 {
                     self.viewGoing.isHidden = true
@@ -157,9 +161,13 @@ class DetailAgendaViewController: UIViewController {
             }
         }, onFailed: { (message) in
             print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
             print("Do action when data failed to fetching here")
         }) { (message) in
             print(message)
+            self.spinner.stopAnimating()
+            self.spinner.isHidden = true
             print("Do action when data complete fetching here")
         }
     }
@@ -254,14 +262,19 @@ class DetailAgendaViewController: UIViewController {
         }
         
         guard let id = idAgenda else {return}
-        AgendaController().requestRespond(id: id, respond: "\(self.decision)", onSuccess: { (code, message, result) in
-            guard let res = result else {return}
-            if res == 200 {
-                let alert = UIAlertController(title: "Change Availability", message: "Want to change availability? Current :\(desc) ", preferredStyle: UIAlertControllerStyle.alert)
-                
-                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
-                alert.addAction(UIAlertAction(title: "Change", style: UIAlertActionStyle.default, handler: { action in
-                    
+        let alert = UIAlertController(title: "Change Availability", message: "Want to change availability? Current :\(desc) ", preferredStyle: UIAlertControllerStyle.alert)
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Change", style: UIAlertActionStyle.default, handler: { action in
+            var dec = ""
+            if self.decision == 0{
+                dec = "1"
+            }else{
+                dec = "0"
+            }
+            AgendaController().requestRespond(id: id, respond: dec, onSuccess: { (code, message, result) in
+                guard let res = result else {return}
+                if res == 200 {
                     if self.decision == 1 {
                         self.decision = 0
                         self.btnAttendDecline.setTitle("DECLINE", for: UIControlState.normal)
@@ -272,19 +285,25 @@ class DetailAgendaViewController: UIViewController {
                         self.btnAttendDecline.setTitle("ATTEND", for: UIControlState.normal)
                         self.btnAttendDecline.backgroundColor = UIColor(hexString: "1ABBA4")
                     }
-                    
-                }))
-                
-                // show the alert
-                self.present(alert, animated: true, completion: nil )
+                }
+            }, onFailed: { (message) in
+                print(message)
+                print("Do action when data failed to fetching here")
+            }) { (message) in
+                print(message)
+                print("Do action when data complete fetching here")
             }
-        }, onFailed: { (message) in
-            print(message)
-            print("Do action when data failed to fetching here")
-        }) { (message) in
-            print(message)
-            print("Do action when data complete fetching here")
-        }
+            
+           
+            
+        }))
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil )
+        
+        
+        
+        
         
     }
     

@@ -9,12 +9,12 @@
 import SwiftyJSON
 
 class AgendaModel{
-    var upNext : DataUpNext
+    var upNext : DataUpNext?
     var today : [DataAgenda]
     var tomorrow : [DataAgenda]
     var isCreate : Bool
     
-    init(upNext : DataUpNext, today : [DataAgenda], tomorrow : [DataAgenda], isCreate : Bool) {
+    init(upNext : DataUpNext?, today : [DataAgenda], tomorrow : [DataAgenda], isCreate : Bool) {
         self.upNext = upNext
         self.today = today
         self.tomorrow = tomorrow
@@ -23,7 +23,11 @@ class AgendaModel{
     }
     
     convenience init(json: JSON){
-        let upNext = DataUpNext(json: json["up-next"])
+        var upNext: DataUpNext?
+        if let jsonUpNext = json["up-next"].dictionaryObject {
+            upNext = DataUpNext(json: JSON(jsonUpNext))
+        }
+        
         var today = [DataAgenda]()
         for value in json["today"].arrayValue {
             let datas = DataAgenda(json: value)

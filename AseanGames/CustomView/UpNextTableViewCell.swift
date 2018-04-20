@@ -24,8 +24,10 @@ class UpNextTableViewCell: UITableViewCell {
     @IBOutlet weak var lblGoing: UILabel!
     @IBOutlet var imageCollection: [UIImageView]!
     @IBOutlet weak var imgStripe: UIImageView!
+    
     var attend: ((UITableViewCell) -> Void)?
-     var decline: ((UITableViewCell) -> Void)?
+    var decline: ((UITableViewCell) -> Void)?
+    var select: ((UITableViewCell) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -44,6 +46,11 @@ class UpNextTableViewCell: UITableViewCell {
     @IBAction func declineSelected(_ sender: Any) {
          decline?(self)
     }
+    
+    @IBAction func cellSelected(_ sender: Any) {
+        select?(self)
+    }
+    
 }
 
 extension UpNextTableViewCell: TableViewCellProtocol {
@@ -64,7 +71,7 @@ extension UpNextTableViewCell: TableViewCellProtocol {
                 image.isHidden = false
                 
                 guard let url = URL(string: data.attendants[i]) else { return cell}
-                image.sd_setImage(with: url, placeholderImage: nil, options: .progressiveDownload, completed: { (img, error, type, url) in
+                image.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
                     image.layer.cornerRadius = image.frame.size.height*0.5
                     image.layer.masksToBounds = true
                 })
@@ -85,14 +92,15 @@ extension UpNextTableViewCell: TableViewCellProtocol {
             cell.lblGoing.isHidden = false
         }
         
-        guard let url = URL(string: data.photo) else { return cell }
-        cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
-            cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
-            cell.imgProfile.layer.masksToBounds = true
-        })
+        if let url = URL(string: data.photo) {
+            cell.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                cell.imgProfile.layer.cornerRadius = cell.imgProfile.frame.size.height*0.5
+                cell.imgProfile.layer.masksToBounds = true
+            })
+        }
 
         cell.viewGoing.layer.cornerRadius = cell.viewGoing.frame.size.height*0.5
-        cell.viewBorder.dropShadow()
+      //  cell.viewBorder.dropShadow()
         
         cell.attend = {
             (cells) in
@@ -133,6 +141,14 @@ extension UpNextTableViewCell: TableViewCellProtocol {
                 print(message)
                 print("Do action when data complete fetching here")
             }
+        }
+        
+        cell.select = {
+            (cells) in
+            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
+            vc.idAgenda = String(data.id)
+            context.navigationController?.pushViewController(vc, animated: true)
         }
         return cell
     }

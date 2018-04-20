@@ -53,7 +53,8 @@ class AuthController: BaseController {
         let params = [
             "email" : email,
             "password" : password,
-            "device_id" : "!@#$%^&QWERTYUI"
+            "device" : "2"
+            //"device_id" : UIDevice.current.identifierForVendor!.uuidString
         ]
         
         httpHelper.requestAPI(url: loginAPI, param: params, method: .post) {

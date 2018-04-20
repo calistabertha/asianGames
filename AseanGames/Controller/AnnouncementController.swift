@@ -13,6 +13,7 @@ class AnnouncementController: BaseController {
     fileprivate let homeAPI = API.Announcement.home.ENV
     fileprivate let historyAPI = API.Announcement.history.ENV
     fileprivate let pinnedAPI = API.Announcement.pinned.ENV
+    fileprivate let recentAPI = API.Announcement.recent.ENV
     
     func getAnnouncement(onSuccess: @escaping SingleResultListener<AnnouncementModel>,
                       onFailed: @escaping MessageListener,
@@ -47,6 +48,52 @@ class AnnouncementController: BaseController {
             }
         }
     }
+    //
+    func getRecent(isInit: Bool, nextURL: Int, onSuccess: @escaping CollectionResultListener<DataAnnouncement>,
+                         onFailed: @escaping MessageListener,
+                         onComplete: @escaping MessageListener) {
+        var url = ""
+        if isInit{
+            url = recentAPI
+        }else{
+            url = "\(recentAPI)/?offset=\(nextURL)"
+        }
+        
+        httpHelper.requestAPI(url: url, param: nil, method: .get) {
+            (success, statusCode, json) in
+            if success {
+                guard let data = json else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if statusCode == 200 {
+                    guard let datas = response.data else {return}
+                    var recents = [DataAnnouncement]()
+                    for value in datas.arrayValue {
+                        let recent = DataAnnouncement(json: value)
+                        recents.append(recent)
+                    }
+                    
+                    onSuccess(200, "Success fetching data", recents)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if statusCode >= 400 {
+                    onFailed("Bad request")
+                } else if statusCode >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    
+                    onFailed("An error occured")
+                }
+            }
+        }
+    }
+    
     
     func getHistory(onSuccess: @escaping CollectionResultListener<DataAnnouncement>,
                     onFailed: @escaping MessageListener,
@@ -115,7 +162,7 @@ class AnnouncementController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -148,7 +195,7 @@ class AnnouncementController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -186,7 +233,7 @@ class AnnouncementController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -224,7 +271,7 @@ class AnnouncementController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -257,7 +304,7 @@ class AnnouncementController: BaseController {
                     onFailed("Internal server error")
                 } else {
                     let alert = JDropDownAlert()
-                    alert.alertWith("Please Check Your Connection", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                     onFailed("An error occured")
                 }
             }
@@ -275,11 +322,11 @@ class AnnouncementController: BaseController {
         if group.count > 0 {
             groupParam = ["type":2,"groups":group]
         }
-        let params:[String:String] = ["title": "John Lennon Update For Announcement Group",
-                      "description": "description description description description description description description description description description description description description description description",
+        let params:[String:String] = ["title": title,
+                      "description": description,
                       "group": groupParam.rawString() ?? "",
-                      "date": "2017-03-01",
-                      "time": "12:00:00"]
+                      "date": date,
+                      "time": "\(time):00"]
         var fileParams:[String:URL] = [:]
         if files.count > 0 {
             for i in 0...files.count - 1 {
@@ -287,7 +334,28 @@ class AnnouncementController: BaseController {
             }
         }
         httpHelper.uploadFile(url: homeAPI, parameter: params, fileParameter: fileParams) { (isSuccess, code, data) in
-            
+            if isSuccess {
+                guard let data = data else {
+                    onFailed("Null response from server")
+                    return
+                }
+                let response = ResponseModel(with: data)
+                
+                if code == 200 {
+                    onSuccess(200, "Success fetching data", response.displayMessage)
+                    onComplete("Fetching data completed")
+                }
+            }else{
+                if code >= 400 {
+                    onFailed("Bad request")
+                } else if code >= 500 {
+                    onFailed("Internal server error")
+                } else {
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Server Temporarily Unavailable", message: nil, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    onFailed("An error occured")
+                }
+            }
         }
     }
 }

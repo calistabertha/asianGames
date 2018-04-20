@@ -40,6 +40,7 @@ class GroupModel{
     var photo : String
     var member : Int
     var image : String
+    var isSelected: Bool = false
     
     init(id : Int, name : String, photo : String, member : Int, image : String){
         self.id = id

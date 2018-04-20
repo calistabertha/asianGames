@@ -9,20 +9,20 @@
 import SwiftyJSON
 
 class AnnouncementModel {
-    var pinned : [DataAnnouncement]
+    var pinned : [DataPinned]
     var recent : [DataAnnouncement]
     var isCreate : Bool
     
-    init(pinned: [DataAnnouncement], recent: [DataAnnouncement], isCreate: Bool){
+    init(pinned: [DataPinned], recent: [DataAnnouncement], isCreate: Bool){
         self.pinned = pinned
         self.recent = recent
         self.isCreate = isCreate
     }
     
     convenience init(json: JSON){
-        var pinned = [DataAnnouncement]()
+        var pinned = [DataPinned]()
         for value in json["pinned"].arrayValue {
-            let datas = DataAnnouncement(json: value)
+            let datas = DataPinned(json: value)
             pinned.append(datas)
         }
         
@@ -36,6 +36,43 @@ class AnnouncementModel {
         
         self.init(pinned: pinned, recent: recent, isCreate: isCreate)
     }
+}
+
+class DataPinned{
+    var id : String
+    var title : String
+    var description : String
+    var attachment : Int
+    var user : String
+    var assignment : String
+    var photo : String
+    var createAt : String
+
+    
+    init(id: String, title : String, description : String, attachment : Int, user : String, assignment : String, photo : String, createAt: String){
+        self.id = id
+        self.title = title
+        self.description = description
+        self.attachment = attachment
+        self.user = user
+        self.assignment = assignment
+        self.photo = photo
+        self.createAt = createAt
+    }
+    
+    convenience init(json: JSON){
+        let id = json["id"].stringValue
+        let title = json["title"].stringValue
+        let description = json["description"].stringValue
+        let attachment = json["attachment"].intValue
+        let user = json["user"].stringValue
+        let assignment = json["assignment"].stringValue
+        let photo = json["photo"].stringValue
+        let createAt = json["created_at"].stringValue
+        
+        self.init(id: id, title: title, description: description, attachment: attachment, user: user, assignment: assignment, photo: photo, createAt: createAt)
+    }
+    
 }
 
 class DataAnnouncement{

@@ -23,7 +23,11 @@ class DetailAnnouncemenViewController: UIViewController {
     @IBOutlet weak var lblDate: UILabel!
     @IBOutlet weak var lblMoreOthers: UILabel!
     @IBOutlet weak var btnOpenRecipient: UIButton!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
+    @IBOutlet weak var constraintHeightRespons: NSLayoutConstraint!
+    @IBOutlet weak var viewRespons: UIView!
+    @IBOutlet weak var scroll: UIScrollView!
     @IBOutlet var imgCollection: [UIImageView]!
     @IBOutlet weak var table: UITableView!{
         didSet{
@@ -45,11 +49,15 @@ class DetailAnnouncemenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        btnDownload.layer.cornerRadius = 2
-        btnSeeComment.layer.cornerRadius = 2
-        lblValid.layer.cornerRadius = 2
+        btnDownload.layer.cornerRadius = 4
+        btnSeeComment.layer.cornerRadius = 4
+        lblValid.layer.cornerRadius = 4
+        lblValid.layer.masksToBounds = true
         viewOthers.layer.cornerRadius = viewOthers.frame.size.height*0.5
         viewRecipient.isHidden = true
+        spinner.startAnimating()
+        scroll.isHidden = true
+      //  print("id \(idAnnouncement)")
         setupData()
     }
     
@@ -59,13 +67,15 @@ class DetailAnnouncemenViewController: UIViewController {
         AnnouncementController().getDetailAnnouncement(id: id, onSuccess: { (code, message, result) in
             guard let res = result else {return}
             if code == 200 {
+                self.scroll.isHidden = false
+                self.spinner.stopAnimating()
+                self.spinner.isHidden = true
                 self.attachment = res.attachment
                 self.lblTitle.text = res.title
                 self.lblDesc.font = UIFont(name: "OpenSans-Regular", size: 13)
                 self.lblDesc.text = res.description
                 self.lblDate.text = res.creatAt
                 self.lblValid.text = res.date
-                self.lblOthers.text = ("+\(res.recipient.more)")
                 self.lblName.text = res.user
                 self.lblDivision.text = res.assigment
                 guard let url = URL(string: res.photo) else { return }
@@ -87,6 +97,30 @@ class DetailAnnouncemenViewController: UIViewController {
                             image.layer.masksToBounds = true
                         })
                     }
+                }
+                
+                if res.attachment.total < 1 {
+                    self.btnDownload.setBackgroundImage(#imageLiteral(resourceName: "img-download-inactive"), for: .normal)
+                    self.btnDownload.isUserInteractionEnabled = false
+                }
+                
+                if res.recipient.more < 1 {
+                    self.viewOthers.isHidden = true
+                    self.lblOthers.isHidden = true
+                    self.lblMoreOthers.isHidden = true
+                    self.constraintHeightRespons.constant = 0
+                }else{
+                    self.viewOthers.isHidden = false
+                    self.lblOthers.text = ("+\(res.recipient.more)")
+                }
+                
+                if res.isPast{
+                    self.btnSeeComment.backgroundColor = UIColor(hexString: "c5c5c5")
+                    self.btnSeeComment.isUserInteractionEnabled = false
+                    self.btnSeeComment.titleLabel?.textColor = UIColor(hexString: "9f9f9f")
+                    
+                    self.btnDownload.setBackgroundImage(#imageLiteral(resourceName: "img-download-inactive"), for: .normal)
+                    self.btnDownload.isUserInteractionEnabled = false
                 }
 
             }
@@ -145,9 +179,31 @@ class DetailAnnouncemenViewController: UIViewController {
     
     @IBAction func downloadOnClick(_ sender:Any){
         AnnouncementController().downloadAttachment(attachment: attachment, onProgress: { (currentFile, totalFile, isSuccess, error) in
-            print("progress \(currentFile) \(isSuccess) \(error)")
+        //    print("progress \(currentFile) \(isSuccess) \(error)")
         }) { (currentFile, totalFile, isSuccess, error) in
-            print("complete \(currentFile) \(isSuccess) \(error)")
+           
+            if isSuccess {
+                if self.isICloudContainerAvailable(){
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Download Success", message: "Please check your iCloud drive", topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
+                    print("lalalaa")
+                }else{
+                    let alert = JDropDownAlert()
+                    alert.alertWith("Download Failed", message: "You must logged into iCloud", topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+                    print("nooo")
+                }
+            }
+         //   print("complete \(currentFile) \(isSuccess) \(error)")
+        }
+    }
+    
+    func isICloudContainerAvailable()->Bool {
+        if let currentToken = FileManager.default.ubiquityIdentityToken {
+            print("icloud \(currentToken)")
+            return true
+        }
+        else {
+            return false
         }
     }
 

@@ -64,6 +64,24 @@ class HistoryAgendaViewController: UIViewController {
         
     }
     
+    func detailAgenda(sender: UIButton){
+        var row = 0
+        
+        for var i in 0...self.arr.count-1{
+            if self.arr[i] > sender.tag {
+                break
+            }
+            row = i
+        }
+        
+        let item = historyItems[row].agendas[sender.tag - self.arr[row] - 1]
+        
+        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
+        vc.idAgenda = String(item.id)
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
     //MARK: Action
     @IBAction func back(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
@@ -118,14 +136,18 @@ extension HistoryAgendaViewController: UITableViewDataSource{
             cell.lblTimeEnd.text = item.timeEnd.replacingOccurrences(of: "am", with: " ")
             cell.lblAMPM.text = "am"
         }
+        cell.btnSelect.tag = indexPath.row
+        cell.btnSelect.addTarget(self, action: #selector(detailAgenda(sender:)), for: UIControlEvents.touchUpInside)
+        
         return cell
         
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
-        self.navigationController?.pushViewController(vc, animated: true)
+//        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+//        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
+//        vc.idAnnouncement = String(data.id)
+//        self.navigationController?.pushViewController(vc, animated: true)
     }
     
 }

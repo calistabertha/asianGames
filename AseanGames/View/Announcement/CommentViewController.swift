@@ -52,7 +52,7 @@ class CommentViewController: UIViewController {
         viewHideKeyboard.addGestureRecognizer(tap)
         self.table.rowHeight = UITableViewAutomaticDimension
         self.table.estimatedRowHeight = 137
-        
+    
         setupData()
     }
     
@@ -106,11 +106,19 @@ class CommentViewController: UIViewController {
         AnnouncementController().getComment(id: id, onSuccess: { (code, message, result) in
             if code == 200 {
                 guard let res = result else {return}
-                self.commentItems = res
+                if res.count == 0 {
+                    self.table.isHidden = true
+                    self.viewEmpty.isHidden = false
+                }else{
+                    
+                    self.commentItems = res
+                }
                 
             }
         }, onFailed: { (message) in
             print(message)
+            self.table.isHidden = true
+            self.viewEmpty.isHidden = false
             print("Do action when data failed to fetching here")
         }) { (message) in
             print(message)
@@ -137,6 +145,16 @@ class CommentViewController: UIViewController {
                     UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
                 self.txtComment.text = ""
                 self.table.reloadData()
+                if self.commentItems.count < 1 {
+                    let index = IndexPath(row: 0, section: 0)
+                    self.table.scrollToRow(at: index, at: UITableViewScrollPosition.top, animated: false)
+                }else {
+                    let index = IndexPath(row: self.commentItems.count - 1, section: 0)
+                    self.table.scrollToRow(at: index, at: UITableViewScrollPosition.top, animated: false)
+                }
+               
+                //scrollToRowAtIndexPath(IndexPath(forRow: self.commentItems.count - 1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+                
                 self.setupData()
                 self.view.endEditing(true)
             }

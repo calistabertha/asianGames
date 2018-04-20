@@ -8,6 +8,7 @@
 
 import UIKit
 import ICEnvironmentSetting
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         print("uuid \(UIDevice.current.identifierForVendor!.uuidString)")
+        ICEnvironmentSetting.setup(window: self.window!,defaultEnv: .STAGGING)
         
         if let user = UserDefaults.standard.getUserProfile() {
             let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
@@ -33,7 +35,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         AppUpdate(appID: "[Your App ID]").checkAppVersion()
         
-        ICEnvironmentSetting.setup(window: self.window!,defaultEnv: .DEVELOPMENT)
+        GMSPlacesClient.provideAPIKey("AIzaSyDrp85F6-05hkhwlXz8JiRt--aawRzb42I")
+        
+        
         ICEnvironmentSetting.setupBaseURL(development: Config.developmentBaseAPI, staging: Config.staggingBaseAPI, production: Config.productionBaseAPI)
         UITabBar.appearance().tintColor = UIColor(hexString: "007E79")
         
@@ -86,19 +90,19 @@ extension UIColor {
     }
 }
 
-extension UIView {
-    
-    func dropShadow(scale: Bool = true) {
-        layer.masksToBounds = false
-        layer.shadowColor = UIColor.black.cgColor
-        layer.shadowOpacity = 0.5
-        layer.shadowOffset = CGSize(width: -1, height: 1)
-        layer.shadowRadius = 2
-        
-        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
-        layer.shouldRasterize = true
-        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
-    }
-    
-}
+//extension UIView {
+//    
+//    func dropShadow(scale: Bool = true) {
+//        layer.masksToBounds = false
+//        layer.shadowColor = UIColor.black.cgColor
+//        layer.shadowOpacity = 0.5
+//        layer.shadowOffset = CGSize(width: -1, height: 1)
+//        layer.shadowRadius = 2
+//        
+//        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+//        layer.shouldRasterize = true
+//        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+//    }
+//    
+//}
 

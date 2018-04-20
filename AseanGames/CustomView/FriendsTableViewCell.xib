@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -27,7 +28,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="63.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUB-IU-cWp">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fUB-IU-cWp" customClass="ShadowView" customModule="AseanGames" customModuleProvider="target">
                         <rect key="frame" x="20" y="5" width="280" height="53.5"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img-profile" translatesAutoresizingMaskIntoConstraints="NO" id="P1w-JS-Px3">
@@ -62,20 +63,57 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="V0K-zr-Pzh">
+                                <rect key="frame" x="250" y="14" width="24" height="24"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jjj-JZ-zuN">
+                                        <rect key="frame" x="6" y="6" width="11" height="11"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.1764705882" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" secondItem="Jjj-JZ-zuN" secondAttribute="height" multiplier="1:1" id="qfV-hz-KRZ"/>
+                                        </constraints>
+                                    </view>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ico-checkbox-inactive" translatesAutoresizingMaskIntoConstraints="NO" id="pqH-3g-2I7">
+                                        <rect key="frame" x="0.0" y="0.0" width="23" height="23"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="23" id="UIQ-6C-qPV"/>
+                                            <constraint firstAttribute="width" constant="23" id="piI-OG-WBN"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="pqH-3g-2I7" firstAttribute="top" secondItem="V0K-zr-Pzh" secondAttribute="top" id="2Rr-DM-Sxl"/>
+                                    <constraint firstAttribute="width" constant="24" id="Cbm-nW-u0m"/>
+                                    <constraint firstAttribute="trailing" secondItem="pqH-3g-2I7" secondAttribute="trailing" constant="1" id="Liw-NP-95Z"/>
+                                    <constraint firstItem="Jjj-JZ-zuN" firstAttribute="centerY" secondItem="pqH-3g-2I7" secondAttribute="centerY" id="WfL-I4-iAY"/>
+                                    <constraint firstItem="Jjj-JZ-zuN" firstAttribute="leading" secondItem="V0K-zr-Pzh" secondAttribute="leading" constant="6" id="h5S-Om-21r"/>
+                                    <constraint firstItem="Jjj-JZ-zuN" firstAttribute="centerX" secondItem="pqH-3g-2I7" secondAttribute="centerX" id="kLG-Ty-UMd"/>
+                                    <constraint firstAttribute="height" constant="24" id="xEJ-Dh-8KS"/>
+                                    <constraint firstItem="Jjj-JZ-zuN" firstAttribute="width" secondItem="Jjj-JZ-zuN" secondAttribute="height" multiplier="1:1" id="z7D-oG-UGI"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="sly-qp-zPp" firstAttribute="top" secondItem="gaW-r3-IGo" secondAttribute="bottom" id="86j-4B-Cpt"/>
                             <constraint firstItem="P1w-JS-Px3" firstAttribute="centerY" secondItem="fUB-IU-cWp" secondAttribute="centerY" id="DKi-QQ-yb9"/>
                             <constraint firstItem="P1w-JS-Px3" firstAttribute="leading" secondItem="fUB-IU-cWp" secondAttribute="leading" constant="14" id="NAh-hm-3rm"/>
+                            <constraint firstItem="V0K-zr-Pzh" firstAttribute="centerY" secondItem="fUB-IU-cWp" secondAttribute="centerY" id="NeS-sm-rGB"/>
                             <constraint firstItem="sly-qp-zPp" firstAttribute="trailing" secondItem="gaW-r3-IGo" secondAttribute="trailing" id="Ple-P3-TEF"/>
                             <constraint firstAttribute="trailing" secondItem="QKu-aP-sxu" secondAttribute="trailing" constant="3" id="Qff-Tu-1MN"/>
                             <constraint firstItem="QKu-aP-sxu" firstAttribute="leading" secondItem="gaW-r3-IGo" secondAttribute="trailing" constant="20" id="Qjb-wB-mej"/>
                             <constraint firstItem="gaW-r3-IGo" firstAttribute="leading" secondItem="P1w-JS-Px3" secondAttribute="trailing" constant="10" id="Ujc-mn-Mq0"/>
                             <constraint firstItem="sly-qp-zPp" firstAttribute="leading" secondItem="gaW-r3-IGo" secondAttribute="leading" id="WzX-AZ-pT3"/>
                             <constraint firstItem="QKu-aP-sxu" firstAttribute="centerY" secondItem="fUB-IU-cWp" secondAttribute="centerY" id="dgC-hh-ZcR"/>
+                            <constraint firstAttribute="trailing" secondItem="V0K-zr-Pzh" secondAttribute="trailing" constant="6" id="lYO-6B-DMA"/>
                             <constraint firstItem="gaW-r3-IGo" firstAttribute="top" secondItem="P1w-JS-Px3" secondAttribute="top" id="pAY-5E-CUT"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="color" keyPath="shadowColor">
+                                <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -93,11 +131,14 @@
                 <outlet property="lblName" destination="gaW-r3-IGo" id="5Nd-gZ-yKy"/>
                 <outlet property="lblTitle" destination="sly-qp-zPp" id="ALS-q9-CdR"/>
                 <outlet property="viewBorder" destination="fUB-IU-cWp" id="7Lg-Ns-LA8"/>
+                <outlet property="viewButton" destination="V0K-zr-Pzh" id="KSU-OS-G6H"/>
+                <outlet property="viewSelect" destination="Jjj-JZ-zuN" id="XLF-M1-zhi"/>
             </connections>
             <point key="canvasLocation" x="34" y="177"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="ico-checkbox-inactive" width="24" height="24"/>
         <image name="ico-dropdown-active" width="16" height="16"/>
         <image name="img-profile" width="38" height="38"/>
     </resources>

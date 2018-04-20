@@ -168,12 +168,15 @@ extension ProfileFriendsViewController : UITableViewDataSource{
             return HeaderTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "Groups")
             
         }else {
-           // let cell = tableView.dequeueReusableCell(withIdentifier: GroupFriendsTableViewCell.identifier, for: indexPath) as! GroupFriendsTableViewCell
-//            cell.collectionView.reloadData()
-//            cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
-//            cell.context = self
-//            cell.groupItems = groupItems
-            return GroupFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
+            let cell = tableView.dequeueReusableCell(withIdentifier: GroupFriendsTableViewCell.identifier, for: indexPath) as! GroupFriendsTableViewCell
+            cell.context = self
+            cell.groupItems = groupItems
+            cell.collectionView.reloadData()
+            cell.collectionView.layoutIfNeeded()
+            cell.constraintHeightCollection.constant = cell.collectionView.collectionViewLayout.collectionViewContentSize.height
+           
+            return cell
+           // return GroupFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: "")
         }
     }
 
