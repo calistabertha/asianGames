@@ -137,9 +137,6 @@
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UmE-TX-H7B">
                                 <rect key="frame" x="0.0" y="0.0" width="300" height="75"/>
-                                <connections>
-                                    <action selector="cellSelected:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ung-Yf-Aup"/>
-                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

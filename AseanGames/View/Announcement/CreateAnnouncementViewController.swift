@@ -36,17 +36,24 @@ class CreateAnnouncementViewController: UIViewController,UIDocumentMenuDelegate,
     @IBOutlet weak var lblGroup: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var timePicker: UIDatePicker!
-    fileprivate var fileDataSource = [URL]() {
+    fileprivate var fileDataSource = [URL]() {  
         didSet {
             self.table.reloadData()
         }
     }
+    /*
+     fileprivate var fileDataSource : [(url : URL, name : String, size : Int)] = [] {
+     didSet {
+     self.table.reloadData()
+     }
+     }
+     */
     var url : URL?
     var grouped : [String]?
     var groupName : [String]?
     var date : String?
     var size = 0
-    var totSize : Int?
+    var fileName = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,6 +114,9 @@ class CreateAnnouncementViewController: UIViewController,UIDocumentMenuDelegate,
             
             let index = fileDataSource.count-1
             let filePath = fileDataSource[index].path
+            let file = fileDataSource[index].lastPathComponent
+            self.fileName = self.fileName + ", " + file
+            print("filename \(self.fileName)")
             var fileSize : UInt64
             
             do {
@@ -200,6 +210,12 @@ class CreateAnnouncementViewController: UIViewController,UIDocumentMenuDelegate,
         if self.size >= 25 {
             let alert = JDropDownAlert()
             alert.alertWith("Sorry", message: "Maximum file size is 25 MB", topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+            
+        }else if (self.fileName.range(of: ".pdf") != nil) || self.fileName.range(of: ".doc") != nil || self.fileName.range(of: ".docx") != nil || self.fileName.range(of: ".xls") != nil || self.fileName.range(of: ".xlsx") != nil || self.fileName.range(of: ".ppt") != nil || self.fileName.range(of: ".pptx") != nil || self.fileName.range(of: ".jpg") != nil || self.fileName.range(of: ".jpeg") != nil || self.fileName.range(of: ".png") != nil || self.fileName.range(of: ".tiff") != nil || self.fileName.range(of: ".bmp") != nil || self.fileName.range(of: ".gif") != nil || self.fileName.range(of: ".mp4") != nil || self.fileName.range(of: ".flv") != nil || self.fileName.range(of: ".avi") != nil   {
+            
+            let alert = JDropDownAlert()
+            alert.alertWith("Sorry", message: "File not allowed!", topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+            
         }else {
             guard let group = grouped else {return}
             AnnouncementController().requestAnnouncement(title: txtTitle.text!, description: txtDesc.text,files:fileDataSource, group:group, date: self.date!, time: txtTime.text!, onSuccess: { (code,respon, error) in
@@ -272,7 +288,32 @@ extension CreateAnnouncementViewController: UITableViewDataSource{
             
             // add the actions (buttons)
             alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.default, handler: { action in
+                
+                let data = self.fileDataSource[indexPath.row]
+                
+                let filePath = data.path
+                var fileSize : UInt64
+                
+                do {
+                    //return [FileAttributeKey : Any]
+                    let attr = try FileManager.default.attributesOfItem(atPath: filePath)
+                    fileSize = attr[FileAttributeKey.size] as! UInt64
+                    
+                    //if you convert to NSDictionary, you can get file size old way as well.
+                    let dict = attr as NSDictionary
+                    fileSize = dict.fileSize()
+                    let size = Double(fileSize)/1048576
+                    let siz = ceil(size)
+                    let si = Int(siz)
+                    self.size = self.size - si
+                    print("total size \(self.size)")
+                } catch {
+                    print("Error: \(error)")
+                }
+                
+                
                 self.fileDataSource.remove(at: indexPath.row)
+                
                 self.table.reloadData()
                 
             }))

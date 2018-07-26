@@ -120,13 +120,18 @@ class ChildGroupViewController: UIViewController {
 
 extension ChildGroupViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        searchText = self.txtSearch.text!
+        if self.txtSearch.text == "" {
+            self.view.endEditing(true)
+        }else {
+            self.view.endEditing(true)
+            searchText = self.txtSearch.text!
             //.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlHostAllowed)!
-        self.spinner.isHidden = false
-        self.spinner.startAnimating()
-        self.searchGroup()
-        
+            self.spinner.isHidden = false
+            self.spinner.startAnimating()
+            self.searchGroup()
+            
+        }
+       
         return true
     }
 }

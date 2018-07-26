@@ -140,23 +140,19 @@ class CommentViewController: UIViewController {
         guard let id = idAnnouncement else {return}
         AnnouncementController().requestComment(id: id, comment: txtComment.text, onSuccess: { (code, message, result) in
             if code == 200 {
+                self.txtComment.text = ""
+                self.view.endEditing(true)
+             //   self.table.reloadData()
+            
+//                let index = IndexPath(row: self.commentItems.count - 1, section: 0)
+//                self.table.scrollToRow(at: index, at: UITableViewScrollPosition.top, animated: true)
+                
                 let alert = JDropDownAlert()
                 alert.alertWith("Success", message: result, topLabelColor:
                     UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
-                self.txtComment.text = ""
-                self.table.reloadData()
-                if self.commentItems.count < 1 {
-                    let index = IndexPath(row: 0, section: 0)
-                    self.table.scrollToRow(at: index, at: UITableViewScrollPosition.top, animated: false)
-                }else {
-                    let index = IndexPath(row: self.commentItems.count - 1, section: 0)
-                    self.table.scrollToRow(at: index, at: UITableViewScrollPosition.top, animated: false)
-                }
-               
-                //scrollToRowAtIndexPath(IndexPath(forRow: self.commentItems.count - 1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+                self.navigationController?.popViewController(animated: true)
+                //self.setupData()
                 
-                self.setupData()
-                self.view.endEditing(true)
             }
         }, onFailed: { (message) in
             print(message)

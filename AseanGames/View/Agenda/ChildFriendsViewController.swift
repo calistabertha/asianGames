@@ -129,13 +129,17 @@ class ChildFriendsViewController: UIViewController {
 }
 extension ChildFriendsViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        self.view.endEditing(true)
-        searchText = self.txtSearch.text!
-        self.spinner.isHidden = false
-        self.spinner.startAnimating()
-        self.viewSelect.isHidden = true
-        self.isSelectedAll = !self.isSelectedAll
-        self.searchFriends()
+        if self.txtSearch.text == "" {
+            self.view.endEditing(true)
+        }else {
+            self.view.endEditing(true)
+            searchText = self.txtSearch.text!
+            self.spinner.isHidden = false
+            self.spinner.startAnimating()
+            self.viewSelect.isHidden = true
+            self.isSelectedAll = !self.isSelectedAll
+            self.searchFriends()
+        }
         
         return true
     }

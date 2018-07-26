@@ -19,7 +19,6 @@ class ListAgendaTableViewCell: UITableViewCell {
     @IBOutlet weak var viewLeft: UIView!
     var attend: ((UITableViewCell) -> Void)?
     var decline: ((UITableViewCell) -> Void)?
-    var select: ((UITableViewCell) -> Void)?
     
     @IBOutlet weak var btnSelect: UIButton!
     @IBAction func attendSelected(_ sender: Any) {
@@ -28,10 +27,6 @@ class ListAgendaTableViewCell: UITableViewCell {
     
     @IBAction func declineSelected(_ sender: Any) {
         decline?(self)
-    }
-    
-    @IBAction func cellSelected(_ sender: Any) {
-        select?(self)
     }
     
     override func awakeFromNib() {
@@ -45,6 +40,7 @@ extension ListAgendaTableViewCell: TableViewCellProtocol {
     static func configure<T>(context: UIViewController, tableView: UITableView, indexPath: IndexPath, object: T) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: ListAgendaTableViewCell.identifier, for: indexPath) as! ListAgendaTableViewCell
         guard let data = object as? DataAgenda else {return cell}
+        cell.btnSelect.isHidden = true
         cell.lblTitle.text = data.title
         cell.lblLocation.text = data.location.replacingOccurrences(of: "#", with: ", ")
         cell.lblTimeStart.text = data.timeStart
@@ -64,13 +60,13 @@ extension ListAgendaTableViewCell: TableViewCellProtocol {
         }
         //cell.viewBorder.dropShadow()
         
-        cell.select = {
-            (cells) in
-            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
-            vc.idAgenda = String(data.id)
-            context.navigationController?.pushViewController(vc, animated: true)
-        }
+//        cell.select = {
+//            (cells) in
+//            let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+//            let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
+//            vc.idAgenda = String(data.id)
+//            context.navigationController?.pushViewController(vc, animated: true)
+//        }
         
         return cell
     }

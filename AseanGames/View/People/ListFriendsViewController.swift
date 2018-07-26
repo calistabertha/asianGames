@@ -86,11 +86,15 @@ class ListFriendsViewController: UIViewController, UIGestureRecognizerDelegate {
 
 extension ListFriendsViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 60
-        }
+//        if indexPath.row == 0 {
+//            return 60
+//        }
         
         return 64
+    }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 60
     }
 }
 
@@ -104,18 +108,33 @@ extension ListFriendsViewController : UITableViewDataSource{
         return friendsItems.count
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            let data = friendsItems.count
-            return HeaderFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeaderFriendsTableViewCell.identifier) as! HeaderFriendsTableViewCell
+        let data = friendsItems.count
+        if data >= 2 {
+            cell.lblTotalFriends.text = "\(data) Friends"
+        }else{
+            cell.lblTotalFriends.text = "\(data) Friend"
         }
+        return cell
         
-        let data = friendsItems[indexPath.row - 1]
-        return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        if indexPath.row == 0 {
+//            let data = friendsItems.count
+//            return HeaderFriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+//        }else {
+            let data = friendsItems[indexPath.row]
+            return FriendsTableViewCell.configure(context: self, tableView: tableView, indexPath: indexPath, object: data)
+       // }
+        
+       
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let data = friendsItems[indexPath.row - 1]
+        let data = friendsItems[indexPath.row]
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detailFriends) as! DetailFriendsViewController
         vc.idUser = data.id

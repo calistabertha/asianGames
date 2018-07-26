@@ -47,11 +47,12 @@ class AgendaViewController: UIViewController {
         self.spinner.startAnimating()
         self.table.isHidden = true
         self.lblNoAgenda.isHidden = true
-        self.spinner.startAnimating()
+      
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        self.spinner.startAnimating()
         self.viewTitleSmall.backgroundColor = UIColor.clear
         self.spinner.startAnimating()
         if Connectivity.isConnectedToInternet() {
@@ -108,13 +109,32 @@ class AgendaViewController: UIViewController {
         }, onComplete: { (code, message, result) in
             print(message)
             guard let res = result else {return}
-            self.lblNoAgenda.isHidden = false
-            self.table.isHidden = true
-            if res.isCreate {
-                self.btnCreateAgenda.isHidden = false
-            }else{
-                self.btnCreateAgenda.isHidden = true
+            if code == 200 {
+                self.dataSource = []
+                
+                if let nextAgenda = res.upNext {
+                    self.dataSource.append((section: "Up Next", type: 0, data: [nextAgenda]))
+                }
+                
+                if res.today.count > 0 {
+                    self.dataSource.append((section: "Today", type: 1, data: res.today))
+                }
+                
+                if res.tomorrow.count > 0 {
+                    self.dataSource.append((section: "Tomorrow", type: 2, data: res.tomorrow))
+                }
+                
+                self.table.isHidden = false
+                self.lblNoAgenda.isHidden = true
+                
+                if res.isCreate {
+                    self.btnCreateAgenda.isHidden = false
+                }else{
+                    self.btnCreateAgenda.isHidden = true
+                }
+                
             }
+            
             print("Do action when data complete fetching here")
         })
 
@@ -177,9 +197,8 @@ extension AgendaViewController: UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         let data = dataSource[indexPath.section].data[indexPath.row]
-       
-        let decline = UITableViewRowAction(style: .normal, title: "Decline") { (action, indexPath) in
-            if let data = data as? DataAgenda{
+        if let data = data as? DataAgenda{
+            let decline = UITableViewRowAction(style: .normal, title: "Decline") { (action, indexPath) in
                 AgendaController().requestRespond(id: String(data.id), respond: "0", onSuccess: { (code, message, result) in
                     guard let res = result else {return}
                     if res == 200 {
@@ -195,21 +214,20 @@ extension AgendaViewController: UITableViewDataSource{
                     print(message)
                     print("Do action when data complete fetching here")
                 }
+                
+                print("decline")
+                // delete item at indexPath
             }
-            print("decline")
-            // delete item at indexPath
-        }
-    
-        let attend = UITableViewRowAction(style: .normal, title: "Attend") { (action, indexPath) in
-            if let data = data as? DataAgenda{
+            
+            let attend = UITableViewRowAction(style: .normal, title: "Attend") { (action, indexPath) in
                 AgendaController().requestRespond(id: String(data.id), respond: "1", onSuccess: { (code, message, result) in
                     guard let res = result else {return}
                     if res == 200 {
                         let alert = JDropDownAlert()
                         alert.alertWith("Attend", message: "You can change response by clicking button below.", topLabelColor:
-                            UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
+                        UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "1ABBA4"), image: nil)
                         self.setupData()
-                        
+                            
                     }
                 }, onFailed: { (message) in
                     print(message)
@@ -218,28 +236,34 @@ extension AgendaViewController: UITableViewDataSource{
                     print(message)
                     print("Do action when data complete fetching here")
                 }
+                
+                
+                print("attend")
+                // share item at indexPath
             }
-        
-            print("attend")
-            // share item at indexPath
+            
+            decline.backgroundColor = UIColor(hexString: "f52d5a")
+            attend.backgroundColor = UIColor(hexString: "1abba4")
+            
+            return [decline, attend]
         }
         
-        decline.backgroundColor = UIColor(hexString: "f52d5a")
-        attend.backgroundColor = UIColor(hexString: "1abba4")
-    
-        return [decline, attend]
+        return[UITableViewRowAction]()
+
     }
 
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
-//        
-//        let data = dataSource[indexPath.section].data[indexPath.row]
-//        if let data = data as? DataAgenda {
-//            vc.idAgenda = String(data.id)
-//            self.navigationController?.pushViewController(vc, animated: true)
-//        }
-//    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Agenda.detail) as! DetailAgendaViewController
+        if indexPath.section > 0 {
+            let data = dataSource[indexPath.section].data[indexPath.row]
+            if let data = data as? DataAgenda {
+                vc.idAgenda = String(data.id)
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        }
+        
+    }
 }
 
 extension AgendaViewController: UITableViewDelegate{

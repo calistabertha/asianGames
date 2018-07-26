@@ -53,8 +53,10 @@ extension GroupFriendsTableViewCell: TableViewCellProtocol {
 
 extension GroupFriendsTableViewCell: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let data = groupItems[indexPath.row]
         let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.People.detail) as! DetailGroupViewController
+        vc.idGroup = String(data.id)
         if let ctx = self.context {
             ctx.navigationController?.pushViewController(vc, animated: true)
         }

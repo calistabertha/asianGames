@@ -66,7 +66,6 @@ class HistoryAgendaViewController: UIViewController {
     
     func detailAgenda(sender: UIButton){
         var row = 0
-        
         for var i in 0...self.arr.count-1{
             if self.arr[i] > sender.tag {
                 break
@@ -142,19 +141,14 @@ extension HistoryAgendaViewController: UITableViewDataSource{
         return cell
         
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let storyboard = UIStoryboard(name: StoryboardReferences.main, bundle: nil)
-//        let vc = storyboard.instantiateViewController(withIdentifier: ViewControllerID.Announcement.detail) as! DetailAnnouncemenViewController
-//        vc.idAnnouncement = String(data.id)
-//        self.navigationController?.pushViewController(vc, animated: true)
-    }
-    
+
 }
 
 extension HistoryAgendaViewController: UITableViewDelegate{
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        
+        if indexPath.row == self.arr.index(of: indexPath.row){
+            return 60
+        }
         
         return 95
         

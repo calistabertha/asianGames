@@ -195,14 +195,33 @@ class AgendaController: BaseController {
     func requestAgenda(title: String, description: String, location: String, guest: [String]?, group: [String]?, date: String, timeStart: String, timeEnd: String, onSuccess: @escaping SingleResultListener<String>,
                              onFailed: @escaping MessageListener,
                              onComplete: @escaping MessageListener) {
-        var groupParam:JSON = [:]
-        if let g = group {
-           groupParam["group"].arrayObject = g
+//        var groupParam:JSON = [:]
+//        if let g = group {
+//           groupParam["group"].arrayObject = g
+//        }
+//        if let g = guest {
+//            groupParam["guest"].arrayObject = g
+//        }
+        
+        var groupParam = JSON()
+        var g = [String]()
+        var gu = [String]()
+        if group == nil {
+            g = [""]
+        }else {
+            guard let gg = group else {return}
+            g = gg
         }
-        if let g = guest {
-            groupParam["guest"].arrayObject = g
+        
+        if guest == nil {
+            gu = [""]
+        }else {
+            guard let gg = guest else {return}
+            gu = gg
         }
-
+        
+        groupParam = ["guest":gu,"group":g]
+        
         let params:[String:Any] = ["title": title,
                                       "description": description,
                                       "recipient": groupParam,

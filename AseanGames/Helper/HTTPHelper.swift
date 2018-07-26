@@ -82,23 +82,23 @@ class HTTPHelper {
         
         let token = UserDefaults.standard.getToken()
         let header = [
-            "authorization" : token
+            "Token" : "e6416f83cffce3909c21bbd4c9b40e1b9ca286f8"
         ]
         
         manager.request(url, method: method.toHTTPMethod(), parameters: param, headers: header).responseJSON {
             (response) in
-            self.requestHandler(response: response, url: url, param: param, method: method, completion: completion)
+        //    self.requestHandler(response: response, url: url, param: param, method: method, completion: completion)
             
-//            if let responHeader = response.response?.statusCode { //statusCode = status server
-//                if responHeader >= 400 {
-//                    completion(false, responHeader, nil)
-//                } else {
-//                    if let json = response.result.value {
-//                        let data = JSON(json)
-//                        completion(true, responHeader, data)
-//                    }
-//                }
-//            }
+            if let responHeader = response.response?.statusCode { //statusCode = status server
+                if responHeader >= 400 {
+                    completion(false, responHeader, nil)
+                } else {
+                    if let json = response.result.value {
+                        let data = JSON(json)
+                        completion(true, responHeader, data)
+                    }
+                }
+            }
         
         }
     }
@@ -119,7 +119,14 @@ class HTTPHelper {
                     }))
                     
                     (UIApplication.shared.delegate as! AppDelegate).window?.rootViewController?.present(alert, animated: false, completion: nil)
-                }else{
+                }
+//                else if json["display_message"].stringValue.range(of: "File type") != nil{
+//                    let alert = JDropDownAlert()
+//                    alert.alertWith("File type not support!", message: "Only pdf, doc, docx, xls, xlsx, ppt, pptx, jpg, jpeg, png, tiff, bmp, gif, mp4, flv & avi were allowed!", topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
+//                    
+//                }
+                else{
+                    print("\(json["display_message"].stringValue)")
                     let alert = JDropDownAlert()
                     alert.alertWith("", message: json["display_message"].stringValue, topLabelColor: UIColor.white, messageLabelColor: UIColor.white, backgroundColor: UIColor(hexString: "f52d5a"), image: nil)
                 }

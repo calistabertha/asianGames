@@ -84,36 +84,21 @@ class DetailAgendaViewController: UIViewController {
                 self.lblDivision.text = res.assignment
                 self.lblCreateAgenda.text = res.createAt
                
-                guard let url = URL(string: res.photo) else { return }
-                self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
-                    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
-                    self.imgProfile.layer.masksToBounds = true
-                })
-                
-                if res.attendants.count > 0 {
-                    for var i in 0...res.attendants.count-1{
-                        let image = self.imageCollection[i]
-                        image.isHidden = false
-                        
-                        guard let url = URL(string: res.attendants[i]) else { return }
-                        image.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
-                            image.layer.cornerRadius = image.frame.size.height*0.5
-                            image.layer.masksToBounds = true
-                        })
-                    }
-                }
-                
                 if res.attendants.count == 0{
                     self.viewResponsRSVP.isHidden = true
                     self.constraintHeightRSVP.constant = 0
                     self.btnOpenRSVP.isUserInteractionEnabled = false
                     self.btnOpenRSVP.isHidden = true
-//                    self.viewGoing.isHidden = true
-//                    self.lblGoing.isHidden = true
                     
                 } else if res.attendants.count < 5 {
-                    self.viewGoing.isHidden = true
-                    self.lblGoing.isHidden = true
+                    if res.more == 0 {
+                        self.viewGoing.isHidden = true
+                        self.lblGoing.isHidden = true
+                    }else {
+                        self.viewGoing.isHidden = false
+                        self.lblGoing.isHidden = false
+                        self.lblMoreRSVP.text = String(res.more)
+                    }
                     
                 } else {
                     self.viewGoing.isHidden = false
@@ -153,9 +138,47 @@ class DetailAgendaViewController: UIViewController {
                         self.btnAttendDecline.setTitleColor(UIColor.white, for: UIControlState.normal)
                     }
                     
-                }else {
+                }else if res.respond == 2{
                     self.viewBtnOption.isHidden = false
                     self.btnAttendDecline.isHidden = true
+                    
+                    if res.isPast{
+                        self.btnDecline.backgroundColor = UIColor(hexString: "C5C5C5")
+                        self.btnDecline.setTitleColor(UIColor(hexString: "9F9F9F"), for: UIControlState.normal)
+                        self.btnDecline.isUserInteractionEnabled = false
+                        
+                        self.btnAttend.backgroundColor = UIColor(hexString: "C5C5C5")
+                        self.btnAttend.setTitleColor(UIColor(hexString: "9F9F9F"), for: UIControlState.normal)
+                        self.btnAttend.isUserInteractionEnabled = false
+                        
+                    }else {
+                        self.btnAttend.backgroundColor = UIColor(hexString: "1ABBA4")
+                        self.btnAttend.setTitleColor(UIColor.white, for: UIControlState.normal)
+                        
+                        self.btnDecline.backgroundColor = UIColor(hexString: "F52D5A")
+                        self.btnDecline.setTitleColor(UIColor.white, for: UIControlState.normal)
+                    }
+                
+                    
+                }
+                
+                guard let url = URL(string: res.photo) else { return }
+                self.imgProfile.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                    self.imgProfile.layer.cornerRadius = self.imgProfile.frame.size.height*0.5
+                    self.imgProfile.layer.masksToBounds = true
+                })
+                
+                if res.attendants.count > 0 {
+                    for var i in 0...res.attendants.count-1{
+                        let image = self.imageCollection[i]
+                        image.isHidden = false
+                        
+                        guard let url = URL(string: res.attendants[i]) else { return }
+                        image.sd_setImage(with: url, placeholderImage: #imageLiteral(resourceName: "img-placeholder"), options: .progressiveDownload, completed: { (img, error, type, url) in
+                            image.layer.cornerRadius = image.frame.size.height*0.5
+                            image.layer.masksToBounds = true
+                        })
+                    }
                 }
               
             }
